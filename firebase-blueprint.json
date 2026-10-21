@@ -1,0 +1,97 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account information and preferences.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["client", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "createdAt", "updatedAt"]
+    },
+    "Filing": {
+      "title": "Tax Filing",
+      "description": "Information about a specific tax filing session.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "year": { "type": "integer" },
+        "status": { "type": "string", "enum": ["draft", "pending", "in-review", "completed"] },
+        "type": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "year", "status", "createdAt", "updatedAt"]
+    },
+    "Document": {
+      "title": "Document Record",
+      "description": "Metadata for an uploaded tax document.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "filingId": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "uploadedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "name", "url", "uploadedAt"]
+    },
+    "Task": {
+      "title": "Task Item",
+      "description": "A task for the user to complete.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed"] },
+        "dueDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "title", "status", "createdAt"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "Prospective client information from chatbot.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "emailOrPhone": { "type": "string" },
+        "context": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "emailOrPhone", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Main user collection."
+    },
+    "users/{userId}/filings/{filingId}": {
+      "schema": "Filing",
+      "description": "User's tax filings."
+    },
+    "users/{userId}/documents/{docId}": {
+      "schema": "Document",
+      "description": "Metadata for files uploaded by the user."
+    },
+    "users/{userId}/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Personalized tasks for the user."
+    },
+    "leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Contact info collected via chatbot."
+    }
+  }
+}

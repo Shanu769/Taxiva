@@ -1,0 +1,10 @@
+{
+  "name": "Taxiva LLC",
+  "description": "Smart tax filing, planning \u0026 accounting support for individuals and businesses. Austin, Texas based tax and accounting support team serving clients across the U.S. and overseas.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

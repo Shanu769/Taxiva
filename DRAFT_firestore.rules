@@ -1,0 +1,110 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    // --- Collection: Users ---
+    match /users/{userId} {
+      function isValidUser(data) {
+        return data.keys().hasAll(['uid', 'email', 'role', 'createdAt', 'updatedAt']) &&
+               data.keys().size() == 5 &&
+               data.uid == request.auth.uid &&
+               data.email is string && data.email.size() <= 256 &&
+               data.role in ['client', 'admin'] &&
+               data.createdAt == request.time &&
+               data.updatedAt == request.time;
+      }
+
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUser(incoming());
+      allow update: if isOwner(userId) && (
+        incoming().diff(existing()).affectedKeys().hasOnly(['name', 'updatedAt']) &&
+        incoming().updatedAt == request.time
+      );
+    }
+
+    // --- Sub-collection: Filings ---
+    match /users/{userId}/filings/{filingId} {
+      function isValidFiling(data) {
+        return data.keys().hasAll(['id', 'userId', 'year', 'status', 'createdAt', 'updatedAt']) &&
+               data.keys().size() == 6 &&
+               data.userId == userId &&
+               data.year is int &&
+               data.status in ['draft', 'pending', 'in-review', 'completed'] &&
+               data.createdAt == request.time &&
+               data.updatedAt == request.time;
+      }
+
+      allow list, get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidFiling(incoming());
+      allow update: if isOwner(userId) && (
+        (existing().status != 'completed' || incoming().status == 'completed') &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt']) &&
+        incoming().updatedAt == request.time
+      );
+    }
+
+    // --- Sub-collection: Documents ---
+    match /users/{userId}/documents/{docId} {
+      function isValidDocument(data) {
+        return data.keys().hasAll(['id', 'userId', 'name', 'url', 'uploadedAt']) &&
+               data.keys().size() >= 5 &&
+               data.userId == userId &&
+               data.name is string && data.name.size() <= 256 &&
+               data.url is string && data.url.size() <= 2048 &&
+               data.uploadedAt == request.time;
+      }
+
+      allow list, get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidDocument(incoming());
+      allow delete: if isOwner(userId);
+    }
+
+    // --- Sub-collection: Tasks ---
+    match /users/{userId}/tasks/{taskId} {
+      allow list, get: if isOwner(userId);
+      // Tasks are usually system-generated, but for this app, we'll allow client read
+    }
+
+    // --- Collection: Leads ---
+    match /leads/{leadId} {
+      function isValidLead(data) {
+        return data.keys().hasAll(['id', 'emailOrPhone', 'createdAt']) &&
+               data.emailOrPhone is string && data.emailOrPhone.size() <= 256 &&
+               data.createdAt == request.time;
+      }
+
+      allow create: if isValidLead(incoming());
+      // Only admins can read leads
+      allow read: if false; 
+    }
+  }
+}
