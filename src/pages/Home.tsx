@@ -83,8 +83,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full bg-white text-[#0f172a]">
-      {/* Compact, Balanced Hero Section — Full-Bleed US Federal Government Building + Right-Side Tax Platform Image */}
-      <section className="relative py-10 lg:py-14 overflow-hidden bg-[#0f172a] text-white border-b border-white/15">
+      {/* Compact, Balanced Hero Section — Slightly Increased Height for Full Capitol Dome Visibility */}
+      <section className="relative py-14 lg:py-20 min-h-[480px] lg:min-h-[540px] flex items-center overflow-hidden bg-[#0f172a] text-white border-b border-white/15">
         {/* Background Image Layer: Cropped left margin so the US Federal Government Building fills 100% edge-to-edge without any blank strip */}
         <div className="absolute inset-0 z-0 overflow-hidden bg-[#0f172a]">
           <img
@@ -102,14 +102,14 @@ export default function Home() {
           />
         </div>
 
-        <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1380px] w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Left Column — Compact Height & Balanced Width */}
+            {/* Left Column — Balanced Height & Width */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55 }}
-              className="lg:col-span-7 bg-[#0f172a]/50 backdrop-blur-[3px] p-6 sm:p-8 rounded-3xl border border-white/25 shadow-2xl"
+              className="lg:col-span-7 bg-[#0f172a]/50 backdrop-blur-[3px] p-7 sm:p-9 rounded-3xl border border-white/25 shadow-2xl"
             >
               <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 px-3.5 py-1.5 rounded-lg text-white text-[11px] font-extrabold uppercase tracking-widest mb-4">
                 <ShieldCheck className="w-4 h-4 text-white shrink-0" />
@@ -185,14 +185,14 @@ export default function Home() {
             </motion.div>
 
             {/* Right Column — Transparent 3D Motion Hub with Central "T" Emblem & 4 Floating 3D Cards */}
-            <div className="lg:col-span-5 relative min-h-[360px] sm:min-h-[390px] flex items-center justify-center [perspective:1200px] select-none">
+            <div className="lg:col-span-5 relative min-h-[400px] sm:min-h-[430px] flex items-center justify-center [perspective:1200px] select-none">
               {/* Transparent 3D Orbital Rings & Dashed Connector Lines */}
               <motion.div
                 animate={{ rotateZ: [0, 360] }}
                 transition={{ duration: 48, repeat: Infinity, ease: "linear" }}
-                className="w-60 h-60 sm:w-72 sm:h-72 rounded-full border border-white/20 bg-white/[0.03] backdrop-blur-[1px] flex items-center justify-center pointer-events-none"
+                className="absolute w-64 h-64 sm:w-72 sm:h-72 rounded-full border border-white/20 bg-white/[0.03] backdrop-blur-[1px] flex items-center justify-center pointer-events-none"
               >
-                <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-full border border-dashed border-white/30 bg-white/[0.04]" />
+                <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-full border border-dashed border-white/30 bg-white/[0.04]" />
               </motion.div>
 
               {/* SVG Dashed Connector Lines from Center "T" to the 4 Floating 3D Cards */}
@@ -357,6 +357,88 @@ export default function Home() {
                   </div>
                 </div>
               </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Security & Trust Strip — Directly Below Hero Area */}
+      <section
+        aria-label="Security & Trust"
+        className="py-6 sm:py-7 bg-[#f8fafc] border-b border-[#dbeafe]"
+      >
+        <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+            {/* Section Title Pill & Subtext */}
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-[#0f172a] text-white flex items-center justify-center shadow-sm shrink-0">
+                <ShieldCheck className="w-5 h-5 text-[#60a5fa]" />
+              </div>
+              <div>
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#1d4ed8] block leading-none">
+                  Security & Trust
+                </span>
+                <p className="text-sm sm:text-base font-extrabold text-[#0f172a] font-display mt-0.5">
+                  Verified Compliance & Client Protection
+                </p>
+              </div>
+            </div>
+
+            {/* 3 Core Trust Badges: IRS Authorized, Bank-Level Encryption, Data Privacy Guaranteed */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 flex-1 lg:max-w-4xl">
+              {/* Badge 1: IRS Authorized */}
+              <div className="bg-white border border-[#dbeafe] hover:border-[#1d4ed8] rounded-2xl px-4 py-3 flex items-center gap-3.5 shadow-2xs transition-all">
+                <div className="w-10 h-10 rounded-xl bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe] flex items-center justify-center shrink-0">
+                  <BadgeCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="text-xs sm:text-sm font-extrabold text-[#0f172a] leading-tight">
+                      IRS Authorized
+                    </h3>
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#10b981]" />
+                  </div>
+                  <p className="text-[11px] font-medium text-[#334155] mt-0.5">
+                    Official E-File Provider & PTIN Verified
+                  </p>
+                </div>
+              </div>
+
+              {/* Badge 2: Bank-Level Encryption */}
+              <div className="bg-white border border-[#dbeafe] hover:border-[#1d4ed8] rounded-2xl px-4 py-3 flex items-center gap-3.5 shadow-2xs transition-all">
+                <div className="w-10 h-10 rounded-xl bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe] flex items-center justify-center shrink-0">
+                  <Lock className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="text-xs sm:text-sm font-extrabold text-[#0f172a] leading-tight">
+                      Bank-Level Encryption
+                    </h3>
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#10b981]" />
+                  </div>
+                  <p className="text-[11px] font-medium text-[#334155] mt-0.5">
+                    256-Bit AES & SOC 2 Canopy Portal
+                  </p>
+                </div>
+              </div>
+
+              {/* Badge 3: Data Privacy Guaranteed */}
+              <div className="bg-white border border-[#dbeafe] hover:border-[#1d4ed8] rounded-2xl px-4 py-3 flex items-center gap-3.5 shadow-2xs transition-all">
+                <div className="w-10 h-10 rounded-xl bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe] flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="text-xs sm:text-sm font-extrabold text-[#0f172a] leading-tight">
+                      Data Privacy Guaranteed
+                    </h3>
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#10b981]" />
+                  </div>
+                  <p className="text-[11px] font-medium text-[#334155] mt-0.5">
+                    Strict IRS Sec. 7216 Non-Disclosure
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
