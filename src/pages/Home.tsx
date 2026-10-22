@@ -4,7 +4,7 @@
  */
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, type Variants } from "motion/react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -36,6 +36,8 @@ import { FAQ_DATA } from "../components/FAQ";
 import LogoAnimation from "../components/LogoAnimation";
 import TaxExperts from "../components/TaxExperts";
 import ConsultationModal from "../components/ConsultationModal";
+import { WhatsAppIcon } from "../components/WhatsAppCallout";
+import SecurityAuditDefense from "../components/SecurityAuditDefense";
 
 const coreServices = [
   {
@@ -75,6 +77,28 @@ const coreServices = [
     visualType: "nri"
   }
 ];
+
+const sectionStaggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05
+    }
+  }
+};
+
+const slideUpItemVariants: Variants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: "easeOut" }
+  }
+};
+
+const sectionViewport = { once: true, margin: "-60px" };
 
 export default function Home() {
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
@@ -205,7 +229,12 @@ export default function Home() {
             </motion.div>
 
             {/* Right Column — Transparent 3D Motion Hub with Central "T" Emblem & 4 Floating 3D Cards */}
-            <div className="lg:col-span-5 relative min-h-[440px] sm:min-h-[480px] lg:min-h-[500px] flex items-center justify-center [perspective:1200px] select-none">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.15 }}
+              className="lg:col-span-5 relative min-h-[440px] sm:min-h-[480px] lg:min-h-[500px] flex items-center justify-center [perspective:1200px] select-none"
+            >
               {/* Transparent 3D Orbital Rings & Dashed Connector Lines */}
               <motion.div
                 animate={{ rotateZ: [0, 360] }}
@@ -377,20 +406,24 @@ export default function Home() {
                   </div>
                 </div>
               </motion.div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Security & Trust Strip — Directly Below Hero Area */}
-      <section
+      <motion.section
         aria-label="Security & Trust"
+        variants={sectionStaggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={sectionViewport}
         className="py-6 sm:py-7 bg-[#f8fafc] border-b border-[#dbeafe]"
       >
         <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
             {/* Section Title Pill & Subtext */}
-            <div className="flex items-center gap-3 shrink-0">
+            <motion.div variants={slideUpItemVariants} className="flex items-center gap-3 shrink-0">
               <div className="w-10 h-10 rounded-xl bg-[#0f172a] text-white flex items-center justify-center shadow-sm shrink-0">
                 <ShieldCheck className="w-5 h-5 text-[#60a5fa]" />
               </div>
@@ -402,12 +435,12 @@ export default function Home() {
                   Verified Compliance & Client Protection
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* 3 Core Trust Badges: IRS Authorized, Bank-Level Encryption, Data Privacy Guaranteed */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 flex-1 lg:max-w-4xl">
               {/* Badge 1: IRS Authorized */}
-              <div className="bg-white border border-[#dbeafe] hover:border-[#1d4ed8] rounded-2xl px-4 py-3 flex items-center gap-3.5 shadow-2xs transition-all">
+              <motion.div variants={slideUpItemVariants} className="bg-white border border-[#dbeafe] hover:border-[#1d4ed8] rounded-2xl px-4 py-3 flex items-center gap-3.5 shadow-2xs transition-all">
                 <div className="w-10 h-10 rounded-xl bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe] flex items-center justify-center shrink-0">
                   <BadgeCheck className="w-5 h-5" />
                 </div>
@@ -422,10 +455,10 @@ export default function Home() {
                     Official E-File Provider & PTIN Verified
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Badge 2: Bank-Level Encryption */}
-              <div className="bg-white border border-[#dbeafe] hover:border-[#1d4ed8] rounded-2xl px-4 py-3 flex items-center gap-3.5 shadow-2xs transition-all">
+              <motion.div variants={slideUpItemVariants} className="bg-white border border-[#dbeafe] hover:border-[#1d4ed8] rounded-2xl px-4 py-3 flex items-center gap-3.5 shadow-2xs transition-all">
                 <div className="w-10 h-10 rounded-xl bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe] flex items-center justify-center shrink-0">
                   <Lock className="w-5 h-5" />
                 </div>
@@ -440,10 +473,10 @@ export default function Home() {
                     256-Bit AES & SOC 2 Canopy Portal
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Badge 3: Data Privacy Guaranteed */}
-              <div className="bg-white border border-[#dbeafe] hover:border-[#1d4ed8] rounded-2xl px-4 py-3 flex items-center gap-3.5 shadow-2xs transition-all">
+              <motion.div variants={slideUpItemVariants} className="bg-white border border-[#dbeafe] hover:border-[#1d4ed8] rounded-2xl px-4 py-3 flex items-center gap-3.5 shadow-2xs transition-all">
                 <div className="w-10 h-10 rounded-xl bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe] flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
@@ -458,16 +491,22 @@ export default function Home() {
                     Strict IRS Sec. 7216 Non-Disclosure
                   </p>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Core 4 Tax Services — ALL 4 IN ONE SINGLE CLEAN ROW (lg:grid-cols-4) */}
-      <section className="py-14 bg-white">
+      <motion.section
+        variants={sectionStaggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={sectionViewport}
+        className="py-14 bg-white"
+      >
         <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-9 gap-6">
+          <motion.div variants={slideUpItemVariants} className="flex flex-col lg:flex-row lg:items-end justify-between mb-9 gap-6">
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 text-[#1d4ed8] font-extrabold uppercase tracking-widest text-xs mb-3 bg-[#eff6ff] px-3.5 py-1.5 rounded-lg border border-[#dbeafe]">
                 <FileText className="w-4 h-4 text-[#1d4ed8]" />
@@ -480,17 +519,14 @@ export default function Home() {
             <p className="text-[#334155]/85 max-w-md text-sm sm:text-base leading-relaxed font-medium">
               Every return is prepared and reviewed by experienced tax professionals covering U.S. individual, NY & 50-state corporate, FBAR, and Indian NRI compliance.
             </p>
-          </div>
+          </motion.div>
 
           {/* 4 Cards in ONE Single Row on Desktop (lg:grid-cols-4) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 items-stretch">
-            {coreServices.map((service, idx) => (
+            {coreServices.map((service) => (
               <motion.div
                 key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.07 }}
+                variants={slideUpItemVariants}
                 className="rounded-3xl bg-[#f8fafc] border border-[#dbeafe] overflow-hidden hover:border-[#1d4ed8] hover:bg-white hover:shadow-xl transition-all flex flex-col justify-between group"
               >
                 <div className="relative h-40 bg-[#0f172a] overflow-hidden border-b border-[#dbeafe]">
@@ -585,14 +621,20 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* "WHY TAXIVA LLC — The care of a family accountant, at a flat price" (Matching Reference Image image_ee9170ca.png) */}
-      <section className="py-16 bg-[#f8fafc] border-t border-[#dbeafe]">
+      <motion.section
+        variants={sectionStaggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={sectionViewport}
+        className="py-16 bg-[#f8fafc] border-t border-[#dbeafe]"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Column: Headline, Description & Meet the Team CTA */}
-            <div className="lg:col-span-5 space-y-5">
+            <motion.div variants={slideUpItemVariants} className="lg:col-span-5 space-y-5">
               <span className="text-xs font-extrabold uppercase tracking-widest text-[#2563eb] block">
                 WHY TAXIVA LLC
               </span>
@@ -617,12 +659,21 @@ export default function Home() {
                   <span>Get in touch</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
+                <a
+                  href="https://wa.me/919963260743?text=Hi%20TAXIVA%20LLC%2C%20I%20would%20like%20to%20consult%20about%20tax%20filing%20services"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#25d366] hover:bg-[#20ba59] text-white px-5 py-3.5 rounded-full font-extrabold text-sm transition-all shadow-sm active:scale-95"
+                >
+                  <WhatsAppIcon className="w-4 h-4 text-white" />
+                  <span>WhatsApp</span>
+                </a>
               </div>
-            </div>
+            </motion.div>
 
             {/* Right Column: 2x2 Grid of 4 Value Cards */}
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="bg-[#eff6ff]/70 border border-[#dbeafe] rounded-3xl p-6 sm:p-7 space-y-3 hover:bg-white hover:shadow-md transition-all">
+              <motion.div variants={slideUpItemVariants} className="bg-[#eff6ff]/70 border border-[#dbeafe] rounded-3xl p-6 sm:p-7 space-y-3 hover:bg-white hover:shadow-md transition-all">
                 <div className="w-11 h-11 rounded-2xl bg-[#1d4ed8] text-white flex items-center justify-center shadow-sm">
                   <BadgeCheck className="w-5 h-5" />
                 </div>
@@ -632,9 +683,9 @@ export default function Home() {
                 <p className="text-sm text-[#334155]/90 leading-relaxed font-medium">
                   Every return is prepared by a CPA or IRS Enrolled Agent whose license is on the line with each filing. Not a seasonal hire, not software alone.
                 </p>
-              </div>
+              </motion.div>
 
-              <div className="bg-[#eff6ff]/70 border border-[#dbeafe] rounded-3xl p-6 sm:p-7 space-y-3 hover:bg-white hover:shadow-md transition-all">
+              <motion.div variants={slideUpItemVariants} className="bg-[#eff6ff]/70 border border-[#dbeafe] rounded-3xl p-6 sm:p-7 space-y-3 hover:bg-white hover:shadow-md transition-all">
                 <div className="w-11 h-11 rounded-2xl bg-[#1d4ed8] text-white flex items-center justify-center shadow-sm">
                   <Receipt className="w-5 h-5" />
                 </div>
@@ -644,9 +695,9 @@ export default function Home() {
                 <p className="text-sm text-[#334155]/90 leading-relaxed font-medium">
                   You know the fee before we start. No hourly meters, no surprise add-ons for 'complexity' discovered halfway through.
                 </p>
-              </div>
+              </motion.div>
 
-              <div className="bg-[#eff6ff]/70 border border-[#dbeafe] rounded-3xl p-6 sm:p-7 space-y-3 hover:bg-white hover:shadow-md transition-all">
+              <motion.div variants={slideUpItemVariants} className="bg-[#eff6ff]/70 border border-[#dbeafe] rounded-3xl p-6 sm:p-7 space-y-3 hover:bg-white hover:shadow-md transition-all">
                 <div className="w-11 h-11 rounded-2xl bg-[#1d4ed8] text-white flex items-center justify-center shadow-sm">
                   <ShieldCheck className="w-5 h-5" />
                 </div>
@@ -656,9 +707,9 @@ export default function Home() {
                 <p className="text-sm text-[#334155]/90 leading-relaxed font-medium">
                   If the IRS or a state writes about a return we filed, we read the notice with you and tell you exactly what to do next. That guidance is part of the service.
                 </p>
-              </div>
+              </motion.div>
 
-              <div className="bg-[#eff6ff]/70 border border-[#dbeafe] rounded-3xl p-6 sm:p-7 space-y-3 hover:bg-white hover:shadow-md transition-all">
+              <motion.div variants={slideUpItemVariants} className="bg-[#eff6ff]/70 border border-[#dbeafe] rounded-3xl p-6 sm:p-7 space-y-3 hover:bg-white hover:shadow-md transition-all">
                 <div className="w-11 h-11 rounded-2xl bg-[#1d4ed8] text-white flex items-center justify-center shadow-sm">
                   <Clock className="w-5 h-5" />
                 </div>
@@ -668,11 +719,11 @@ export default function Home() {
                 <p className="text-sm text-[#334155]/90 leading-relaxed font-medium">
                   Quarterly estimates, NY company formation, multi-state filings, and mid-year planning. The same team that files your return is there in July.
                 </p>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* "Built by Tax Experts from the World's Best Firms" Section Matching Provided Screenshot image_e761820c.png */}
       <TaxExperts
@@ -683,7 +734,10 @@ export default function Home() {
       />
 
       {/* ENLARGED & ELEVATED "Ready for your free tax draft?" Section */}
-      <section className="py-20 sm:py-28 bg-gradient-to-b from-white via-[#f1f6ff]/70 to-white border-y border-[#dbeafe]">
+      <motion.section
+        {...sectionFadeInUp}
+        className="py-20 sm:py-28 bg-gradient-to-b from-white via-[#f1f6ff]/70 to-white border-y border-[#dbeafe]"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl sm:rounded-[2.5rem] border-2 border-[#bfdbfe] shadow-2xl p-8 sm:p-12 lg:p-16 relative overflow-hidden">
             {/* Subtle background glow */}
@@ -790,10 +844,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* "NEED HELP NOW? Two common paths — start in minutes" */}
-      <section className="py-16 bg-white">
+      <motion.section
+        {...sectionFadeInUp}
+        className="py-16 bg-white"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-extrabold uppercase tracking-widest text-[#2563eb] block mb-2">
@@ -901,10 +958,14 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* SIDE-BY-SIDE SECTION: "Stop Overpaying. Start Tax Savings." (Left) AND "Frequently Asked Questions" (Right) */}
-      <section className="py-16 bg-[#f8fafc] border-t border-[#dbeafe]" id="faq-section">
+      <motion.section
+        {...sectionFadeInUp}
+        className="py-16 bg-[#f8fafc] border-t border-[#dbeafe]"
+        id="faq-section"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             {/* LEFT COLUMN: Stop Overpaying. Start Tax Savings. */}
@@ -1055,10 +1116,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Slightly Smaller, Compact Blue CTA Section ("Ready to File Your Taxes with Maximum Accuracy?") */}
-      <section className="py-6 bg-white">
+      <motion.section
+        {...sectionFadeInUp}
+        className="py-6 bg-white"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className="rounded-2xl py-6 px-6 sm:px-10 text-white shadow-lg relative overflow-hidden bg-[#1d4ed8] flex flex-col md:flex-row items-center justify-between gap-6"
@@ -1090,10 +1154,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Side-by-Side Section: "Proactive IRS Tax Saving Alerts & Deadlines" AND "Instant Access to Official IRS Refund Tracking & Tax Portals" */}
-      <section className="py-16 bg-[#f8fafc] border-t border-[#dbeafe]">
+      <motion.section
+        {...sectionFadeInUp}
+        className="py-16 bg-[#f8fafc] border-t border-[#dbeafe]"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {/* Left Card: Proactive IRS Tax Saving Alerts & Deadlines */}
@@ -1215,10 +1282,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Key Authority Stats + "Security and data protection" */}
-      <section className="py-16 bg-white border-t border-[#dbeafe]">
+      <motion.section
+        {...sectionFadeInUp}
+        className="py-16 bg-white border-t border-[#dbeafe]"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* 4 Key Stats Row */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pb-12 border-b border-dashed border-[#bfdbfe]">
@@ -1262,84 +1332,11 @@ export default function Home() {
               <span className="text-xs font-semibold text-[#334155]">Tax Forms & Schedules Prepared</span>
             </div>
           </div>
-
-          {/* Security and Data Protection Block */}
-          <div className="pt-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center max-w-4xl mx-auto">
-            {/* Left Shield Visual Box */}
-            <div className="md:col-span-4 flex justify-center">
-              <div className="relative w-44 h-36 bg-[#f8fafc] border-2 border-[#dbeafe] rounded-2xl flex items-center justify-center shadow-sm">
-                <div className="w-20 h-20 rounded-2xl bg-[#1d4ed8] text-white flex items-center justify-center shadow-lg">
-                  <ShieldCheck className="w-11 h-11" />
-                </div>
-                <div className="absolute -bottom-3 bg-white border border-[#dbeafe] px-3 py-1 rounded-lg text-[10px] font-extrabold text-[#1d4ed8] uppercase tracking-wider shadow-xs">
-                  256-Bit Encrypted
-                </div>
-              </div>
-            </div>
-
-            {/* Right Text & Security Compliance Badges */}
-            <div className="md:col-span-8 text-center md:text-left space-y-4">
-              <h3 className="text-2xl sm:text-4xl font-extrabold text-[#0f172a] tracking-tight font-display">
-                Security and data <span className="text-[#2563eb]">protection</span>
-              </h3>
-              <p className="text-sm sm:text-base text-[#334155]/90 leading-relaxed font-medium">
-                TAXIVA LLC's Premier Client Services uses AES-256 encryption, SOC 2-compliant controls, two-factor authentication, and strict IRS Section 7216 safeguards inside our Canopy Portal to ensure top-tier data security and compliance.
-              </p>
-
-              {/* Compliance Badges Row */}
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
-                <div className="inline-flex items-center gap-2 bg-[#f8fafc] border border-[#bfdbfe] px-3.5 py-2 rounded-xl">
-                  <Building2 className="w-4 h-4 text-[#1d4ed8]" />
-                  <div className="text-left">
-                    <span className="block text-[10px] font-black uppercase tracking-wider text-[#0f172a] leading-none">
-                      IRS E-FILE
-                    </span>
-                    <span className="block text-[9px] font-semibold text-[#2563eb] mt-0.5">
-                      Authorized Provider
-                    </span>
-                  </div>
-                </div>
-
-                <div className="inline-flex items-center gap-2 bg-[#f8fafc] border border-[#bfdbfe] px-3.5 py-2 rounded-xl">
-                  <Lock className="w-4 h-4 text-[#1d4ed8]" />
-                  <div className="text-left">
-                    <span className="block text-[10px] font-black uppercase tracking-wider text-[#0f172a] leading-none">
-                      ISO 27001
-                    </span>
-                    <span className="block text-[9px] font-semibold text-[#2563eb] mt-0.5">
-                      Certified Security
-                    </span>
-                  </div>
-                </div>
-
-                <div className="inline-flex items-center gap-2 bg-[#f8fafc] border border-[#bfdbfe] px-3.5 py-2 rounded-xl">
-                  <ShieldCheck className="w-4 h-4 text-[#1d4ed8]" />
-                  <div className="text-left">
-                    <span className="block text-[10px] font-black uppercase tracking-wider text-[#0f172a] leading-none">
-                      AICPA SOC 2
-                    </span>
-                    <span className="block text-[9px] font-semibold text-[#2563eb] mt-0.5">
-                      Type II Controls
-                    </span>
-                  </div>
-                </div>
-
-                <div className="inline-flex items-center gap-2 bg-[#f8fafc] border border-[#bfdbfe] px-3.5 py-2 rounded-xl">
-                  <CheckCircle2 className="w-4 h-4 text-[#1d4ed8]" />
-                  <div className="text-left">
-                    <span className="block text-[10px] font-black uppercase tracking-wider text-[#0f172a] leading-none">
-                      IRS SEC. 7216
-                    </span>
-                    <span className="block text-[9px] font-semibold text-[#2563eb] mt-0.5">
-                      Privacy Compliant
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </section>
+      </motion.section>
+
+      {/* "Your Data, Fully Protected" & $1 MILLION TAX AUDIT DEFENSE™ — Matching Image image_fd2a24a9.png */}
+      <SecurityAuditDefense />
 
       {/* Complimentary 30-Minute Consultation Modal */}
       <ConsultationModal

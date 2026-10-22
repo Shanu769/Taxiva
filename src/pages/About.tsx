@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -21,7 +22,8 @@ import {
   Scale,
   Building2,
   TrendingDown,
-  Calculator
+  Calculator,
+  Sparkles
 } from "lucide-react";
 
 const CORE_PILLARS = [
@@ -36,10 +38,10 @@ const CORE_PILLARS = [
   },
   {
     index: "02",
-    title: "Business Tax Filing & NY Main Company Formation",
-    subtitle: "NY Entity Formation · Form 1120-S · Form 1065 · Form 1120 · LLCs",
+    title: "Business Tax Filing & Corporate Strategy",
+    subtitle: "Form 1120-S · Form 1065 · Form 1120 · LLCs · Franchise Compliance",
     description:
-      "End-to-end New York (NY) main company formation, 50-state entity registration, and corporate/pass-through tax compliance for LLCs, S-Corporations, partnerships, and C-Corporations. We optimize owner compensation, Section 199A QBI deductions, and quarterly estimated tax schedules.",
+      "Pass-through and corporate tax compliance for LLCs, S-Corporations, partnerships, and C-Corporations. We optimize owner compensation, Section 199A QBI deductions, state apportionment, and quarterly estimated tax schedules.",
     href: "/services/business",
     icon: Briefcase
   },
@@ -68,7 +70,7 @@ const ENGAGEMENT_STEPS = [
     step: "Step 01",
     title: "Free Discovery Consultation & Flat-Fee Scope",
     description:
-      "Book a consultation or complete our quick intake form. A senior tax advisor in our New York (EST) headquarters evaluates your residency status, income streams, or NY company formation needs and provides a transparent, upfront flat-fee quote."
+      "Book a consultation or complete our quick intake form. A senior tax advisor in our New York (EST) headquarters evaluates your residency status, income streams, or filing needs and provides a transparent, upfront flat-fee quote."
   },
   {
     step: "Step 02",
@@ -98,9 +100,9 @@ const EXTRA_TAX_BENEFITS = [
     icon: TrendingDown
   },
   {
-    title: "New York (NY) Main Company Formation & 50-State Filing",
-    desc: "Starting a new business or scaling across states? New York is our primary company formation hub—we handle NY LLC/Corp formation, EIN issuance, S-Corp (Form 2553) elections, and multi-state apportionment across all 50 U.S. states.",
-    badge: "NY & 50-State Formation",
+    title: "Multi-State Apportionment & Corporate Filings",
+    desc: "Starting a new business or scaling across states? We handle entity registration, EIN issuance, S-Corp (Form 2553) elections, and multi-state apportionment across all 50 U.S. states.",
+    badge: "Corporate Compliance",
     icon: Building2
   },
   {
@@ -118,15 +120,15 @@ const EXTRA_TAX_BENEFITS = [
 ];
 
 const FIRM_BENEFITS = [
-  "Licensed CPAs, IRS Enrolled Agents (EAs) & Chartered Accountants on staff.",
-  "Headquartered in New York, NY (EST) — our main company formation & corporate hub.",
-  "Comprehensive draft tax summary delivered within 24–48 hours for your review.",
-  "Complimentary 3-year prior tax return review to identify missed refunds or credits.",
-  "Transparent, upfront flat-fee pricing with zero hidden hourly billing surprises.",
-  "Full IRS & State Audit Defense, Notice Resolution, and Penalty Abatement support.",
-  "Bank-grade AES-256 encryption and strict IRS Section 7216 data privacy compliance.",
-  "Specialized expertise in RSU, ESPP, ISO stock options, and multi-state apportionment.",
-  "Complete FinCEN Form 114 (FBAR) and Form 8938 (FATCA) international compliance.",
+  "Licensed CPAs, IRS Enrolled Agents, and Chartered Accountants on every engagement.",
+  "100% line-by-line audit review before transmitting any return to the IRS.",
+  "Upfront flat-fee pricing guarantee with zero hourly overages or hidden fees.",
+  "24–48 business hour turnaround on draft returns and tax summary overviews.",
+  "Encrypted Canopy Everything Access Portal with bank-grade 256-bit AES protection.",
+  "IRS Notice assistance and direct CPA representation across all 50 state tax agencies.",
+  "Multi-state residency apportionment for tech workers and remote professionals.",
+  "Specialized RSU, ESPP, and ISO equity compensation cost-basis reconciliation.",
+  "FinCEN Form 114 (FBAR) and FATCA Form 8938 penalty-free international reporting.",
   "US–India Double Taxation Avoidance Agreement (DTAA) & Form 1116 credit optimization.",
   "ITIN (Form W-7) application & certification support for spouses and dependents.",
   "$20 referral reward credited for every friend or colleague you refer to TAXIVA LLC."
@@ -135,7 +137,7 @@ const FIRM_BENEFITS = [
 export default function About() {
   return (
     <div className="flex flex-col w-full bg-white text-[#0f172a]">
-      {/* Executive Hero Section */}
+      {/* 1. EXECUTIVE HERO SECTION */}
       <section
         className="bg-[#1d4ed8] text-white py-20 lg:py-24 border-b border-white/10 relative overflow-hidden"
         style={{
@@ -143,13 +145,19 @@ export default function About() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-4xl">
-            <div className="flex flex-wrap items-center gap-2.5 text-sm font-bold text-white/90 mb-6 bg-white/10 border border-white/20 px-4 py-2 rounded-xl w-fit">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-4xl"
+          >
+            <div className="flex flex-wrap items-center gap-2.5 text-sm font-bold text-white/90 mb-6 bg-white/10 border border-white/20 px-4 py-2 rounded-xl w-fit backdrop-blur-xs">
+              <Sparkles className="w-4 h-4 text-sky-300" />
               <span>New York, NY Corporate Headquarters (EST)</span>
               <span aria-hidden="true">·</span>
-              <span>NY Main Company Formation</span>
-              <span aria-hidden="true">·</span>
               <span>IRS Authorized E-File Provider</span>
+              <span aria-hidden="true">·</span>
+              <span>All 50 States</span>
             </div>
 
             <h1 className="text-4xl sm:text-6xl lg:text-[4rem] font-extrabold tracking-tight text-white mb-6 leading-[1.08] font-display">
@@ -157,19 +165,19 @@ export default function About() {
             </h1>
 
             <p className="text-lg sm:text-2xl text-white/90 leading-relaxed mb-10 font-normal">
-              Headquartered in <strong className="text-white font-bold">New York, NY (EST)</strong> as our main company formation and executive advisory hub,{" "}
-              <strong className="text-white font-black uppercase">TAXIVA LLC</strong> is a premier tax preparation,
-              entity formation, and strategic tax planning firm serving over 6,500 individuals, families, NRIs,
-              independent consultants, and businesses across all 50 U.S. states and abroad.
+              Headquartered in <strong className="text-white font-bold">New York, NY (EST)</strong> as our executive advisory hub,{" "}
+              <strong className="text-white font-black uppercase">TAXIVA LLC</strong> delivers CPA-led tax preparation,
+              corporate entity planning, and international cross-border advisory for over 6,500 individuals, NRIs,
+              tech consultants, and businesses across all 50 U.S. states and abroad.
             </p>
 
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 to="/get-started"
-                className="bg-white text-[#0f172a] hover:bg-[#eff6ff] px-8 py-4 rounded-xl font-extrabold text-base sm:text-lg transition-all inline-flex items-center gap-2.5 shadow-xl whitespace-nowrap"
+                className="bg-white text-[#0f172a] hover:bg-[#eff6ff] px-8 py-4 rounded-xl font-extrabold text-base sm:text-lg transition-all inline-flex items-center gap-2.5 shadow-xl whitespace-nowrap active:scale-95"
               >
                 <span>Get in Touch with TAXIVA LLC</span>
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 text-[#1d4ed8]" />
               </Link>
               <a
                 href="https://app.canopytax.com/#/login?redirect_url=https%3A%2F%2Fapp.canopytax.com%2F%23%2Fclient"
@@ -181,66 +189,84 @@ export default function About() {
                 <ExternalLink className="w-5 h-5" />
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Quantitative Proof Strip */}
-          <div className="mt-14 pt-10 border-t border-white/15 grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <div>
+          {/* Quantitative Proof Strip: Clean 3 stats (NY + 50 removed as requested) */}
+          <div className="mt-14 pt-10 border-t border-white/15 grid grid-cols-1 sm:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+            >
               <div className="text-4xl sm:text-5xl font-extrabold text-white tabular-nums tracking-tight">6,500+</div>
               <div className="text-base text-white/85 mt-1.5 font-medium">Individual & Business Clients Served</div>
-            </div>
-            <div>
-              <div className="text-4xl sm:text-5xl font-extrabold text-white tabular-nums tracking-tight">NY + 50</div>
-              <div className="text-base text-white/85 mt-1.5 font-medium">NY Main Formation & All 50 U.S. States</div>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+            >
               <div className="text-4xl sm:text-5xl font-extrabold text-white tabular-nums tracking-tight">24–48 Hrs</div>
               <div className="text-base text-white/85 mt-1.5 font-medium">Standard Tax Summary Turnaround</div>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+            >
               <div className="text-4xl sm:text-5xl font-extrabold text-white tabular-nums tracking-tight">100%</div>
               <div className="text-base text-white/85 mt-1.5 font-medium">CPA / EA Reviewed Before E-Filing</div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Who We Are & Firm Story */}
+      {/* WHO WE ARE: Rewritten Headline & Content as requested */}
       <section className="py-20 bg-white border-b border-[#dbeafe]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            <div className="lg:col-span-7 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="lg:col-span-7 space-y-6"
+            >
               <div className="text-sm font-extrabold text-[#1d4ed8] tracking-wider uppercase">
                 Who We Are · New York Corporate Profile (EST)
               </div>
               <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0f172a] tracking-tight leading-tight font-display">
-                A Dedicated Partner for U.S. Domestic, NY Company Formation, and International Tax Compliance
+                Strategic Tax Planning, Multi-State Filing & Global Wealth Protection You Can Rely On
               </h2>
               <p className="text-[#334155] text-lg sm:text-xl leading-relaxed">
-                At <strong className="text-[#0f172a] font-black uppercase">TAXIVA LLC</strong>, we recognize that modern taxpayers face
-                increasingly complex financial landscapes. Whether you are a professional managing multi-year RSU
-                vestings and ESPP dispositions, a Non-Resident Indian (NRI) navigating foreign bank account disclosures
-                (FBAR/FATCA) and the US–India Double Taxation Avoidance Agreement (DTAA), or an entrepreneur forming a business in{" "}
-                <strong className="text-[#0f172a]">New York (NY)</strong> or scaling across states, generic software leaves critical savings on the table.
+                At <strong className="text-[#0f172a] font-black uppercase">TAXIVA LLC</strong>, we provide authoritative,
+                transparent, and proactive tax representation designed for modern taxpayers. Whether you are an equity-holding
+                tech professional navigating RSU and ESPP cost bases, an NRI managing cross-border compliance under the US–India
+                DTAA, or an expanding company operating across multiple states, our licensed team ensures every allowable deduction
+                is claimed and every filing is penalty-free.
               </p>
               <p className="text-[#334155] text-lg sm:text-xl leading-relaxed">
-                With our Head Office and main company formation operations anchored in{" "}
-                <strong className="text-[#0f172a]">New York, NY (EST)</strong>, TAXIVA LLC combines the technical oversight
-                of licensed <strong className="text-[#0f172a]">Certified Public Accountants (CPAs)</strong>,{" "}
+                Anchored by our executive desk in <strong className="text-[#0f172a]">New York, NY (EST)</strong>, TAXIVA LLC pairs
+                licensed <strong className="text-[#0f172a]">Certified Public Accountants (CPAs)</strong>,{" "}
                 <strong className="text-[#0f172a]">IRS Enrolled Agents (EAs)</strong>, and{" "}
-                <strong className="text-[#0f172a]">Chartered Accountants (CAs)</strong> with a streamlined digital experience
-                powered by our Canopy Everything Access Portal.
+                <strong className="text-[#0f172a]">Chartered Accountants (CAs)</strong> with an encrypted Canopy Portal experience.
               </p>
               <p className="text-[#334155] text-lg sm:text-xl leading-relaxed">
-                Every return prepared by TAXIVA LLC undergoes a structured two-tier quality and compliance verification to
-                ensure 100% accuracy, maximum legal tax reduction, and complete audit readiness.
+                Every return undergoes a rigorous multi-point CPA review to safeguard complete audit readiness, eliminate duplicate
+                cross-border liabilities, and guarantee full peace of mind.
               </p>
-            </div>
+            </motion.div>
 
-            {/* Right Column: Executive Credentials & Standards Card */}
-            <div className="lg:col-span-5 bg-[#f8fafc] rounded-3xl p-8 sm:p-10 border border-[#dbeafe] space-y-8">
+            {/* Right Column: Professional Standards */}
+            <motion.div
+              initial={{ opacity: 0, x: 16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="lg:col-span-5 bg-[#f8fafc] rounded-3xl p-8 sm:p-10 border border-[#dbeafe] space-y-8 shadow-xs"
+            >
               <div>
-                <h3 className="text-2xl font-extrabold text-[#0f172a] mb-2">Our Professional Standards</h3>
+                <h3 className="text-2xl font-extrabold text-[#0f172a] mb-2 font-display">Our Professional Standards</h3>
                 <p className="text-base text-[#334155] leading-relaxed">
                   Built on transparency, regulatory rigor, and personal accountability for every client engagement.
                 </p>
@@ -248,274 +274,311 @@ export default function About() {
 
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0 shadow-sm">
                     <Scale className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="font-extrabold text-[#0f172a] text-lg">Certified Representation</h4>
-                    <p className="text-base text-[#334155] mt-1 leading-relaxed">
-                      Direct access to licensed CPAs and IRS Enrolled Agents authorized to represent taxpayers before the Internal Revenue Service and all 50 state tax boards.
+                    <p className="text-sm sm:text-base text-[#334155] mt-1 leading-relaxed">
+                      Direct access to licensed CPAs and IRS Enrolled Agents authorized to represent taxpayers before the IRS and state boards.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0 shadow-sm">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="font-extrabold text-[#0f172a] text-lg">IRS Sec. 7216 & AES-256 Security</h4>
-                    <p className="text-base text-[#334155] mt-1 leading-relaxed">
+                    <p className="text-sm sm:text-base text-[#334155] mt-1 leading-relaxed">
                       All financial records are transmitted and stored via our encrypted Canopy Client Portal under strict federal confidentiality safeguards.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0 shadow-sm">
                     <Award className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="font-extrabold text-[#0f172a] text-lg">Upfront Flat-Fee Transparency</h4>
-                    <p className="text-base text-[#334155] mt-1 leading-relaxed">
+                    <p className="text-sm sm:text-base text-[#334155] mt-1 leading-relaxed">
                       Review your comprehensive tax summary and exact fee schedule before committing—no surprise hourly billing or hidden add-ons.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0 shadow-sm">
                     <Clock className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="font-extrabold text-[#0f172a] text-lg">Year-Round Advisory (EST)</h4>
-                    <p className="text-base text-[#334155] mt-1 leading-relaxed">
-                      Our New York desk remains available 365 days a year for W-4 adjustments, NY entity formation, RSU tax projections, and IRS correspondence.
+                    <p className="text-sm sm:text-base text-[#334155] mt-1 leading-relaxed">
+                      Our New York desk remains available 365 days a year for W-4 adjustments, corporate planning, RSU projections, and IRS notices.
                     </p>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* 4 Core Specialized Practice Pillars */}
-      <section className="py-20 bg-[#f8fafc] border-b border-[#dbeafe]">
+      {/* 2. SECOND TOP SECTION: Our 4-Step Tax Filing & Advisory Workflow (Placed at second top as requested) */}
+      <section className="py-20 sm:py-24 bg-[#eff6ff]/50 border-b border-[#dbeafe]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-14">
-            <div className="text-sm font-extrabold text-[#1d4ed8] tracking-wider uppercase mb-3">
-              Core Practice Areas
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mb-14"
+          >
+            <div className="inline-flex items-center gap-2 bg-[#dbeafe] text-[#1d4ed8] px-3.5 py-1.5 rounded-lg text-xs font-extrabold uppercase tracking-widest mb-3">
+              <Clock className="w-4 h-4" />
+              <span>Streamlined Engagement</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0f172a] tracking-tight font-display">
+              Our 4-Step Tax Filing & Advisory Workflow
+            </h2>
+            <p className="text-[#334155] text-lg sm:text-xl mt-4 leading-relaxed font-medium">
+              Designed for busy professionals, families, and business owners—complete your entire tax filing online from anywhere in the U.S. or abroad.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            {ENGAGEMENT_STEPS.map((item, idx) => (
+              <motion.div
+                key={item.step}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.1 }}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className="p-7 sm:p-8 rounded-3xl bg-white border border-[#dbeafe] hover:border-[#1d4ed8] flex flex-col justify-between shadow-sm hover:shadow-xl transition-all group"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#eff6ff] text-[#1d4ed8] group-hover:bg-[#1d4ed8] group-hover:text-white flex items-center justify-center text-xs font-mono font-black mb-4 transition-colors">
+                    0{idx + 1}
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-extrabold text-[#0f172a] mb-3 leading-snug group-hover:text-[#1d4ed8] transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-[#475569] leading-relaxed font-medium">
+                    {item.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. THIRD TOP SECTION: Why 6,500+ Clients Choose TAXIVA LLC (Placed at third top as requested) */}
+      <section className="py-20 sm:py-24 bg-white border-b border-[#dbeafe]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <motion.div
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="lg:col-span-7 space-y-8"
+            >
+              <div>
+                <div className="inline-flex items-center gap-2 bg-[#eff6ff] text-[#1d4ed8] px-3.5 py-1.5 rounded-lg text-xs font-extrabold uppercase tracking-widest mb-3">
+                  <Award className="w-4 h-4" />
+                  <span>The TAXIVA LLC Advantage</span>
+                </div>
+                <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0f172a] tracking-tight font-display">
+                  Why 6,500+ Clients Choose TAXIVA LLC
+                </h2>
+                <p className="text-base sm:text-lg text-[#475569] mt-3 font-medium">
+                  We bridge the gap between impersonal software algorithms and high-hourly traditional law firms.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {FIRM_BENEFITS.map((benefit, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: idx * 0.03 }}
+                    className="flex items-start gap-3 p-4 bg-[#f8fafc] hover:bg-[#eff6ff] rounded-2xl border border-[#dbeafe] transition-colors"
+                  >
+                    <CheckCircle2 className="w-5 h-5 text-[#1d4ed8] shrink-0 mt-0.5" />
+                    <span className="text-sm font-semibold text-[#0f172a] leading-snug">{benefit}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Corporate Headquarters Card — New York, NY (EST) */}
+            <motion.div
+              initial={{ opacity: 0, x: 16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="lg:col-span-5 bg-gradient-to-br from-[#0f172a] to-[#1e3a8a] text-white rounded-3xl p-8 sm:p-10 shadow-xl border border-white/10 space-y-8 sticky top-28"
+            >
+              <div>
+                <span className="text-xs font-mono font-extrabold uppercase tracking-widest text-[#93c5fd]">
+                  Executive Headquarters
+                </span>
+                <h3 className="text-2xl sm:text-3xl font-extrabold mt-2 font-display">
+                  New York Corporate Operations
+                </h3>
+                <p className="text-white/80 text-sm mt-2 leading-relaxed">
+                  Our main advisory hub coordinates domestic filing, corporate compliance, and cross-border workflows under Eastern Standard Time (EST).
+                </p>
+              </div>
+
+              <div className="space-y-4 text-sm">
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-sky-400 shrink-0" />
+                  <span>New York, NY (EST) • Primary Executive Hub</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-sky-400 shrink-0" />
+                  <a href="tel:737-381-2330" className="hover:text-sky-300 font-bold transition-colors">
+                    +1 737-381-2330 (EST Direct)
+                  </a>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-sky-400 shrink-0" />
+                  <a href="mailto:info@taxiva.co" className="hover:text-sky-300 font-bold transition-colors">
+                    info@taxiva.co
+                  </a>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-sky-400 shrink-0" />
+                  <span>Mon – Sat: 9:00 AM – 7:00 PM EST</span>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-white/15">
+                <Link
+                  to="/get-started"
+                  className="w-full bg-[#1d4ed8] hover:bg-[#2563eb] text-white py-3.5 px-4 rounded-xl font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95"
+                >
+                  <span>Book Consultation with NYC Desk</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. FOUR SPECIALIZED PILLARS (Moved to bottom as requested) */}
+      <section className="py-20 sm:py-24 bg-[#f8fafc] border-b border-[#dbeafe]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mb-14"
+          >
+            <div className="inline-flex items-center gap-2 bg-[#dbeafe] text-[#1d4ed8] px-3.5 py-1.5 rounded-lg text-xs font-extrabold uppercase tracking-widest mb-3">
+              <Briefcase className="w-4 h-4" />
+              <span>Core Practice Areas</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0f172a] tracking-tight font-display">
               Four Specialized Pillars of Tax Compliance & Strategy
             </h2>
-            <p className="text-[#334155] text-lg sm:text-xl mt-4 leading-relaxed">
+            <p className="text-[#334155] text-lg sm:text-xl mt-4 leading-relaxed font-medium">
               TAXIVA LLC focuses exclusively on the four high-impact areas where professional CPA and cross-border expertise delivers measurable financial protection.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {CORE_PILLARS.map((pillar) => (
-              <div
+            {CORE_PILLARS.map((pillar, idx) => (
+              <motion.div
                 key={pillar.index}
-                className="bg-white rounded-3xl p-8 sm:p-10 border border-[#dbeafe] flex flex-col justify-between hover:border-[#1d4ed8] transition-all shadow-sm"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: idx * 0.1 }}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className="bg-white rounded-3xl p-8 sm:p-10 border border-[#dbeafe] flex flex-col justify-between hover:border-[#1d4ed8] transition-all shadow-sm hover:shadow-xl group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <span className="text-base font-mono font-extrabold text-[#1d4ed8]">
                       {pillar.index}. Practice Area
                     </span>
-                    <div className="w-12 h-12 rounded-xl bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-xl bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center group-hover:bg-[#1d4ed8] group-hover:text-white transition-colors">
                       <pillar.icon className="w-6 h-6" />
                     </div>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] mb-2">{pillar.title}</h3>
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] mb-2 font-display group-hover:text-[#1d4ed8] transition-colors">
+                    {pillar.title}
+                  </h3>
                   <p className="text-sm font-bold text-[#2563eb] mb-4">{pillar.subtitle}</p>
-                  <p className="text-[#334155] text-base sm:text-lg leading-relaxed mb-8">{pillar.description}</p>
+                  <p className="text-[#334155] text-base sm:text-lg leading-relaxed mb-8 font-medium">
+                    {pillar.description}
+                  </p>
                 </div>
 
                 <Link
                   to={pillar.href}
-                  className="inline-flex items-center gap-2 text-base font-extrabold text-[#1d4ed8] hover:underline transition-colors"
+                  className="inline-flex items-center gap-2 text-base font-extrabold text-[#1d4ed8] hover:gap-3 transition-all"
                 >
                   <span>Explore {pillar.title}</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Extra Tax-Saving & Compliance Benefits Section */}
-      <section className="py-20 bg-white border-b border-[#dbeafe]">
+      {/* 5. EXTRA TAX-SAVING BENEFITS */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-14">
-            <div className="text-sm font-extrabold text-[#1d4ed8] tracking-wider uppercase mb-3">
-              Strategic Tax Reduction & Value-Added Benefits
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mb-14"
+          >
+            <div className="inline-flex items-center gap-2 bg-[#eff6ff] text-[#1d4ed8] px-3.5 py-1.5 rounded-lg text-xs font-extrabold uppercase tracking-widest mb-3">
+              <Sparkles className="w-4 h-4" />
+              <span>Value-Added Benefits</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0f172a] tracking-tight font-display">
               Extra Tax-Saving Benefits Included With Our Advisory
             </h2>
-            <p className="text-[#334155] text-lg sm:text-xl mt-4 leading-relaxed">
-              Beyond standard tax form preparation, our advisors actively look for legal ways to reduce your effective tax rate across federal, New York, 50-state, and international jurisdictions.
+            <p className="text-[#334155] text-lg sm:text-xl mt-4 leading-relaxed font-medium">
+              Beyond standard tax form preparation, our advisors actively look for legal ways to reduce your effective tax rate across federal, multi-state, and international jurisdictions.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {EXTRA_TAX_BENEFITS.map((item) => (
-              <div
+            {EXTRA_TAX_BENEFITS.map((item, idx) => (
+              <motion.div
                 key={item.title}
-                className="bg-[#f8fafc] rounded-3xl p-8 sm:p-10 border border-[#dbeafe] flex flex-col justify-between"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                className="bg-[#f8fafc] rounded-3xl p-8 sm:p-10 border border-[#dbeafe] flex flex-col justify-between hover:bg-white hover:border-[#bfdbfe] transition-all shadow-2xs hover:shadow-md"
               >
                 <div>
                   <div className="flex items-center justify-between gap-4 mb-5">
                     <span className="inline-block bg-[#eff6ff] text-[#1d4ed8] text-xs font-extrabold uppercase tracking-wider px-3.5 py-1.5 rounded-lg border border-[#dbeafe]">
                       {item.badge}
                     </span>
-                    <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0">
+                    <div className="w-11 h-11 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0 shadow-xs">
                       <item.icon className="w-5 h-5" />
                     </div>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#0f172a] mb-3">{item.title}</h3>
-                  <p className="text-base sm:text-lg text-[#334155] leading-relaxed">{item.desc}</p>
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#0f172a] mb-3 font-display">{item.title}</h3>
+                  <p className="text-base sm:text-lg text-[#475569] leading-relaxed font-medium">{item.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Our 4-Step Client Engagement Process */}
-      <section className="py-20 bg-[#f8fafc] border-b border-[#dbeafe]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-14">
-            <div className="text-sm font-extrabold text-[#1d4ed8] tracking-wider uppercase mb-3">
-              How We Work
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0f172a] tracking-tight font-display">
-              Our 4-Step Tax Filing & Advisory Workflow
-            </h2>
-            <p className="text-[#334155] text-lg sm:text-xl mt-4 leading-relaxed">
-              Designed for busy professionals, families, and business owners—complete your entire tax filing online from anywhere in the U.S. or abroad.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {ENGAGEMENT_STEPS.map((item) => (
-              <div
-                key={item.step}
-                className="p-8 rounded-3xl bg-white border border-[#dbeafe] flex flex-col justify-between shadow-sm"
-              >
-                <div>
-                  <div className="text-sm font-mono font-extrabold text-[#2563eb] mb-3">{item.step}</div>
-                  <h3 className="text-xl font-extrabold text-[#0f172a] mb-3 leading-snug">{item.title}</h3>
-                  <p className="text-base text-[#334155] leading-relaxed">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 12-Point Client Benefits & New York Headquarters */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-7 space-y-8">
-              <div>
-                <div className="text-sm font-extrabold text-[#1d4ed8] tracking-wider uppercase mb-3">
-                  The TAXIVA LLC Advantage
-                </div>
-                <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0f172a] tracking-tight font-display">
-                  Why 6,500+ Clients Choose TAXIVA LLC
-                </h2>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {FIRM_BENEFITS.map((benefit, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-start gap-3 p-4.5 bg-[#f8fafc] rounded-2xl border border-[#dbeafe]"
-                  >
-                    <CheckCircle2 className="w-5 h-5 text-[#1d4ed8] shrink-0 mt-0.5" />
-                    <span className="text-base font-medium text-[#0f172a] leading-snug">{benefit}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Corporate Headquarters Card — New York, NY (EST) */}
-            <div
-              className="lg:col-span-5 bg-[#1d4ed8] text-white rounded-3xl p-8 sm:p-10 space-y-7 border border-white/15 shadow-xl"
-              style={{
-                background: "linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1d4ed8 100%)"
-              }}
-            >
-              <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center text-white font-black text-xl">
-                  <Building2 className="w-6 h-6" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-white/80">Corporate Headquarters (EST)</div>
-                  <h3 className="text-2xl font-black text-white uppercase">TAXIVA LLC — New York, NY</h3>
-                </div>
-              </div>
-
-              <p className="text-base text-white/90 leading-relaxed">
-                Our executive team operates from our New York, NY Head Office (Eastern Standard Time — EST), handling New York main company formation and serving clients across all 50 U.S. states and international time zones.
-              </p>
-
-              <div className="space-y-4 pt-3 border-t border-white/20 text-base">
-                <div className="flex items-start gap-3.5">
-                  <MapPin className="w-5 h-5 text-white shrink-0 mt-1" />
-                  <div>
-                    <div className="font-bold text-white">New York Head Office (EST)</div>
-                    <div className="text-white/85">
-                      One World Trade Center, Suite 8500, New York, NY 10007, USA
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3.5">
-                  <Phone className="w-5 h-5 text-white shrink-0" />
-                  <div>
-                    <span className="text-white/80 mr-2">Direct Line (EST):</span>
-                    <a href="tel:+17373812330" className="font-bold text-white hover:underline">
-                      +1 737-381-2330
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3.5">
-                  <Mail className="w-5 h-5 text-white shrink-0" />
-                  <div>
-                    <span className="text-white/80 mr-2">Official Email:</span>
-                    <a href="mailto:info@taxiva.co" className="font-bold text-white hover:underline">
-                      info@taxiva.co
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4 flex flex-col sm:flex-row gap-3">
-                <Link
-                  to="/get-started"
-                  className="flex-1 bg-white text-[#0f172a] px-5 py-3.5 rounded-xl font-extrabold text-base hover:bg-[#eff6ff] transition-all flex items-center justify-center gap-2 whitespace-nowrap"
-                >
-                  <span>Get in Touch</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  to="/pricing"
-                  className="flex-1 bg-white/10 text-white border border-white/25 px-5 py-3.5 rounded-xl font-bold text-base hover:bg-white/20 transition-all flex items-center justify-center gap-2 whitespace-nowrap"
-                >
-                  <span>View Pricing Plans</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </section>

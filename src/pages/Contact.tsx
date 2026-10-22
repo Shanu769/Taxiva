@@ -226,13 +226,21 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Content based on Active Tab */}
-                {activeTab === "form" ? (
-                  isSuccess ? (
-                    /* Confirmation Screen with Framer Motion Animated Checkmark */
+                {/* Content based on Active Tab with smooth Framer Motion transition */}
+                <AnimatePresence mode="wait">
+                  {activeTab === "form" ? (
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      key="form-tab"
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -12 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      {isSuccess ? (
+                        /* Confirmation Screen with Framer Motion Animated Checkmark */
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.35, ease: "easeOut" }}
                       className="py-6 space-y-6"
                     >
@@ -402,10 +410,18 @@ export default function Contact() {
                         🔒 Confidential under IRS Section 7216. We never share or sell your data.
                       </p>
                     </form>
-                  )
-                ) : (
+                  )}
+                </motion.div>
+              ) : (
                   /* Quick Portals & Direct Links */
-                  <div className="space-y-4">
+                  <motion.div
+                    key="actions-tab"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.25 }}
+                    className="space-y-4"
+                  >
                     <Link
                       to="/get-started"
                       className="w-full group bg-white border border-[#dbeafe] p-5 rounded-2xl flex items-center justify-between hover:shadow-lg hover:border-[#1d4ed8] transition-all"
@@ -461,8 +477,9 @@ export default function Contact() {
                       </div>
                       <ChevronRight className="w-5 h-5 text-[#2563eb] group-hover:translate-x-1 transition-transform shrink-0" />
                     </Link>
-                  </div>
+                  </motion.div>
                 )}
+              </AnimatePresence>
               </div>
             </div>
           </div>

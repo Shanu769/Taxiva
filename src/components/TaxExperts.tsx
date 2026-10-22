@@ -4,9 +4,32 @@
  */
 
 import React from "react";
-import { motion } from "motion/react";
+import { motion, type Variants } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Calendar, MessageSquare, Sparkles, ShieldCheck } from "lucide-react";
+
+const sectionStaggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05
+    }
+  }
+};
+
+const slideUpItemVariants: Variants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.55,
+      ease: "easeOut"
+    }
+  }
+};
 
 interface TaxExpertsProps {
   onBookConsultation: (expertName?: string) => void;
@@ -32,7 +55,7 @@ const EXPERT_DATA: ExpertItem[] = [
     actionLabel: "Book Consultation",
     firm: "Ex-PwC / Big Four Director",
     specialty: "Equity Comp, RSUs, ESPP & International Advisory",
-    avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600"
+    avatarUrl: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=600"
   },
   {
     id: "john",
@@ -42,7 +65,7 @@ const EXPERT_DATA: ExpertItem[] = [
     actionLabel: "Get in touch",
     firm: "Ex-EY Senior Tax Manager",
     specialty: "S-Corp (1120-S), Multi-State Corporate & Partnership Tax",
-    avatarUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600"
+    avatarUrl: "https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=600"
   },
   {
     id: "alex",
@@ -52,7 +75,7 @@ const EXPERT_DATA: ExpertItem[] = [
     actionLabel: "Book Consultation",
     firm: "IRS Enrolled Agent",
     specialty: "High-Volume Stock/Crypto & Individual 1040 Optimization",
-    avatarUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600"
+    avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600"
   },
   {
     id: "narendra",
@@ -62,7 +85,7 @@ const EXPERT_DATA: ExpertItem[] = [
     actionLabel: "Get in touch",
     firm: "Ex-KPMG International Tax Lead",
     specialty: "FinCEN 114 FBAR, FATCA 8938 & NRI Cross-Border Filings",
-    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600"
+    avatarUrl: "https://images.unsplash.com/photo-1557862921-37829c790f19?auto=format&fit=crop&q=80&w=600"
   },
   {
     id: "shanmukh",
@@ -72,9 +95,10 @@ const EXPERT_DATA: ExpertItem[] = [
     actionLabel: "Book Consultation",
     firm: "Dual CPA & Chartered Accountant",
     specialty: "US–India DTAA, Form 1116 Foreign Tax Credit & Entity Formation",
-    avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600"
+    avatarUrl: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600"
   }
 ];
+
 
 export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
   const navigate = useNavigate();
@@ -88,10 +112,16 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
   };
 
   return (
-    <section className="py-20 sm:py-24 bg-white text-[#0f172a] border-t border-[#dbeafe] relative overflow-hidden">
+    <motion.section
+      variants={sectionStaggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
+      className="py-20 sm:py-24 bg-white text-[#0f172a] border-t border-[#dbeafe] relative overflow-hidden"
+    >
       <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header with Blue Accent Styling */}
-        <div className="text-center max-w-4xl mx-auto mb-14 sm:mb-16">
+        <motion.div variants={slideUpItemVariants} className="text-center max-w-4xl mx-auto mb-14 sm:mb-16">
           <div className="inline-flex items-center gap-2 bg-[#eff6ff] text-[#1d4ed8] border border-[#dbeafe] px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest mb-4">
             <Sparkles className="w-3.5 h-3.5 text-[#1d4ed8]" />
             <span>Licensed CPAs, EAs & Big Four Alumni</span>
@@ -105,19 +135,16 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
           <p className="text-base sm:text-lg text-[#334155]/90 font-medium max-w-2xl mx-auto leading-relaxed">
             Our team brings decades of experience from Big Four and elite firms. We specialize in equity compensation and complex tax situations.
           </p>
-        </div>
+        </motion.div>
 
         {/* 5 Expert Cards in a Single Balanced Row on Desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 sm:gap-6">
-          {EXPERT_DATA.map((expert, idx) => {
+          {EXPERT_DATA.map((expert) => {
             const isConsult = expert.actionType === "consultation";
             return (
               <motion.div
                 key={expert.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: idx * 0.08 }}
+                variants={slideUpItemVariants}
                 onClick={() => handleCardClick(expert)}
                 role="button"
                 tabIndex={0}
@@ -201,7 +228,7 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
         </div>
 
         {/* Bottom Reassurance Banner */}
-        <div className="mt-12 max-w-3xl mx-auto bg-[#f8fafc] border border-[#dbeafe] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <motion.div variants={slideUpItemVariants} className="mt-12 max-w-3xl mx-auto bg-[#f8fafc] border border-[#dbeafe] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center shrink-0">
               <ShieldCheck className="w-5 h-5" />
@@ -221,8 +248,8 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
           >
             Schedule Free 30-Min Call
           </button>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

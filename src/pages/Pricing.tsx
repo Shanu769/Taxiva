@@ -153,6 +153,38 @@ export default function Pricing() {
               </div>
             </div>
           </div>
+
+          {/* Bottom Fast Action Banner */}
+          <div className="mt-12 bg-gradient-to-r from-[#0f172a] via-[#1e3a8a] to-[#1d4ed8] rounded-3xl p-8 sm:p-10 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+            <div className="text-left space-y-2">
+              <span className="text-xs font-black tracking-widest text-[#93c5fd] uppercase">
+                Ready to review your tax forms?
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black font-display">
+                Get an Accurate, Zero-Obligation Tax Draft Today
+              </h3>
+              <p className="text-sm text-white/85 max-w-xl font-medium">
+                Upload your W-2, 1099, K-1, or Indian income summaries. Our licensed CPAs will prepare an initial estimate before any charge.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
+              <Link
+                to="/get-started"
+                className="w-full sm:w-auto bg-white text-[#0f172a] hover:bg-[#eff6ff] px-6 py-3.5 rounded-xl font-black text-sm transition-all shadow-md active:scale-95 text-center"
+              >
+                Start Free Tax Draft
+              </Link>
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                className="w-full sm:w-auto border border-white/30 hover:bg-white/10 text-white px-5 py-3.5 rounded-xl font-bold text-sm transition-all cursor-pointer flex items-center justify-center gap-2"
+              >
+                <span>Back to Top</span>
+                <ArrowRight className="w-4 h-4 -rotate-90" />
+              </button>
+            </div>
+          </div>
         </div>
       </section>
 

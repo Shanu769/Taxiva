@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
 import Breadcrumb from "./components/Breadcrumb";
+import WhatsAppFloatingButton from "./components/WhatsAppFloatingButton";
 
 // Pages
 import Home from "./pages/Home";
@@ -25,14 +26,15 @@ import GetStartedForm from "./pages/GetStartedForm";
 import Dashboard from "./pages/Dashboard";
 import SettingsPage from "./pages/SettingsPage";
 
-// Helper to scroll to top on route change
+// Helper to scroll to top on route change or navigation
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, search, key } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname, search, key]);
   return null;
 }
+
 
 export default function App() {
   return (
@@ -76,6 +78,7 @@ function AppContent() {
       </main>
 
       {!isDashboard && <Footer />}
+      {!isDashboard && <WhatsAppFloatingButton />}
       <Chatbot />
     </div>
   );

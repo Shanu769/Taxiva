@@ -6,6 +6,7 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, ArrowUpRight, ShieldCheck, ExternalLink, Clock } from "lucide-react";
 import LogoAnimation from "./LogoAnimation";
+import SocialFollow from "./SocialFollow";
 
 export default function Footer() {
   return (
@@ -33,13 +34,6 @@ export default function Footer() {
                 </span>
               </div>
             </Link>
-
-            {/* High-visibility Trust Credential Badge ensuring the text is prominently readable */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-blue-950/90 border border-blue-400/30 text-blue-100 text-xs sm:text-sm font-semibold tracking-wide shadow-sm">
-              <ShieldCheck className="w-4 h-4 text-sky-400 shrink-0" />
-              <span className="text-white font-extrabold">US and cross-border tax experts</span>
-              <span className="text-sky-400/70 text-[10px] uppercase font-bold">• New York, NY (EST)</span>
-            </div>
 
             <p className="text-slate-300 text-sm leading-relaxed max-w-sm font-medium">
               Line-by-line CPA preparation, New York (NY) main company formation, and proactive tax advisory for individuals, NRIs, and expanding businesses across all 50 states.
@@ -100,6 +94,9 @@ export default function Footer() {
                 <span>Mon – Sat: 9:00 AM – 7:00 PM EST • NY Main Company Formation</span>
               </p>
             </div>
+
+            {/* "FOLLOW US" Social Row matching image_bf930afb.png */}
+            <SocialFollow className="pt-3 border-t border-white/10" />
           </div>
 
           {/* Responsive Links Grid:
