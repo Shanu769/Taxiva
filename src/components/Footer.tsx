@@ -176,12 +176,34 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://www.irs.gov/payments/direct-pay"
+                  href="https://taxadmin.org/fta-members/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1 hover:text-white hover:underline transition-colors"
                 >
-                  <span>IRS Direct Pay</span>
+                  <span>State Refund Status (FTA)</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.irs.gov/payments/direct-pay-with-bank-account"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 hover:text-white hover:underline transition-colors"
+                >
+                  <span>Federal Payment Portal</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.irs.gov/payments/online-account-for-individuals"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 hover:text-white hover:underline transition-colors"
+                >
+                  <span>IRS Account Setup</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               </li>

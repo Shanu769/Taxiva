@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, ExternalLink } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import LogoAnimation from "./LogoAnimation";
@@ -18,12 +18,13 @@ const services = [
 ];
 
 const taxTools = [
-  { name: "Federal Refund Status", href: "/tax-tools" },
-  { name: "State Refund Status", href: "/tax-tools" },
-  { name: "Federal Payment Portal", href: "/tax-tools" },
-  { name: "State Payment Portals", href: "/tax-tools" },
-  { name: "IRS Account Setup", href: "/tax-tools" },
-  { name: "Ohio Tax Portal", href: "https://www.tax.ohio.gov/" },
+  { name: "Federal Refund Status", href: "https://www.irs.gov/refunds", isExternal: true },
+  { name: "State Refund Status", href: "https://taxadmin.org/fta-members/", isExternal: true },
+  { name: "Federal Payment Portal", href: "https://www.irs.gov/payments/direct-pay-with-bank-account", isExternal: true },
+  { name: "State Payment Portals", href: "https://taxadmin.org/fta-members/", isExternal: true },
+  { name: "IRS Account Setup", href: "https://www.irs.gov/payments/online-account-for-individuals", isExternal: true },
+  { name: "Refund & Payment Center Hub", href: "/tax-tools", isExternal: false },
+  { name: "Ohio Tax Portal", href: "https://www.tax.ohio.gov/", isExternal: true },
 ];
 
 export default function Header() {
@@ -103,7 +104,7 @@ export default function Header() {
               </button>
               <div
                 className={cn(
-                  "absolute top-full left-0 w-64 bg-white border border-[#dbeafe] shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                  "absolute top-full left-0 w-72 bg-white border border-[#dbeafe] shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                 )}
               >
                 {taxTools.map((item) =>
@@ -113,15 +114,16 @@ export default function Header() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-4 py-3 text-sm font-semibold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] transition-colors"
+                      className="flex items-center justify-between px-4 py-2.5 text-sm font-semibold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] transition-colors"
                     >
-                      {item.name}
+                      <span>{item.name}</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-[#1d4ed8]/70" />
                     </a>
                   ) : (
                     <Link
                       key={item.name}
                       to={item.href}
-                      className="block px-4 py-3 text-sm font-semibold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] transition-colors"
+                      className="block px-4 py-2.5 text-sm font-bold text-[#1d4ed8] bg-[#f8fafc] border-t border-[#eff6ff] hover:bg-[#eff6ff] transition-colors"
                     >
                       {item.name}
                     </Link>
@@ -144,17 +146,17 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Desktop CTA Buttons (Search button removed as requested) */}
-          <div className="hidden xl:flex items-center gap-3.5 shrink-0">
+          {/* Desktop CTA Buttons */}
+          <div className="hidden xl:flex items-center gap-3 shrink-0">
             <Link
               to="/login"
-              className="text-[#0f172a] text-sm 2xl:text-base font-extrabold hover:text-[#1d4ed8] px-3 py-2 transition-all active:scale-95 whitespace-nowrap shrink-0"
+              className="inline-flex items-center justify-center bg-white border border-[#bfdbfe] hover:border-[#1d4ed8] hover:bg-[#eff6ff] text-[#0f172a] px-5 py-2.5 rounded-xl text-sm 2xl:text-base font-extrabold transition-all shadow-2xs active:scale-95 whitespace-nowrap shrink-0"
             >
               Client Login
             </Link>
             <Link
               to="/get-started"
-              className="bg-[#1d4ed8] text-white px-5 py-2.5 rounded-xl text-sm 2xl:text-base font-extrabold hover:bg-[#0f172a] transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0"
+              className="inline-flex items-center justify-center bg-[#1d4ed8] text-white px-5 py-2.5 rounded-xl text-sm 2xl:text-base font-extrabold hover:bg-[#0f172a] transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0"
             >
               Get in touch
             </Link>
@@ -242,15 +244,16 @@ export default function Header() {
                           href={item.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block px-3 py-2.5 text-sm font-semibold text-[#334155] hover:text-[#1d4ed8]"
+                          className="flex items-center justify-between px-3 py-2.5 text-sm font-semibold text-[#334155] hover:text-[#1d4ed8]"
                         >
-                          {item.name}
+                          <span>{item.name}</span>
+                          <ExternalLink className="w-3.5 h-3.5 text-[#1d4ed8]" />
                         </a>
                       ) : (
                         <Link
                           key={item.name}
                           to={item.href}
-                          className="block px-3 py-2.5 text-sm font-semibold text-[#334155] hover:text-[#1d4ed8]"
+                          className="block px-3 py-2.5 text-sm font-bold text-[#1d4ed8] hover:underline"
                         >
                           {item.name}
                         </Link>

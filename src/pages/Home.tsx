@@ -29,10 +29,13 @@ import {
   BadgeCheck,
   BarChart3,
   TrendingUp,
-  Check
+  Check,
+  Calendar
 } from "lucide-react";
 import { FAQ_DATA } from "../components/FAQ";
 import LogoAnimation from "../components/LogoAnimation";
+import TaxExperts from "../components/TaxExperts";
+import ConsultationModal from "../components/ConsultationModal";
 
 const coreServices = [
   {
@@ -76,6 +79,8 @@ const coreServices = [
 export default function Home() {
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
   const [expandedFaqId, setExpandedFaqId] = useState<string | null>("faq-1");
+  const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const [preselectedExpert, setPreselectedExpert] = useState<string | undefined>(undefined);
 
   const toggleFaq = (id: string) => {
     setExpandedFaqId(expandedFaqId === id ? null : id);
@@ -83,21 +88,21 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full bg-white text-[#0f172a]">
-      {/* Compact, Balanced Hero Section — Slightly Increased Height for Full Capitol Dome Visibility */}
-      <section className="relative py-14 lg:py-20 min-h-[480px] lg:min-h-[540px] flex items-center overflow-hidden bg-[#0f172a] text-white border-b border-white/15">
-        {/* Background Image Layer: Cropped left margin so the US Federal Government Building fills 100% edge-to-edge without any blank strip */}
+      {/* Grand Hero Section — Substantially Increased Height & Length for Full Capitol Building Visibility */}
+      <section className="relative py-24 sm:py-32 lg:py-44 min-h-[680px] sm:min-h-[760px] lg:min-h-[860px] xl:min-h-[920px] flex items-center overflow-hidden bg-[#0f172a] text-white border-b border-white/15">
+        {/* Background Image Layer: Sized and aligned to show the full Capitol building including dome, colonnade, and base */}
         <div className="absolute inset-0 z-0 overflow-hidden bg-[#0f172a]">
           <img
             src="/assets/aistudio/image_3d9fe68f.png"
             alt="U.S. Federal Government Capitol Building"
-            className="w-[114%] max-w-none -ml-[14%] h-full object-cover object-right opacity-65"
+            className="w-[115%] max-w-none -ml-[15%] h-full object-cover object-[right_15%] opacity-65"
           />
           {/* 40% Navy & Blue Color Overlay so 60% of the US Federal Government Building shines through */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(90deg, rgba(15, 23, 42, 0.72) 0%, rgba(29, 78, 216, 0.45) 55%, rgba(15, 23, 42, 0.48) 100%)"
+                "linear-gradient(90deg, rgba(15, 23, 42, 0.72) 0%, rgba(29, 78, 216, 0.42) 55%, rgba(15, 23, 42, 0.48) 100%)"
             }}
           />
         </div>
@@ -111,58 +116,73 @@ export default function Home() {
               transition={{ duration: 0.55 }}
               className="lg:col-span-7 bg-[#0f172a]/50 backdrop-blur-[3px] p-7 sm:p-9 rounded-3xl border border-white/25 shadow-2xl"
             >
-              <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 px-3.5 py-1.5 rounded-lg text-white text-[11px] font-extrabold uppercase tracking-widest mb-4">
-                <ShieldCheck className="w-4 h-4 text-white shrink-0" />
-                <span>TAXIVA LLC • New York, NY (EST) • IRS Registered Tax Preparers</span>
+              {/* Slogan pill in 12-13 font size as requested */}
+              <div className="inline-flex items-center gap-2.5 bg-white/15 border border-white/30 px-4 py-2 rounded-xl text-white text-[12px] sm:text-[13px] font-extrabold uppercase tracking-wide mb-4 backdrop-blur-xs shadow-xs">
+                <Sparkles className="w-4 h-4 text-white shrink-0" />
+                <span>One platform, every regulation, 24-48 hours free tax draft</span>
               </div>
 
+              {/* Headline with 'IRS' removed as requested */}
               <h1 className="text-3xl sm:text-5xl lg:text-[2.85rem] font-extrabold tracking-tight text-white mb-6 leading-[1.1] font-display drop-shadow-md">
                 Maximize Your Tax Refund & File with{" "}
                 <span className="italic underline decoration-white/60 underline-offset-8">
-                  100% IRS Confidence.
+                  100% Confidence.
                 </span>
               </h1>
 
-              {/* Key Tax Highlights Strip */}
+              {/* Key Tax Highlights Strip with Increased Font Size as requested */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-6">
                 <div className="bg-[#0f172a]/75 border border-white/25 rounded-xl px-3.5 py-2.5 flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#60a5fa] shrink-0" />
                   <div>
-                    <p className="text-xs font-extrabold text-white">Every Deduction Found</p>
-                    <p className="text-[10px] text-white/85">W-2, 1099, RSU & Rental</p>
+                    <p className="text-xs sm:text-[13px] font-extrabold text-white">Every Deduction Found</p>
+                    <p className="text-[11px] text-white/90 font-medium">W-2, 1099, RSU & Rental</p>
                   </div>
                 </div>
                 <div className="bg-[#0f172a]/75 border border-white/25 rounded-xl px-3.5 py-2.5 flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#60a5fa] shrink-0" />
                   <div>
-                    <p className="text-xs font-extrabold text-white">NY Entity & Business</p>
-                    <p className="text-[10px] text-white/85">1120-S, 1065, 1120 & LLC</p>
+                    <p className="text-xs sm:text-[13px] font-extrabold text-white">NY Entity & Business</p>
+                    <p className="text-[11px] text-white/90 font-medium">1120-S, 1065, 1120 & LLC</p>
                   </div>
                 </div>
                 <div className="bg-[#0f172a]/75 border border-white/25 rounded-xl px-3.5 py-2.5 flex items-center gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#60a5fa] shrink-0" />
                   <div>
-                    <p className="text-xs font-extrabold text-white">FBAR & NRI Experts</p>
-                    <p className="text-[10px] text-white/85">FinCEN 114 & DTAA Relief</p>
+                    <p className="text-xs sm:text-[13px] font-extrabold text-white">FBAR & NRI Experts</p>
+                    <p className="text-[11px] text-white/90 font-medium">FinCEN 114 & DTAA Relief</p>
                   </div>
                 </div>
               </div>
 
-              {/* Primary CTAs — Side-by-Side on 1 Row */}
+              {/* Primary CTAs in exact requested order:
+                  1st button: Get in touch
+                  2nd button: Book a consultation / Book a free 30 min call
+                  3rd button: Upload documents */}
               <div className="flex flex-wrap items-center gap-3">
                 <Link
                   to="/get-started"
-                  className="bg-white text-[#0f172a] px-6 py-3.5 rounded-xl font-extrabold text-sm sm:text-base hover:bg-[#eff6ff] transition-all shadow-xl active:scale-95 inline-flex items-center gap-2"
+                  className="bg-white text-[#0f172a] px-5 sm:px-6 py-3.5 rounded-xl font-extrabold text-xs sm:text-sm hover:bg-[#eff6ff] transition-all shadow-xl active:scale-95 inline-flex items-center gap-2"
                 >
                   <span>Get in touch</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 text-[#1d4ed8]" />
                 </Link>
+                <button
+                  onClick={() => {
+                    setPreselectedExpert(undefined);
+                    setIsConsultationOpen(true);
+                  }}
+                  className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-5 sm:px-6 py-3.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all shadow-xl active:scale-95 inline-flex items-center gap-2 cursor-pointer border border-white/20"
+                >
+                  <Calendar className="w-4 h-4 text-white" />
+                  <span>Book a free 30 min call</span>
+                </button>
                 <Link
                   to="/login"
-                  className="bg-[#0f172a]/85 text-white px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base border border-white/35 hover:bg-[#1d4ed8] transition-all active:scale-95 inline-flex items-center gap-2"
+                  className="bg-[#0f172a]/85 text-white px-5 py-3.5 rounded-xl font-bold text-xs sm:text-sm border border-white/35 hover:bg-[#1d4ed8] transition-all active:scale-95 inline-flex items-center gap-2"
                 >
                   <UploadCloud className="w-4 h-4 text-white" />
-                  <span>Upload Docs (Canopy Portal)</span>
+                  <span>Upload documents</span>
                 </Link>
               </div>
 
@@ -185,14 +205,14 @@ export default function Home() {
             </motion.div>
 
             {/* Right Column — Transparent 3D Motion Hub with Central "T" Emblem & 4 Floating 3D Cards */}
-            <div className="lg:col-span-5 relative min-h-[400px] sm:min-h-[430px] flex items-center justify-center [perspective:1200px] select-none">
+            <div className="lg:col-span-5 relative min-h-[440px] sm:min-h-[480px] lg:min-h-[500px] flex items-center justify-center [perspective:1200px] select-none">
               {/* Transparent 3D Orbital Rings & Dashed Connector Lines */}
               <motion.div
                 animate={{ rotateZ: [0, 360] }}
                 transition={{ duration: 48, repeat: Infinity, ease: "linear" }}
-                className="absolute w-64 h-64 sm:w-72 sm:h-72 rounded-full border border-white/20 bg-white/[0.03] backdrop-blur-[1px] flex items-center justify-center pointer-events-none"
+                className="absolute w-72 h-72 sm:w-80 sm:h-80 rounded-full border border-white/20 bg-white/[0.03] backdrop-blur-[1px] flex items-center justify-center pointer-events-none"
               >
-                <div className="w-44 h-44 sm:w-48 sm:h-48 rounded-full border border-dashed border-white/30 bg-white/[0.04]" />
+                <div className="w-50 h-50 sm:w-56 sm:h-56 rounded-full border border-dashed border-white/30 bg-white/[0.04]" />
               </motion.div>
 
               {/* SVG Dashed Connector Lines from Center "T" to the 4 Floating 3D Cards */}
@@ -271,7 +291,7 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              {/* Top-Right 3D Floating Card: Payroll */}
+              {/* Top-Right 3D Floating Card: Business Tax Returns */}
               <motion.div
                 animate={{
                   y: [0, 8, 0],
@@ -280,21 +300,21 @@ export default function Home() {
                 }}
                 transition={{ duration: 5.1, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
                 whileHover={{ scale: 1.05, translateZ: 20 }}
-                className="absolute top-1 right-0 sm:right-2 z-20 w-[168px] sm:w-[190px] bg-white/95 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 shadow-[0_18px_35px_rgba(15,23,42,0.42),0_4px_0_rgba(219,234,254,0.9)] border border-white"
+                className="absolute top-1 right-0 sm:right-2 z-20 w-[178px] sm:w-[208px] bg-white/95 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 shadow-[0_18px_35px_rgba(15,23,42,0.42),0_4px_0_rgba(219,234,254,0.9)] border border-white"
               >
                 <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[#10b981] text-white flex items-center justify-center shadow-md border-2 border-white">
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-[#ffedd5] text-[#0f172a] flex items-center justify-center shrink-0 shadow-inner">
-                    <Users className="w-5 h-5" />
+                  <div className="w-10 h-10 rounded-xl bg-[#ffedd5] text-[#b45309] flex items-center justify-center shrink-0 shadow-inner">
+                    <Building2 className="w-5 h-5" />
                   </div>
                   <div>
                     <p className="text-xs sm:text-sm font-extrabold text-[#0f172a] leading-tight">
-                      Payroll
+                      Business Tax Returns
                     </p>
                     <p className="text-[11px] font-semibold text-[#475569] mt-0.5">
-                      Never miss a 941
+                      1120-S, 1065 & LLC
                     </p>
                   </div>
                 </div>
@@ -654,82 +674,112 @@ export default function Home() {
         </div>
       </section>
 
-      {/* OPTIMIZED & BALANCED "Ready for your free tax draft?" Section */}
-      <section className="py-10 bg-white border-y border-[#dbeafe]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#f8fafc] rounded-3xl border border-[#dbeafe] shadow-sm p-6 sm:p-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-center">
-              <div className="lg:col-span-7 space-y-3.5">
-                <div className="inline-flex items-center gap-2 bg-[#eff6ff] text-[#1d4ed8] px-3 py-1 rounded-lg text-[11px] font-extrabold uppercase tracking-widest border border-[#dbeafe]">
-                  <Sparkles className="w-3.5 h-3.5" />
+      {/* "Built by Tax Experts from the World's Best Firms" Section Matching Provided Screenshot image_e761820c.png */}
+      <TaxExperts
+        onBookConsultation={(expertName) => {
+          setPreselectedExpert(expertName);
+          setIsConsultationOpen(true);
+        }}
+      />
+
+      {/* ENLARGED & ELEVATED "Ready for your free tax draft?" Section */}
+      <section className="py-20 sm:py-28 bg-gradient-to-b from-white via-[#f1f6ff]/70 to-white border-y border-[#dbeafe]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-3xl sm:rounded-[2.5rem] border-2 border-[#bfdbfe] shadow-2xl p-8 sm:p-12 lg:p-16 relative overflow-hidden">
+            {/* Subtle background glow */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#dbeafe]/60 via-[#eff6ff]/30 to-transparent rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-[#dbeafe]/50 via-transparent to-transparent rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center relative z-10">
+              {/* Left Column: Headline, Steps & CTAs */}
+              <div className="lg:col-span-7 space-y-6">
+                <div className="inline-flex items-center gap-2.5 bg-[#eff6ff] text-[#1d4ed8] px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold uppercase tracking-widest border border-[#bfdbfe] shadow-2xs">
+                  <Sparkles className="w-4 h-4 text-[#1d4ed8]" />
                   <span>One Platform • Every Regulation • 24–48 Hr Free Tax Draft</span>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] tracking-tight font-display leading-tight">
-                  Ready for your free tax draft?
+                <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-black text-[#0f172a] tracking-tight font-display leading-[1.08]">
+                  Ready for your{" "}
+                  <span className="text-[#1d4ed8] underline decoration-[#93c5fd] underline-offset-8">
+                    free tax draft?
+                  </span>
                 </h2>
 
-                <p className="text-xs sm:text-sm text-[#334155]/90 leading-relaxed font-medium">
+                <p className="text-sm sm:text-base lg:text-lg text-[#334155]/95 leading-relaxed font-medium max-w-2xl">
                   Sign up in minutes and upload your tax documents from your phone or computer via our encrypted Canopy portal. Our licensed CPA & EA team delivers a complete line-by-line draft return within 24–48 hours* before you pay or e-file.
                 </p>
 
-                {/* Compact 3-Step Strip */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-                  <div className="bg-white border border-[#dbeafe] px-3 py-2 rounded-xl">
-                    <p className="text-[10px] font-extrabold uppercase tracking-wider text-[#2563eb]">Step 1</p>
-                    <p className="text-xs font-extrabold text-[#0f172a]">Free Sign Up</p>
+                {/* Prominent 3-Step Strip */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
+                  <div className="bg-[#f8fafc] border-2 border-[#dbeafe] hover:border-[#1d4ed8] px-4 py-3.5 rounded-2xl transition-all shadow-2xs">
+                    <span className="text-[11px] font-black uppercase tracking-wider text-[#1d4ed8] block">Step 1</span>
+                    <p className="text-sm sm:text-base font-extrabold text-[#0f172a] mt-0.5">Free Sign Up</p>
+                    <p className="text-[11px] text-[#334155] font-medium mt-0.5">Instant portal access</p>
                   </div>
-                  <div className="bg-white border border-[#dbeafe] px-3 py-2 rounded-xl">
-                    <p className="text-[10px] font-extrabold uppercase tracking-wider text-[#2563eb]">Step 2</p>
-                    <p className="text-xs font-extrabold text-[#0f172a]">Upload Tax Docs</p>
+                  <div className="bg-[#f8fafc] border-2 border-[#dbeafe] hover:border-[#1d4ed8] px-4 py-3.5 rounded-2xl transition-all shadow-2xs">
+                    <span className="text-[11px] font-black uppercase tracking-wider text-[#1d4ed8] block">Step 2</span>
+                    <p className="text-sm sm:text-base font-extrabold text-[#0f172a] mt-0.5">Upload Tax Docs</p>
+                    <p className="text-[11px] text-[#334155] font-medium mt-0.5">Phone or PC upload</p>
                   </div>
-                  <div className="bg-white border border-[#dbeafe] px-3 py-2 rounded-xl">
-                    <p className="text-[10px] font-extrabold uppercase tracking-wider text-[#2563eb]">Step 3</p>
-                    <p className="text-xs font-extrabold text-[#0f172a]">Review Free Draft</p>
+                  <div className="bg-[#f8fafc] border-2 border-[#dbeafe] hover:border-[#1d4ed8] px-4 py-3.5 rounded-2xl transition-all shadow-2xs">
+                    <span className="text-[11px] font-black uppercase tracking-wider text-[#1d4ed8] block">Step 3</span>
+                    <p className="text-sm sm:text-base font-extrabold text-[#0f172a] mt-0.5">Review Free Draft</p>
+                    <p className="text-[11px] text-[#334155] font-medium mt-0.5">24-48 hrs CPA draft</p>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3 pt-1.5">
+                {/* Action Buttons Row */}
+                <div className="flex flex-wrap items-center gap-4 pt-3">
                   <Link
                     to="/get-started"
-                    className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-5 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm shadow-md transition-all active:scale-95 inline-flex items-center gap-2"
+                    className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-8 py-4 rounded-2xl font-black text-sm sm:text-base shadow-xl shadow-blue-900/20 transition-all active:scale-95 inline-flex items-center gap-3"
                   >
                     <span>Get in touch</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-5 h-5" />
                   </Link>
                   <Link
                     to="/pricing"
-                    className="bg-white hover:bg-[#eff6ff] text-[#0f172a] border border-[#bfdbfe] px-4 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all"
+                    className="bg-white hover:bg-[#eff6ff] text-[#0f172a] hover:text-[#1d4ed8] border-2 border-[#bfdbfe] px-7 py-4 rounded-2xl font-extrabold text-sm sm:text-base transition-all shadow-xs"
                   >
-                    See all our services
+                    Explore Pricing & Plans
                   </Link>
                 </div>
 
-                <p className="text-xs text-[#334155] font-medium pt-0.5">
-                  New York HQ: <strong className="text-[#0f172a] font-extrabold">+1 737-381-2330</strong> •{" "}
-                  <strong className="text-[#0f172a] font-extrabold">info@taxiva.co</strong> • Mon – Sat, 9:00 AM – 7:00 PM EST
-                </p>
+                <div className="pt-2 border-t border-[#eff6ff] text-xs sm:text-sm text-[#334155] font-medium flex flex-wrap items-center gap-y-1 gap-x-3">
+                  <span>New York HQ: <strong className="text-[#0f172a] font-black">+1 737-381-2330</strong></span>
+                  <span className="text-[#94a3b8] hidden sm:inline">•</span>
+                  <span><strong className="text-[#0f172a] font-black">info@taxiva.co</strong></span>
+                  <span className="text-[#94a3b8] hidden sm:inline">•</span>
+                  <span>Mon – Sat: 9:00 AM – 7:00 PM EST</span>
+                </div>
               </div>
 
-              {/* Right Column: Compact Balanced Multitasking CPA / Regulation Visual */}
+              {/* Right Column: Substantially Increased Visual Card & Height */}
               <div className="lg:col-span-5">
-                <div className="rounded-2xl overflow-hidden shadow-md border border-[#bfdbfe] bg-[#0f172a] relative">
+                <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-[#bfdbfe] bg-[#0f172a] relative h-80 sm:h-96 lg:h-[440px] group">
                   <img
                     src="/assets/aistudio/image_a62c31cf.png"
                     alt="TAXIVA LLC — One Platform, Every Regulation, Instant Answers"
-                    className="w-full h-56 sm:h-60 object-cover object-top"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute top-2.5 right-2.5 bg-[#0f172a] text-white border border-white/25 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider shadow-md">
+                  {/* Subtle Dark Gradient Overlay for Contrast */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/95 via-[#0f172a]/20 to-transparent" />
+
+                  <div className="absolute top-4 right-4 bg-[#0f172a]/90 backdrop-blur-md text-white border border-white/30 px-3.5 py-1.5 rounded-xl text-[11px] font-black uppercase tracking-wider shadow-lg">
                     TAXIVA LLC • CPA & CA
                   </div>
-                  <div className="absolute bottom-2.5 left-2.5 right-2.5 bg-white/95 backdrop-blur-md p-2.5 rounded-xl border border-[#dbeafe] flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-[#1d4ed8] text-white flex items-center justify-center font-black shrink-0">
-                        <CheckCircle2 className="w-3.5 h-3.5" />
+
+                  {/* Bottom Highlight Pill */}
+                  <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-white shadow-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center font-black shrink-0 shadow-sm">
+                        <CheckCircle2 className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-xs font-extrabold text-[#0f172a]">One Platform • Every Tax Regulation</p>
-                        <p className="text-[10px] text-[#334155] font-semibold">
+                        <p className="text-xs sm:text-sm font-black text-[#0f172a]">
+                          One Platform • Every Tax Regulation
+                        </p>
+                        <p className="text-[11px] sm:text-xs text-[#334155] font-semibold mt-0.5">
                           U.S. IRS Code, 50 States, NY Formation & US–India DTAA
                         </p>
                       </div>
@@ -1134,16 +1184,18 @@ export default function Home() {
                       <span className="text-xs text-[#334155]">Official IRS Where's My Refund</span>
                     </div>
                   </a>
-                  <Link
-                    to="/tax-tools"
+                  <a
+                    href="https://taxadmin.org/fta-members/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-3 p-4 bg-[#f8fafc] rounded-xl border border-[#dbeafe] hover:border-[#1d4ed8] transition-all"
                   >
                     <Landmark className="w-5 h-5 text-[#1d4ed8] shrink-0" />
                     <div>
-                      <span className="font-extrabold text-sm text-[#0f172a] block">State Refund & Direct Pay</span>
-                      <span className="text-xs text-[#334155]">All 50 States + Tax Calendar</span>
+                      <span className="font-extrabold text-sm text-[#0f172a] block">State Refund Status</span>
+                      <span className="text-xs text-[#334155]">All 50 States (FTA Directory)</span>
                     </div>
-                  </Link>
+                  </a>
                 </div>
               </div>
 
@@ -1288,6 +1340,13 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Complimentary 30-Minute Consultation Modal */}
+      <ConsultationModal
+        isOpen={isConsultationOpen}
+        onClose={() => setIsConsultationOpen(false)}
+        preselectedExpert={preselectedExpert}
+      />
     </div>
   );
 }

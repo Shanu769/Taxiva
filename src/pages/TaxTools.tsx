@@ -4,70 +4,99 @@
  */
 
 import { motion } from "motion/react";
-import { ExternalLink, ShieldCheck, Landmark, CreditCard, FileText, Map, Search, User } from "lucide-react";
+import { ExternalLink, ShieldCheck, Landmark, CreditCard, FileText, Map, Search, User, CheckCircle2, ArrowRight } from "lucide-react";
 import TaxCalendar from "../components/TaxCalendar";
 
 export default function TaxTools() {
-  const tools = [
+  // Primary Official Portals explicitly provided and requested
+  const primaryPortals = [
     {
       title: "Federal Refund Status",
-      desc: "Check your status 24 hours after e-filing. Have your SSN and amount ready.",
+      badge: "Official IRS Tool",
+      desc: "Check your federal refund status 24 hours after e-filing. Have your SSN/ITIN, filing status, and exact refund amount ready.",
       link: "https://www.irs.gov/refunds",
       icon: Search,
-      btn: "Check Federal Refund"
+      btn: "Check Federal Refund Status",
+      featured: true
     },
     {
-      title: "IRS Individual Account",
-      desc: "Securely access your tax records, transcripts, and view notices online.",
-      link: "https://www.irs.gov/payments/online-account-for-individuals",
-      icon: User,
-      btn: "Login to IRS"
+      title: "State Refund Status",
+      badge: "All 50 States (FTA)",
+      desc: "Official Federation of Tax Administrators (FTA) portal directory. Select your state revenue department to track your state income tax refund.",
+      link: "https://taxadmin.org/fta-members/",
+      icon: Map,
+      btn: "Check State Refund Status",
+      featured: true
     },
     {
-      title: "Direct Pay (Free)",
-      desc: "Pay directly from your bank account with no service fees or sign-in.",
+      title: "Federal Payment Portal",
+      badge: "IRS Direct Pay",
+      desc: "Pay directly from your checking or savings bank account with zero fees and no registration required. Safe, fast, and instant confirmation.",
       link: "https://www.irs.gov/payments/direct-pay-with-bank-account",
       icon: CreditCard,
-      btn: "Pay Federal Tax"
+      btn: "Open Federal Payment Portal",
+      featured: true
     },
     {
-      title: "Pay by Card",
-      desc: "IRS payment via debit/credit card through third-party processors.",
+      title: "State Payment Portals",
+      badge: "All 50 States Directory",
+      desc: "Direct access to official state departments of taxation and revenue payment gateways for state tax returns and quarterly estimates.",
+      link: "https://taxadmin.org/fta-members/",
+      icon: Landmark,
+      btn: "Open State Payment Portals",
+      featured: true
+    },
+    {
+      title: "IRS Account Setup",
+      badge: "ID.me Verification",
+      desc: "Create or access your official IRS Online Account to view your tax records, transcripts, prior payments, and official IRS notices.",
+      link: "https://www.irs.gov/payments/online-account-for-individuals",
+      icon: User,
+      btn: "IRS Account Setup & Login",
+      featured: true
+    }
+  ];
+
+  // Secondary State & Business Tools
+  const secondaryTools = [
+    {
+      title: "Pay by Debit or Credit Card",
+      desc: "IRS approved payment processing via official third-party card payment gateways.",
       link: "https://www.irs.gov/payments/pay-your-taxes-by-debit-or-credit-card",
       icon: CreditCard,
-      btn: "Pay by Card"
+      btn: "Pay Federal by Card"
     },
     {
-      title: "IRS Business Account",
-      desc: "View business tax records, payments, and balances for your entity.",
+      title: "IRS Business Tax Account",
+      desc: "View business tax records, entity payments, and balance details directly with the IRS.",
       link: "https://www.irs.gov/businesses/business-tax-account",
       icon: Landmark,
-      btn: "Business Portal"
+      btn: "IRS Business Account"
     },
     {
-      title: "Ohio Tax Portal",
-      desc: "Official Ohio Department of Taxation portal for individual and business tax management.",
+      title: "Ohio Department of Taxation",
+      desc: "Official Ohio state portal for personal income tax and commercial activity tax (CAT).",
       link: "https://www.tax.ohio.gov/",
       icon: Landmark,
-      btn: "Login to Ohio Tax"
+      btn: "Ohio Tax Portal"
     },
     {
-      title: "PA Tax Services",
-      desc: "Pennsylvania Department of Revenue online services for personal income tax.",
+      title: "Pennsylvania Revenue Portal",
+      desc: "Pennsylvania Department of Revenue (myPATH) for PA personal income tax filings.",
       link: "https://www.revenue.pa.gov/",
       icon: FileText,
       btn: "PA Revenue Portal"
     },
     {
-      title: "Vehicle & EV Credits",
-      desc: "Learn about clean vehicle tax credits for new and used electric vehicles.",
+      title: "Clean Vehicle Tax Credits",
+      desc: "IRS requirements and eligibility guidelines for new and previously-owned EV credits.",
       link: "https://www.irs.gov/clean-vehicle-tax-credits",
       icon: Search,
-      btn: "View EV Credits"
+      btn: "View Clean Vehicle Credits"
     },
     {
       title: "GIPS Motor Vehicle Credits",
-      desc: "Access motor vehicle credit information and applications via GIPS.",
+      desc: "Access state and federal motor vehicle credit information and applications.",
       link: "https://www.getgips.com/",
       icon: CreditCard,
       btn: "Access GIPS Credits"
@@ -75,75 +104,155 @@ export default function TaxTools() {
   ];
 
   return (
-    <div className="flex flex-col w-full">
-      <section className="bg-blue-50 py-20 border-b border-gray-100">
+    <div className="flex flex-col w-full bg-[#f8fafc] min-h-screen">
+      {/* Hero Header */}
+      <section className="bg-gradient-to-b from-[#eff6ff] to-[#f8fafc] py-16 sm:py-20 border-b border-[#dbeafe]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
           >
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">Refund & Payment Center</h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto font-medium">
-              Official IRS and state resources for federal refund status, individual accounts, direct payments, and tax deadlines.
+            <div className="inline-flex items-center gap-2 bg-[#dbeafe] text-[#1d4ed8] px-3.5 py-1.5 rounded-xl text-xs font-extrabold uppercase tracking-widest mb-4">
+              <Landmark className="w-4 h-4" />
+              <span>Official Government & State Gateways</span>
+            </div>
+            <h1 className="text-3xl sm:text-5xl font-black text-[#0f172a] mb-4 font-display tracking-tight">
+              Refund & Payment Center
+            </h1>
+            <p className="text-base sm:text-lg text-[#334155] max-w-2xl mx-auto font-medium">
+              Instant, verified links to official IRS and all 50-state portals for tracking your refund, paying taxes securely, and setting up your online IRS account.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-20 bg-white">
+      <section className="py-14 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-blue-900 rounded-3xl p-8 mb-12 text-white flex flex-col md:flex-row items-center gap-8 shadow-xl shadow-blue-900/10">
-            <ShieldCheck className="w-16 h-16 text-blue-300 flex-shrink-0" />
-            <div className="space-y-2">
-              <h3 className="text-xl font-bold">Security Note</h3>
-              <p className="text-blue-100/80 leading-relaxed text-sm">
-                For your security, <strong>Taxiva LLC will never ask you to enter your IRS, ID.me, bank, or state tax portal password on our website.</strong> Please use the official links below and contact our team if you need guidance.
+          {/* Security Banner */}
+          <div className="bg-[#0f172a] rounded-3xl p-6 sm:p-8 mb-12 text-white flex flex-col md:flex-row items-center gap-6 shadow-xl border border-white/10">
+            <div className="w-14 h-14 rounded-2xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0 shadow-md">
+              <ShieldCheck className="w-8 h-8 text-white" />
+            </div>
+            <div className="space-y-1.5 text-center md:text-left flex-1">
+              <h3 className="text-lg sm:text-xl font-extrabold text-white">Client Security Safeguard</h3>
+              <p className="text-white/85 text-xs sm:text-sm leading-relaxed font-medium">
+                <strong>Taxiva LLC will never ask you to enter your IRS, ID.me, bank, or state login password on our website.</strong> Always use the official government links provided below to submit payments or check refund status directly.
               </p>
+            </div>
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-3.5 py-2 rounded-xl text-xs font-bold text-white shrink-0">
+              <CheckCircle2 className="w-4 h-4 text-[#60a5fa]" />
+              <span>Official Portals Verified</span>
             </div>
           </div>
 
-          {/* Primary Federal Refund Status, IRS Account, Direct Pay & State Portals */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {tools.map((tool) => (
-              <div key={tool.title} className="p-8 bg-gray-50 rounded-3xl border border-gray-100 flex flex-col h-full hover:bg-white hover:shadow-xl transition-all group">
-                <tool.icon className="w-10 h-10 text-blue-900 mb-6" />
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{tool.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-8 flex-1">{tool.desc}</p>
-                <a 
-                  href={tool.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="w-full bg-white text-blue-900 border-2 border-blue-900/10 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 group-hover:bg-blue-900 group-hover:text-white group-hover:border-blue-900 transition-all active:scale-95"
+          {/* Core Official Gateways Highlight Header */}
+          <div className="mb-6">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#2563eb] block mb-1">
+              PRIMARY GATEWAYS
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] font-display">
+              Official IRS & State Action Portals
+            </h2>
+          </div>
+
+          {/* Primary 5 Official Portals Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {primaryPortals.map((tool) => (
+              <div
+                key={tool.title}
+                className="p-7 bg-white rounded-3xl border-2 border-[#dbeafe] hover:border-[#1d4ed8] flex flex-col justify-between shadow-xs hover:shadow-xl transition-all duration-300 group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-2xl bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center group-hover:bg-[#1d4ed8] group-hover:text-white transition-colors">
+                      <tool.icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider bg-[#f1f5f9] text-[#1e40af] px-3 py-1 rounded-full border border-[#dbeafe]">
+                      {tool.badge}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-black text-[#0f172a] mb-2 font-display">{tool.title}</h3>
+                  <p className="text-[#334155]/90 text-sm leading-relaxed mb-6 font-medium">{tool.desc}</p>
+                </div>
+
+                <a
+                  href={tool.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#1d4ed8] text-white hover:bg-[#1e40af] py-3.5 px-4 rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 transition-all shadow-md active:scale-98 cursor-pointer"
                 >
-                  {tool.btn} <ExternalLink className="w-4 h-4" />
+                  <span>{tool.btn}</span>
+                  <ExternalLink className="w-4 h-4" />
                 </a>
               </div>
             ))}
           </div>
 
-          {/* State Refund / State Payment Directory */}
-          <div className="mt-16 p-12 bg-gray-50 rounded-3xl border border-gray-100 flex flex-col lg:flex-row items-center justify-between gap-12">
-            <div className="space-y-4 max-w-xl text-center lg:text-left">
-              <div className="w-12 h-12 bg-blue-900 rounded-xl flex items-center justify-center text-white mx-auto lg:mx-0">
-                <Map className="w-6 h-6" />
+          {/* All 50 States Tax Agency Directory Banner */}
+          <div className="mb-16 p-8 sm:p-12 bg-white rounded-3xl border-2 border-[#dbeafe] shadow-md flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="space-y-3 max-w-xl text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 bg-[#eff6ff] text-[#1d4ed8] px-3 py-1 rounded-lg text-xs font-extrabold uppercase tracking-wider">
+                <Map className="w-4 h-4" />
+                <span>50-State Comprehensive Directory</span>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900">State Refund / State Payment</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Looking for your state's official tax portal? Use the official directory of state tax agencies provided by the Federation of Tax Administrators.
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] font-display">
+                State Refund Status & State Payment Portals
+              </h3>
+              <p className="text-[#334155] text-sm sm:text-base leading-relaxed font-medium">
+                Looking for your state's official tax portal? Access the official directory maintained by the Federation of Tax Administrators (FTA) covering tax agencies across all 50 U.S. states.
               </p>
             </div>
-            <a 
-              href="https://taxadmin.org/fta-members/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="px-10 py-5 bg-blue-900 text-white rounded-2xl font-bold text-lg shadow-xl active:scale-95 transition-all inline-flex items-center gap-3"
+            <a
+              href="https://taxadmin.org/fta-members/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 bg-[#0f172a] hover:bg-[#1d4ed8] text-white rounded-2xl font-extrabold text-base shadow-xl active:scale-95 transition-all inline-flex items-center gap-3 shrink-0"
             >
-              Find State Tax Agency <ExternalLink className="w-5 h-5" />
+              <span>Open FTA State Directory</span>
+              <ExternalLink className="w-5 h-5" />
             </a>
           </div>
 
-          {/* Tax Deadline Calendar at the Bottom */}
-          <div className="mt-20 pt-16 border-t border-gray-100">
+          {/* Secondary Tools Section */}
+          <div className="mb-6">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#2563eb] block mb-1">
+              ADDITIONAL SERVICES
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] font-display">
+              Business & Regional Portals
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {secondaryTools.map((tool) => (
+              <div
+                key={tool.title}
+                className="p-6 bg-white rounded-2xl border border-[#dbeafe] hover:border-[#1d4ed8] flex flex-col justify-between shadow-2xs hover:shadow-md transition-all group"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center mb-4">
+                    <tool.icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-extrabold text-[#0f172a] mb-2 font-display">{tool.title}</h3>
+                  <p className="text-[#334155] text-xs sm:text-sm leading-relaxed mb-6 font-medium">{tool.desc}</p>
+                </div>
+
+                <a
+                  href={tool.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#f8fafc] hover:bg-[#eff6ff] text-[#0f172a] hover:text-[#1d4ed8] border border-[#dbeafe] py-2.5 px-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-98"
+                >
+                  <span>{tool.btn}</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            ))}
+          </div>
+
+          {/* Tax Calendar Component at the Bottom */}
+          <div className="pt-12 border-t border-[#dbeafe]">
             <TaxCalendar defaultProfile="Individual" />
           </div>
         </div>

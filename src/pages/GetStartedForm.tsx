@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
+import { useSearchParams } from "react-router-dom";
 import {
   Check,
   User,
@@ -66,6 +67,10 @@ const BUSINESS_SITUATIONS = [
 ];
 
 export default function GetStartedForm() {
+  const [searchParams] = useSearchParams();
+  const expertParam = searchParams.get("expert");
+  const planParam = searchParams.get("plan");
+
   const [taxTab, setTaxTab] = useState<"personal" | "business">("personal");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -76,6 +81,14 @@ export default function GetStartedForm() {
   const [notes, setNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    if (planParam) {
+      if (planParam.toLowerCase().includes("business")) {
+        setTaxTab("business");
+      }
+    }
+  }, [planParam]);
+
   const [submittedData, setSubmittedData] = useState<{
     category: string;
     fullName: string;
@@ -84,6 +97,8 @@ export default function GetStartedForm() {
     service: string;
     situation: string;
     notes: string;
+    expert?: string;
+    plan?: string;
     submittedAt: string;
   } | null>(null);
 
@@ -114,6 +129,8 @@ export default function GetStartedForm() {
       service: selectedService,
       situation: situation || "Standard Filing",
       notes: notes.trim(),
+      expert: expertParam || undefined,
+      plan: planParam || undefined,
       submittedAt: new Date().toLocaleString("en-US", {
         dateStyle: "medium",
         timeStyle: "short"
@@ -122,7 +139,7 @@ export default function GetStartedForm() {
 
     try {
       await addDoc(collection(db, "leads"), {
-        emailOrPhone: `${payload.fullName} | ${payload.email} | ${payload.phone} (${payload.category}: ${payload.service})`.slice(
+        emailOrPhone: `${payload.fullName} | ${payload.email} | ${payload.phone} (${payload.category}: ${payload.service}${payload.expert ? ` • Prefers: ${payload.expert}` : ""}${payload.plan ? ` • Plan: ${payload.plan}` : ""})`.slice(
           0,
           250
         ),
@@ -304,6 +321,18 @@ export default function GetStartedForm() {
                         <span className="text-[#2563eb] font-bold block uppercase text-[10px]">Situation</span>
                         <span className="font-extrabold text-[#0f172a]">{submittedData.situation}</span>
                       </div>
+                      {submittedData.expert && (
+                        <div className="bg-[#eff6ff] p-3 rounded-xl border border-[#bfdbfe] sm:col-span-2">
+                          <span className="text-[#1d4ed8] font-bold block uppercase text-[10px]">Preferred Expert</span>
+                          <span className="font-extrabold text-[#0f172a]">{submittedData.expert} (Big Four Specialist)</span>
+                        </div>
+                      )}
+                      {submittedData.plan && (
+                        <div className="bg-[#eff6ff] p-3 rounded-xl border border-[#bfdbfe] sm:col-span-2">
+                          <span className="text-[#1d4ed8] font-bold block uppercase text-[10px]">Selected Plan</span>
+                          <span className="font-extrabold text-[#0f172a]">{submittedData.plan}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -337,6 +366,46 @@ export default function GetStartedForm() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Dynamic Expert or Plan Indicator */}
+                  {expertParam && (
+                    <div className="p-4 rounded-2xl bg-[#eff6ff] border border-[#bfdbfe] flex items-center justify-between gap-3 shadow-xs">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0 shadow-sm">
+                          <User className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <p className="text-[11px] font-black uppercase tracking-wider text-[#1d4ed8]">
+                            Direct Consultation With Specialist
+                          </p>
+                          <p className="text-sm font-black text-[#0f172a]">
+                            {expertParam} — Big Four / Elite Tax Professional
+                          </p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-extrabold bg-white text-[#1d4ed8] px-2.5 py-1 rounded-md border border-[#bfdbfe]">
+                        Assigned
+                      </span>
+                    </div>
+                  )}
+
+                  {planParam && !expertParam && (
+                    <div className="p-4 rounded-2xl bg-[#eff6ff] border border-[#bfdbfe] flex items-center justify-between gap-3 shadow-xs">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-[#1d4ed8] text-white flex items-center justify-center shrink-0 shadow-sm">
+                          <Sparkles className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <p className="text-[11px] font-black uppercase tracking-wider text-[#1d4ed8]">
+                            Selected Tax Package
+                          </p>
+                          <p className="text-sm font-black text-[#0f172a]">
+                            {planParam}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Top 2-Button Toggle: Personal taxes | My business */}
                   <div className="grid grid-cols-2 gap-3.5 pb-2">
                     <button
