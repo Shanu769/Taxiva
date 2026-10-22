@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { db } from "../lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import AnimatedCheckmark from "./AnimatedCheckmark";
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -184,9 +185,7 @@ export default function ConsultationModal({
           <div className="p-6 sm:p-8 max-h-[75vh] overflow-y-auto">
             {isSuccess ? (
               <div className="text-center py-8 space-y-4">
-                <div className="w-16 h-16 rounded-2xl bg-[#dcfce7] text-[#16a34a] border border-[#bbf7d0] flex items-center justify-center mx-auto shadow-inner">
-                  <CheckCircle2 className="w-9 h-9" />
-                </div>
+                <AnimatedCheckmark size="xl" variant="emerald" showRipple={true} className="mx-auto" />
                 <h3 className="text-2xl font-extrabold text-[#0f172a] font-display">
                   Consultation Confirmed!
                 </h3>

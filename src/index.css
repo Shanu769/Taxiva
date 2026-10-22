@@ -150,3 +150,10 @@
     color: #0f172a;
   }
 }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+

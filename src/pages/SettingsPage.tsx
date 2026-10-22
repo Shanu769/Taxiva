@@ -4,8 +4,6 @@
  */
 
 import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import SettingsView from "../components/SettingsView";
 import { auth } from "../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -33,12 +31,11 @@ export default function SettingsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] flex flex-col font-sans">
-      <Header />
+    <div className="w-full bg-[#F8F9FA] flex flex-col font-sans">
       <main className="flex-1 py-10 px-4 sm:px-6">
         <SettingsView currentUserEmail={currentUserEmail} />
       </main>
-      <Footer />
     </div>
   );
 }
+

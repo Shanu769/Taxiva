@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import {
@@ -14,13 +14,24 @@ import {
   ArrowRight,
   Gift,
   Lock,
-  BadgeCheck
+  BadgeCheck,
+  RefreshCw
 } from "lucide-react";
 import PricingTable from "../components/PricingTable";
 import ConsultationModal from "../components/ConsultationModal";
+import { PricingSkeleton } from "../components/Skeleton";
 
 export default function Pricing() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Perceived performance: simulate instant external schedule & fee matrix sync
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="flex flex-col w-full min-h-screen bg-white text-[#0f172a]">
@@ -91,8 +102,16 @@ export default function Pricing() {
         </div>
       </section>
 
-      {/* Main 3-Tab Pricing Component Matching Reference Images */}
-      <PricingTable onOpenConsultation={() => setIsConsultationOpen(true)} />
+      {/* Main 3-Tab Pricing Component Matching Reference Images or Skeleton Loader */}
+      {isLoading ? (
+        <div className="w-full bg-[#f6f3ee] py-14 sm:py-20">
+          <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8">
+            <PricingSkeleton />
+          </div>
+        </div>
+      ) : (
+        <PricingTable onOpenConsultation={() => setIsConsultationOpen(true)} />
+      )}
 
       {/* Trust & Guarantee Strip */}
       <section className="py-12 bg-white border-t border-[#dbeafe]">

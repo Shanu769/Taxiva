@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { db } from "../lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import AnimatedCheckmark from "../components/AnimatedCheckmark";
 
 const PERSONAL_SERVICES = [
   "Individual Tax Filing (Form 1040)",
@@ -272,11 +273,9 @@ export default function GetStartedForm() {
               {submittedData ? (
                 <div className="space-y-6 py-2">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#eff6ff] text-[#0f172a] rounded-2xl flex items-center justify-center shrink-0">
-                      <CheckCircle2 className="w-7 h-7" />
-                    </div>
+                    <AnimatedCheckmark size="lg" variant="emerald" showRipple={true} className="mt-0.5" />
                     <div>
-                      <span className="text-xs font-extrabold uppercase tracking-wider text-[#0f172a] bg-[#eff6ff] px-3 py-1 rounded-md border border-[#bfdbfe]">
+                      <span className="text-xs font-extrabold uppercase tracking-wider text-[#059669] bg-[#ecfdf5] px-3 py-1 rounded-md border border-[#a7f3d0]">
                         Request Received • {submittedData.category}
                       </span>
                       <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0f172a] mt-2 font-display">
@@ -552,9 +551,16 @@ export default function GetStartedForm() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-[#1d4ed8] hover:bg-[#0f172a] text-white py-3.5 px-6 rounded-xl font-extrabold text-sm sm:text-base transition-all shadow-md active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+                      className="w-full bg-[#1d4ed8] hover:bg-[#0f172a] text-white py-3.5 px-6 rounded-xl font-extrabold text-sm sm:text-base transition-all shadow-md active:scale-[0.99] disabled:opacity-75 cursor-pointer flex items-center justify-center gap-2.5"
                     >
-                      {isSubmitting ? "Submitting..." : "Get my personalized quote"}
+                      {isSubmitting ? (
+                        <>
+                          <AnimatedCheckmark size="sm" variant="white" showRipple={false} />
+                          <span>Submitting request...</span>
+                        </>
+                      ) : (
+                        "Get my personalized quote"
+                      )}
                     </button>
                   </div>
 

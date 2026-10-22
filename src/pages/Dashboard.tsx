@@ -31,6 +31,8 @@ import QuickActionFloatingMenu from "../components/QuickActionFloatingMenu";
 import ReceiptScannerUpload from "../components/ReceiptScannerUpload";
 import DocumentStatusBadge from "../components/DocumentStatusBadge";
 import GmailCommunicationPanel from "../components/GmailCommunicationPanel";
+import { DashboardSkeleton } from "../components/Skeleton";
+import Breadcrumb from "../components/Breadcrumb";
 
 // Types
 type TabType = "Home" | "Communication" | "Notes" | "Files" | "Tasks" | "Resolution" | "Organizers" | "Sheets" | "Settings";
@@ -231,11 +233,7 @@ export default function Dashboard() {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="w-12 h-12 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   const clientInitials = currentUser?.displayName 
@@ -369,6 +367,16 @@ export default function Dashboard() {
           ))}
         </nav>
       </header>
+
+      {/* Dashboard Breadcrumb */}
+      <Breadcrumb
+        items={[
+          { label: "Home", href: "/", icon: Home },
+          { label: "Canopy Client Portal", href: "/dashboard" },
+          { label: `${activeTab} Workspace` }
+        ]}
+        showBackButton={false}
+      />
 
       {/* Main Page Area */}
       <main className="flex-1 overflow-y-auto no-scrollbar">

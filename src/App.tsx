@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Chatbot from "./components/Chatbot";
+import Breadcrumb from "./components/Breadcrumb";
 
 // Pages
 import Home from "./pages/Home";
@@ -49,6 +50,7 @@ function AppContent() {
     <div className="min-h-screen flex flex-col bg-[#f8fafc] font-sans text-[#0f172a] selection:bg-[#dbeafe] selection:text-[#0f172a]">
       <ScrollToTop />
       {!isDashboard && <Header />}
+      {!isDashboard && <Breadcrumb />}
       
       <main className="flex-1 flex flex-col">
         <Routes>

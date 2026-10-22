@@ -5,26 +5,64 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronDown, Menu, X, ExternalLink } from "lucide-react";
+import {
+  ChevronDown,
+  Menu,
+  X,
+  ExternalLink,
+  Phone,
+  Mail,
+  ShieldCheck,
+  Sparkles,
+  ArrowRight,
+  Lock,
+  Calendar,
+  FileText,
+  Briefcase,
+  Globe2,
+  Landmark,
+  CreditCard,
+  Search
+} from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import LogoAnimation from "./LogoAnimation";
 
 const services = [
-  { name: "Individual Tax Filing", href: "/services/individual" },
-  { name: "Business Tax Filing", href: "/services/business" },
-  { name: "FBAR & Foreign Reporting", href: "/services/foreign-reporting" },
-  { name: "Indian Tax & NRI", href: "/services/indian-tax" },
+  {
+    name: "Individual Tax Filing",
+    href: "/services/individual",
+    subtitle: "Form 1040 • RSUs • 50 States",
+    icon: FileText
+  },
+  {
+    name: "Business Tax Filing",
+    href: "/services/business",
+    subtitle: "NY Formation • 1120-S • 1065 • LLC",
+    icon: Briefcase
+  },
+  {
+    name: "FBAR & Foreign Reporting",
+    href: "/services/foreign-reporting",
+    subtitle: "FinCEN 114 • FATCA Form 8938",
+    icon: Globe2
+  },
+  {
+    name: "Indian Tax & NRI",
+    href: "/services/indian-tax",
+    subtitle: "DTAA Relief • Form 1116 • ITR",
+    icon: Landmark
+  },
 ];
 
 const taxTools = [
-  { name: "Federal Refund Status", href: "https://www.irs.gov/refunds", isExternal: true },
-  { name: "State Refund Status", href: "https://taxadmin.org/fta-members/", isExternal: true },
-  { name: "Federal Payment Portal", href: "https://www.irs.gov/payments/direct-pay-with-bank-account", isExternal: true },
-  { name: "State Payment Portals", href: "https://taxadmin.org/fta-members/", isExternal: true },
-  { name: "IRS Account Setup", href: "https://www.irs.gov/payments/online-account-for-individuals", isExternal: true },
-  { name: "Refund & Payment Center Hub", href: "/tax-tools", isExternal: false },
-  { name: "Ohio Tax Portal", href: "https://www.tax.ohio.gov/", isExternal: true },
+  { name: "Federal Refund Status", href: "https://www.irs.gov/refunds", isExternal: true, badge: "IRS.gov" },
+  { name: "State Refund Status", href: "https://taxadmin.org/fta-members/", isExternal: true, badge: "50 States" },
+  { name: "Federal Payment Portal", href: "https://www.irs.gov/payments/direct-pay-with-bank-account", isExternal: true, badge: "Direct Pay" },
+  { name: "State Payment Portals", href: "https://taxadmin.org/fta-members/", isExternal: true, badge: "FTA" },
+  { name: "IRS Account Setup", href: "https://www.irs.gov/payments/online-account-for-individuals", isExternal: true, badge: "ID.me" },
+  { name: "Refund & Payment Center Hub", href: "/tax-tools", isExternal: false, badge: "All Tools" },
+  { name: "Ohio Tax Portal", href: "https://www.tax.ohio.gov/", isExternal: true, badge: "Ohio" },
 ];
 
 export default function Header() {
@@ -32,17 +70,41 @@ export default function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const location = useLocation();
 
+  // Close drawer and dropdowns on route changes
   useEffect(() => {
     setIsOpen(false);
     setActiveDropdown(null);
-  }, [location]);
+  }, [location.pathname]);
+
+  // Lock body scroll when mobile slide-out menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
+  // Handle ESC key to close mobile drawer
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const toggleDropdown = (name: string) => {
     setActiveDropdown(activeDropdown === name ? null : name);
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#f8fafc]/95 backdrop-blur-md border-b border-[#dbeafe] shadow-xs">
+    <header className="sticky top-0 z-40 w-full bg-[#f8fafc]/95 backdrop-blur-md border-b border-[#dbeafe] shadow-xs">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-22 gap-8">
           {/* Logo — Stylized 3D Transparent Animated 'T' Component + Cursive 'Taxiva LLC' UI/UX Branding */}
@@ -70,21 +132,27 @@ export default function Header() {
 
             {/* Services Dropdown */}
             <div className="relative group py-4">
-              <button className="flex items-center gap-1 text-[#0f172a] group-hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0">
+              <button className="flex items-center gap-1 text-[#0f172a] group-hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer">
                 Services <ChevronDown className="w-4 h-4 text-[#1d4ed8] group-hover:text-[#0f172a]" />
               </button>
               <div
                 className={cn(
-                  "absolute top-full left-0 w-64 bg-white border border-[#dbeafe] shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                  "absolute top-full left-0 w-72 bg-white border border-[#dbeafe] shadow-xl rounded-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                 )}
               >
                 {services.map((item) => (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="block px-4 py-3 text-sm font-semibold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] transition-colors"
                   >
-                    {item.name}
+                    <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center shrink-0">
+                      <item.icon className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="font-bold">{item.name}</div>
+                      <div className="text-[11px] text-[#64748b] font-medium">{item.subtitle}</div>
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -99,12 +167,12 @@ export default function Header() {
 
             {/* Refund & Payment Center Dropdown */}
             <div className="relative group py-4">
-              <button className="flex items-center gap-1 text-[#0f172a] group-hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0">
+              <button className="flex items-center gap-1 text-[#0f172a] group-hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer">
                 Refund & Payment Center <ChevronDown className="w-4 h-4 text-[#1d4ed8] group-hover:text-[#0f172a]" />
               </button>
               <div
                 className={cn(
-                  "absolute top-full left-0 w-72 bg-white border border-[#dbeafe] shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                  "absolute top-full left-0 w-72 bg-white border border-[#dbeafe] shadow-xl rounded-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                 )}
               >
                 {taxTools.map((item) =>
@@ -162,136 +230,269 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="xl:hidden flex items-center gap-2">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-[#0f172a] hover:text-[#1d4ed8] focus:outline-none p-1"
+          {/* Mobile Right Bar: Fast Access 'Get in touch' + Hamburger Toggle */}
+          <div className="xl:hidden flex items-center gap-2 sm:gap-3">
+            <Link
+              to="/get-started"
+              className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all shadow-md active:scale-95 whitespace-nowrap"
             >
-              {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+              Get in touch
+            </Link>
+
+            <button
+              onClick={() => setIsOpen(true)}
+              aria-label="Open mobile navigation menu"
+              aria-expanded={isOpen}
+              className="p-2 sm:p-2.5 text-[#0f172a] hover:text-[#1d4ed8] bg-white border border-[#cbd5e1] hover:border-[#94a3b8] rounded-xl focus:outline-none transition-colors shadow-2xs cursor-pointer"
+            >
+              <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Slide-Out Hamburger Drawer for Mobile Devices */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="xl:hidden bg-[#f8fafc] border-t border-[#dbeafe] overflow-hidden"
-          >
-            <div className="px-4 pt-4 pb-8 space-y-2">
-              <Link
-                to="/"
-                className="block px-3 py-3.5 text-base font-bold text-[#0f172a] hover:bg-[#eff6ff] rounded-lg"
-              >
-                Home
-              </Link>
+          <div className="fixed inset-0 z-50 xl:hidden">
+            {/* Backdrop Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setIsOpen(false)}
+              className="absolute inset-0 bg-[#0f172a]/60 backdrop-blur-xs"
+              aria-hidden="true"
+            />
 
-              {/* Mobile Services */}
-              <div className="space-y-1">
+            {/* Slide-Out Panel (Right side) */}
+            <motion.aside
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 280 }}
+              className="absolute top-0 right-0 bottom-0 w-full max-w-[340px] sm:max-w-[400px] bg-white text-[#0f172a] shadow-2xl flex flex-col z-10 border-l border-[#dbeafe]"
+              aria-label="Mobile Navigation"
+            >
+              {/* Drawer Header with Branding & Close Button */}
+              <div className="p-4 sm:p-5 border-b border-[#e2e8f0] flex items-center justify-between bg-[#f8fafc]">
+                <div className="flex items-center gap-2.5">
+                  <LogoAnimation size="sm" variant="header" />
+                  <span
+                    className="text-2xl font-bold text-[#0f172a]"
+                    style={{ fontFamily: "'Dancing Script', 'Great Vibes', cursive" }}
+                  >
+                    Taxiva LLC
+                  </span>
+                </div>
+
                 <button
-                  onClick={() => toggleDropdown("services")}
-                  className="w-full flex justify-between items-center px-3 py-3.5 text-base font-bold text-[#0f172a] hover:bg-[#eff6ff] rounded-lg"
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Close mobile menu"
+                  className="w-10 h-10 rounded-xl bg-white border border-[#cbd5e1] hover:bg-[#eff6ff] hover:text-[#1d4ed8] flex items-center justify-center text-[#475569] transition-all cursor-pointer shadow-2xs"
                 >
-                  Services{" "}
-                  <ChevronDown
-                    className={cn("w-5 h-5 transition-transform", activeDropdown === "services" && "rotate-180")}
-                  />
+                  <X className="w-5 h-5" />
                 </button>
-                {activeDropdown === "services" && (
-                  <div className="pl-6 space-y-1">
-                    {services.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        className="block px-3 py-2.5 text-sm font-semibold text-[#334155] hover:text-[#1d4ed8]"
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
               </div>
 
-              <Link
-                to="/pricing"
-                className="block px-3 py-3.5 text-base font-bold text-[#0f172a] hover:bg-[#eff6ff] rounded-lg"
-              >
-                Pricing
-              </Link>
+              {/* Drawer Top Priority Action Cards: Get in Touch & Client Login */}
+              <div className="p-4 bg-gradient-to-b from-[#eff6ff] to-white border-b border-[#dbeafe] space-y-2.5">
+                <div className="text-[11px] font-black uppercase tracking-wider text-[#1d4ed8] flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#1d4ed8]" />
+                  <span>Key Actions</span>
+                </div>
 
-              {/* Mobile Refund & Payment Center */}
-              <div className="space-y-1">
-                <button
-                  onClick={() => toggleDropdown("tools")}
-                  className="w-full flex justify-between items-center px-3 py-3.5 text-base font-bold text-[#0f172a] hover:bg-[#eff6ff] rounded-lg"
-                >
-                  Refund & Payment Center{" "}
-                  <ChevronDown
-                    className={cn("w-5 h-5 transition-transform", activeDropdown === "tools" && "rotate-180")}
-                  />
-                </button>
-                {activeDropdown === "tools" && (
-                  <div className="pl-6 space-y-1">
-                    {taxTools.map((item) =>
-                      item.href.startsWith("http") ? (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-between px-3 py-2.5 text-sm font-semibold text-[#334155] hover:text-[#1d4ed8]"
-                        >
-                          <span>{item.name}</span>
-                          <ExternalLink className="w-3.5 h-3.5 text-[#1d4ed8]" />
-                        </a>
-                      ) : (
-                        <Link
-                          key={item.name}
-                          to={item.href}
-                          className="block px-3 py-2.5 text-sm font-bold text-[#1d4ed8] hover:underline"
-                        >
-                          {item.name}
-                        </Link>
-                      )
-                    )}
-                  </div>
-                )}
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    to="/get-started"
+                    onClick={() => setIsOpen(false)}
+                    className="flex flex-col items-center justify-center text-center p-3 rounded-xl bg-[#1d4ed8] hover:bg-[#1e40af] text-white shadow-md active:scale-95 transition-all"
+                  >
+                    <span className="text-xs sm:text-sm font-black">Get in touch</span>
+                    <span className="text-[10px] text-blue-200 mt-0.5">Free Draft & Quote</span>
+                  </Link>
+
+                  <Link
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="flex flex-col items-center justify-center text-center p-3 rounded-xl bg-white hover:bg-[#f8fafc] text-[#0f172a] border border-[#bfdbfe] shadow-2xs active:scale-95 transition-all"
+                  >
+                    <span className="text-xs sm:text-sm font-black flex items-center gap-1">
+                      <Lock className="w-3 h-3 text-[#1d4ed8]" />
+                      <span>Client Login</span>
+                    </span>
+                    <span className="text-[10px] text-[#64748b] mt-0.5">Canopy Portal</span>
+                  </Link>
+                </div>
               </div>
 
-              <Link
-                to="/contact"
-                className="block px-3 py-3.5 text-base font-bold text-[#0f172a] hover:bg-[#eff6ff] rounded-lg"
-              >
-                Contact Us
-              </Link>
-              <Link
-                to="/about"
-                className="block px-3 py-3.5 text-base font-bold text-[#0f172a] hover:bg-[#eff6ff] rounded-lg"
-              >
-                About Us
-              </Link>
+              {/* Scrollable Navigation Links */}
+              <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1.5 divide-y divide-[#f1f5f9]">
+                <div className="space-y-1 pb-2">
+                  <Link
+                    to="/"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors"
+                  >
+                    <span>Home</span>
+                  </Link>
 
-              <div className="pt-6 grid grid-cols-1 gap-3">
-                <Link
-                  to="/login"
-                  className="w-full text-center text-[#0f172a] bg-white font-extrabold border-2 border-[#dbeafe] px-4 py-3 rounded-xl"
-                >
-                  Client Login
-                </Link>
+                  {/* Expandable Services Accordion */}
+                  <div className="rounded-xl overflow-hidden">
+                    <button
+                      onClick={() => toggleDropdown("services")}
+                      className="w-full flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors cursor-pointer"
+                    >
+                      <span>Services</span>
+                      <ChevronDown
+                        className={cn(
+                          "w-4 h-4 text-[#1d4ed8] transition-transform duration-200",
+                          activeDropdown === "services" && "rotate-180"
+                        )}
+                      />
+                    </button>
+
+                    <AnimatePresence>
+                      {activeDropdown === "services" && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="pl-3 pr-1 py-1 space-y-1 bg-[#f8fafc] rounded-xl my-1 border border-[#eff6ff]"
+                        >
+                          {services.map((item) => (
+                            <Link
+                              key={item.name}
+                              to={item.href}
+                              onClick={() => setIsOpen(false)}
+                              className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-[#334155] hover:text-[#1d4ed8] hover:bg-white rounded-lg transition-colors"
+                            >
+                              <item.icon className="w-3.5 h-3.5 text-[#1d4ed8] shrink-0" />
+                              <div className="truncate">
+                                <div className="font-bold">{item.name}</div>
+                                <div className="text-[10px] text-[#64748b]">{item.subtitle}</div>
+                              </div>
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <Link
+                    to="/pricing"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors"
+                  >
+                    <span>Pricing & Plans</span>
+                  </Link>
+
+                  {/* Expandable Refund & Payment Center Accordion */}
+                  <div className="rounded-xl overflow-hidden">
+                    <button
+                      onClick={() => toggleDropdown("tools")}
+                      className="w-full flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors cursor-pointer"
+                    >
+                      <span>Refund & Payment Center</span>
+                      <ChevronDown
+                        className={cn(
+                          "w-4 h-4 text-[#1d4ed8] transition-transform duration-200",
+                          activeDropdown === "tools" && "rotate-180"
+                        )}
+                      />
+                    </button>
+
+                    <AnimatePresence>
+                      {activeDropdown === "tools" && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="pl-3 pr-1 py-1 space-y-1 bg-[#f8fafc] rounded-xl my-1 border border-[#eff6ff]"
+                        >
+                          {taxTools.map((item) =>
+                            item.href.startsWith("http") ? (
+                              <a
+                                key={item.name}
+                                href={item.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-between px-3 py-2 text-xs font-semibold text-[#334155] hover:text-[#1d4ed8] hover:bg-white rounded-lg transition-colors"
+                              >
+                                <span className="truncate">{item.name}</span>
+                                <ExternalLink className="w-3 h-3 text-[#1d4ed8]/70 shrink-0" />
+                              </a>
+                            ) : (
+                              <Link
+                                key={item.name}
+                                to={item.href}
+                                onClick={() => setIsOpen(false)}
+                                className="block px-3 py-2 text-xs font-bold text-[#1d4ed8] bg-white rounded-lg border border-[#bfdbfe]"
+                              >
+                                {item.name}
+                              </Link>
+                            )
+                          )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <Link
+                    to="/contact"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors"
+                  >
+                    <span>Contact Us</span>
+                  </Link>
+
+                  <Link
+                    to="/about"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors"
+                  >
+                    <span>About Us</span>
+                  </Link>
+                </div>
+
+                {/* Direct Phone Support Option */}
+                <div className="pt-3 pb-1 space-y-2">
+                  <a
+                    href="tel:737-381-2330"
+                    className="flex items-center gap-3 p-3 bg-[#f8fafc] hover:bg-[#eff6ff] rounded-xl border border-[#dbeafe] text-xs font-bold text-[#0f172a] transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-[#1d4ed8] text-white flex items-center justify-center shrink-0">
+                      <Phone className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-[11px] text-[#64748b]">Call Support (EST)</div>
+                      <div className="font-extrabold text-[#1d4ed8]">+1 737-381-2330</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              {/* Persistent Bottom Drawer Dock with 'Get in touch' Full Button */}
+              <div className="p-4 border-t border-[#e2e8f0] bg-[#f8fafc] space-y-2">
                 <Link
                   to="/get-started"
-                  className="w-full text-center bg-[#1d4ed8] text-white font-extrabold px-4 py-3 rounded-xl shadow-lg"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white py-3 px-4 rounded-xl font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 active:scale-98 transition-all"
                 >
-                  Get in touch
+                  <span>Start Free Tax Draft</span>
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
+
+                <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#64748b] font-medium pt-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Licensed CPAs & IRS Registered Preparers</span>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.aside>
+          </div>
         )}
       </AnimatePresence>
     </header>
