@@ -4,46 +4,23 @@
  */
 
 import React from "react";
-import { motion, type Variants } from "motion/react";
+import { motion } from "motion/react";
 import { Shield, Lock, CheckCircle2 } from "lucide-react";
-
-const sectionStaggerContainer: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.05
-    }
-  }
-};
-
-const slideUpItemVariants: Variants = {
-  hidden: { opacity: 0, y: 32 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.55,
-      ease: "easeOut"
-    }
-  }
-};
 
 export default function SecurityAuditDefense() {
   return (
     <motion.section
-      variants={sectionStaggerContainer}
-      initial="hidden"
-      whileInView="visible"
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55, ease: "easeOut" }}
       className="py-14 sm:py-16 bg-white border-t border-b border-[#e2e8f0]"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-3xl border border-[#e2e8f0] p-8 sm:p-12 shadow-sm">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Column: "Your Data, Fully Protected" */}
-            <motion.div variants={slideUpItemVariants} className="lg:col-span-7 space-y-4">
+            <div className="lg:col-span-7 space-y-4">
               <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-bold text-[#0f172a] tracking-tight leading-[1.1] font-serif">
                 Your Data,{" "}
                 <span className="italic text-[#1d4ed8] font-serif">
@@ -94,10 +71,10 @@ export default function SecurityAuditDefense() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Right Column: ProtectionPlus $1 MILLION TAX AUDIT DEFENSE™ matching screenshot */}
-            <motion.div variants={slideUpItemVariants} className="lg:col-span-5 flex flex-col items-center lg:items-end text-center lg:text-right">
+            <div className="lg:col-span-5 flex flex-col items-center lg:items-end text-center lg:text-right">
               <div className="max-w-md w-full bg-white border-2 border-[#1e3a8a]/20 rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center shadow-xs">
                 {/* Arch brand header */}
                 <div className="flex flex-col items-center mb-1">
@@ -127,7 +104,7 @@ export default function SecurityAuditDefense() {
                   Complete professional audit representation, document defense, and inquiry resolution by licensed CPAs and Enrolled Agents.
                 </p>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

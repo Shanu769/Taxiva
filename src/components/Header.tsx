@@ -22,13 +22,11 @@ import {
   Globe2,
   Landmark,
   CreditCard,
-  Search,
-  UploadCloud
+  Search
 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import LogoAnimation from "./LogoAnimation";
-import ConsultationModal from "./ConsultationModal";
 
 const services = [
   {
@@ -70,7 +68,6 @@ const taxTools = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const location = useLocation();
 
   // Close drawer and dropdowns on route changes
@@ -118,18 +115,18 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-40 w-full bg-[#f8fafc]/95 backdrop-blur-md border-b border-[#dbeafe] shadow-xs">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 sm:h-22 gap-3 sm:gap-4 lg:gap-6 xl:gap-8">
+        <div className="flex justify-between items-center h-22 gap-8">
           {/* Logo — Stylized 3D Transparent Animated 'T' Component + Cursive 'Taxiva LLC' UI/UX Branding */}
           <div className="flex-shrink-0 flex items-center">
             <Link
               to="/"
               onClick={handleScrollToTop}
-              className="flex items-center gap-2 sm:gap-3 group whitespace-nowrap shrink-0 select-none"
+              className="flex items-center gap-3 group whitespace-nowrap shrink-0"
             >
               <LogoAnimation size="md" variant="header" />
 
               <span
-                className="text-xl sm:text-2xl xl:text-[1.85rem] font-bold text-[#0f172a] group-hover:text-[#1d4ed8] transition-colors leading-none tracking-wide drop-shadow-[0_1px_1px_rgba(15,23,42,0.08)]"
+                className="text-2xl sm:text-[1.85rem] font-bold text-[#0f172a] group-hover:text-[#1d4ed8] transition-colors leading-none tracking-wide select-none drop-shadow-[0_1px_1px_rgba(15,23,42,0.08)]"
                 style={{ fontFamily: "'Dancing Script', 'Great Vibes', cursive" }}
               >
                 Taxiva LLC
@@ -138,23 +135,23 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-3 xl:gap-5 2xl:gap-7">
+          <nav className="hidden xl:flex items-center gap-6 2xl:gap-8">
             <Link
               to="/"
               onClick={handleScrollToTop}
-              className="text-[#0f172a] hover:text-[#1d4ed8] text-xs xl:text-sm 2xl:text-[15px] font-bold transition-colors whitespace-nowrap shrink-0"
+              className="text-[#0f172a] hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
             >
               Home
             </Link>
 
             {/* Services Dropdown */}
             <div className="relative group py-4">
-              <button className="flex items-center gap-1 text-[#0f172a] group-hover:text-[#1d4ed8] text-xs xl:text-sm 2xl:text-[15px] font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer">
-                Services <ChevronDown className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-[#1d4ed8] group-hover:text-[#0f172a]" />
+              <button className="flex items-center gap-1 text-[#0f172a] group-hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer">
+                Services <ChevronDown className="w-4 h-4 text-[#1d4ed8] group-hover:text-[#0f172a]" />
               </button>
               <div
                 className={cn(
-                  "absolute top-full left-0 w-72 bg-white border border-[#dbeafe] shadow-xl rounded-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+                  "absolute top-full left-0 w-72 bg-white border border-[#dbeafe] shadow-xl rounded-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                 )}
               >
                 {services.map((item) => (
@@ -179,19 +176,19 @@ export default function Header() {
             <Link
               to="/pricing"
               onClick={handleScrollToTop}
-              className="text-[#0f172a] hover:text-[#1d4ed8] text-xs xl:text-sm 2xl:text-[15px] font-bold transition-colors whitespace-nowrap shrink-0"
+              className="text-[#0f172a] hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
             >
               Pricing
             </Link>
 
             {/* Refund & Payment Center Dropdown */}
             <div className="relative group py-4">
-              <button className="flex items-center gap-1 text-[#0f172a] group-hover:text-[#1d4ed8] text-xs xl:text-sm 2xl:text-[15px] font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer">
-                Refund & Payment Center <ChevronDown className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-[#1d4ed8] group-hover:text-[#0f172a]" />
+              <button className="flex items-center gap-1 text-[#0f172a] group-hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer">
+                Refund & Payment Center <ChevronDown className="w-4 h-4 text-[#1d4ed8] group-hover:text-[#0f172a]" />
               </button>
               <div
                 className={cn(
-                  "absolute top-full left-0 w-72 bg-white border border-[#dbeafe] shadow-xl rounded-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+                  "absolute top-full left-0 w-72 bg-white border border-[#dbeafe] shadow-xl rounded-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                 )}
               >
                 {taxTools.map((item) =>
@@ -223,82 +220,53 @@ export default function Header() {
             <Link
               to="/contact"
               onClick={handleScrollToTop}
-              className="text-[#0f172a] hover:text-[#1d4ed8] text-xs xl:text-sm 2xl:text-[15px] font-bold transition-colors whitespace-nowrap shrink-0"
+              className="text-[#0f172a] hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
             >
               Contact Us
             </Link>
             <Link
               to="/about"
               onClick={handleScrollToTop}
-              className="text-[#0f172a] hover:text-[#1d4ed8] text-xs xl:text-sm 2xl:text-[15px] font-bold transition-colors whitespace-nowrap shrink-0"
+              className="text-[#0f172a] hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
             >
               About Us
             </Link>
           </nav>
 
-          {/* Desktop Primary Action Buttons: Upload documents, Book a consultation, Get in touch */}
-          <div className="hidden lg:flex items-center gap-2 xl:gap-2.5 2xl:gap-3 shrink-0">
-            {/* Upload documents */}
+          {/* Desktop CTA Buttons */}
+          <div className="hidden xl:flex items-center gap-3 shrink-0">
             <Link
               to="/login"
               onClick={handleScrollToTop}
-              className="inline-flex items-center gap-1.5 bg-white border border-[#cbd5e1] hover:border-[#1d4ed8] hover:bg-[#eff6ff] text-[#334155] hover:text-[#1d4ed8] px-3 py-2 xl:px-3.5 xl:py-2.5 rounded-xl text-xs xl:text-sm font-extrabold transition-all shadow-2xs active:scale-95 whitespace-nowrap shrink-0"
-              title="Upload tax documents to client portal"
+              className="inline-flex items-center justify-center bg-white border border-[#bfdbfe] hover:border-[#1d4ed8] hover:bg-[#eff6ff] text-[#0f172a] px-5 py-2.5 rounded-xl text-sm 2xl:text-base font-extrabold transition-all shadow-2xs active:scale-95 whitespace-nowrap shrink-0"
             >
-              <UploadCloud className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-[#1d4ed8] shrink-0" />
-              <span className="hidden xl:inline">Upload documents</span>
-              <span className="xl:hidden">Upload</span>
+              Client Login
             </Link>
-
-            {/* Book a consultation */}
-            <button
-              onClick={() => setIsConsultationOpen(true)}
-              className="inline-flex items-center gap-1.5 bg-[#eff6ff] border border-[#bfdbfe] hover:border-[#1d4ed8] hover:bg-[#dbeafe] text-[#1d4ed8] px-3 py-2 xl:px-3.5 xl:py-2.5 rounded-xl text-xs xl:text-sm font-extrabold transition-all shadow-2xs active:scale-95 whitespace-nowrap shrink-0 cursor-pointer"
-              title="Book a free 30-minute consultation"
-            >
-              <Calendar className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-[#1d4ed8] shrink-0" />
-              <span className="hidden 2xl:inline">Book a consultation</span>
-              <span className="2xl:hidden">Book consultation</span>
-            </button>
-
-            {/* Get in touch */}
             <Link
               to="/get-started"
               onClick={handleScrollToTop}
-              className="inline-flex items-center gap-1.5 bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-3.5 py-2 xl:px-4 xl:py-2.5 rounded-xl text-xs xl:text-sm font-extrabold transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0"
+              className="inline-flex items-center justify-center bg-[#1d4ed8] text-white px-5 py-2.5 rounded-xl text-sm 2xl:text-base font-extrabold hover:bg-[#0f172a] transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0"
             >
-              <span>Get in touch</span>
-              <ArrowRight className="w-3.5 h-3.5 xl:w-4 xl:h-4 shrink-0" />
+              Get in touch
             </Link>
           </div>
 
-          {/* Mobile & Tablet Right Bar */}
-          <div className="lg:hidden flex items-center gap-1.5 sm:gap-2.5">
-            {/* Tablet Book Consultation Button */}
-            <button
-              onClick={() => setIsConsultationOpen(true)}
-              className="hidden sm:inline-flex items-center gap-1 bg-[#eff6ff] hover:bg-[#dbeafe] text-[#1d4ed8] border border-[#bfdbfe] px-2.5 py-2 rounded-xl text-xs font-bold transition-all shadow-2xs cursor-pointer active:scale-95 whitespace-nowrap"
-            >
-              <Calendar className="w-3.5 h-3.5 text-[#1d4ed8]" />
-              <span>Book call</span>
-            </button>
-
-            {/* Fast Access 'Get in touch' */}
+          {/* Mobile Right Bar: Fast Access 'Get in touch' + Hamburger Toggle */}
+          <div className="xl:hidden flex items-center gap-2 sm:gap-3">
             <Link
               to="/get-started"
-              className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-3 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all shadow-md active:scale-95 whitespace-nowrap"
+              className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all shadow-md active:scale-95 whitespace-nowrap"
             >
               Get in touch
             </Link>
 
-            {/* Hamburger Toggle */}
             <button
               onClick={() => setIsOpen(true)}
               aria-label="Open mobile navigation menu"
               aria-expanded={isOpen}
               className="p-2 sm:p-2.5 text-[#0f172a] hover:text-[#1d4ed8] bg-white border border-[#cbd5e1] hover:border-[#94a3b8] rounded-xl focus:outline-none transition-colors shadow-2xs cursor-pointer"
             >
-              <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
+              <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
@@ -349,56 +317,32 @@ export default function Header() {
                 </button>
               </div>
 
-              {/* Drawer Top Priority Action Cards: Get in Touch, Book a Consultation, Upload Documents */}
+              {/* Drawer Top Priority Action Cards: Get in Touch & Client Login */}
               <div className="p-4 bg-gradient-to-b from-[#eff6ff] to-white border-b border-[#dbeafe] space-y-2.5">
-                <div className="text-[11px] font-black uppercase tracking-wider text-[#1d4ed8] flex items-center justify-between">
-                  <div className="flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-[#1d4ed8]" />
-                    <span>Priority Client Actions</span>
-                  </div>
-                  <Link
-                    to="/login"
-                    onClick={handleMobileNavClick}
-                    className="text-[10px] text-[#475569] hover:text-[#1d4ed8] font-bold underline"
-                  >
-                    Client Login
-                  </Link>
+                <div className="text-[11px] font-black uppercase tracking-wider text-[#1d4ed8] flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#1d4ed8]" />
+                  <span>Key Actions</span>
                 </div>
 
-                {/* Primary Full-Width Action: Get in touch */}
-                <Link
-                  to="/get-started"
-                  onClick={handleMobileNavClick}
-                  className="w-full flex items-center justify-between p-3 rounded-xl bg-[#1d4ed8] hover:bg-[#1e40af] text-white shadow-md active:scale-95 transition-all"
-                >
-                  <div className="text-left">
-                    <span className="text-xs sm:text-sm font-black block">Get in touch</span>
-                    <span className="text-[10px] text-blue-100">Free 24-48h Tax Draft & Quote</span>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-white shrink-0" />
-                </Link>
-
-                {/* Balanced 2-Column Row: Book a consultation & Upload documents */}
                 <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      setIsConsultationOpen(true);
-                    }}
-                    className="flex flex-col items-center justify-center text-center p-2.5 rounded-xl bg-white hover:bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe] hover:border-[#1d4ed8] shadow-2xs active:scale-95 transition-all cursor-pointer"
+                  <Link
+                    to="/get-started"
+                    onClick={() => setIsOpen(false)}
+                    className="flex flex-col items-center justify-center text-center p-3 rounded-xl bg-[#1d4ed8] hover:bg-[#1e40af] text-white shadow-md active:scale-95 transition-all"
                   >
-                    <Calendar className="w-4 h-4 text-[#1d4ed8] mb-1 shrink-0" />
-                    <span className="text-xs font-black">Book a consultation</span>
-                    <span className="text-[10px] text-[#64748b] mt-0.5">Free 30-min call</span>
-                  </button>
+                    <span className="text-xs sm:text-sm font-black">Get in touch</span>
+                    <span className="text-[10px] text-blue-200 mt-0.5">Free Draft & Quote</span>
+                  </Link>
 
                   <Link
                     to="/login"
-                    onClick={handleMobileNavClick}
-                    className="flex flex-col items-center justify-center text-center p-2.5 rounded-xl bg-white hover:bg-[#eff6ff] text-[#0f172a] border border-[#cbd5e1] hover:border-[#1d4ed8] shadow-2xs active:scale-95 transition-all"
+                    onClick={() => setIsOpen(false)}
+                    className="flex flex-col items-center justify-center text-center p-3 rounded-xl bg-white hover:bg-[#f8fafc] text-[#0f172a] border border-[#bfdbfe] shadow-2xs active:scale-95 transition-all"
                   >
-                    <UploadCloud className="w-4 h-4 text-[#1d4ed8] mb-1 shrink-0" />
-                    <span className="text-xs font-black">Upload documents</span>
+                    <span className="text-xs sm:text-sm font-black flex items-center gap-1">
+                      <Lock className="w-3 h-3 text-[#1d4ed8]" />
+                      <span>Client Login</span>
+                    </span>
                     <span className="text-[10px] text-[#64748b] mt-0.5">Canopy Portal</span>
                   </Link>
                 </div>
@@ -573,12 +517,6 @@ export default function Header() {
           </div>
         )}
       </AnimatePresence>
-
-      {/* Interactive Consultation Booking Modal */}
-      <ConsultationModal
-        isOpen={isConsultationOpen}
-        onClose={() => setIsConsultationOpen(false)}
-      />
     </header>
   );
 }

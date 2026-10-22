@@ -4,32 +4,9 @@
  */
 
 import React from "react";
-import { motion, type Variants } from "motion/react";
+import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Calendar, MessageSquare, Sparkles, ShieldCheck } from "lucide-react";
-
-const sectionStaggerContainer: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05
-    }
-  }
-};
-
-const slideUpItemVariants: Variants = {
-  hidden: { opacity: 0, y: 32 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.55,
-      ease: "easeOut"
-    }
-  }
-};
 
 interface TaxExpertsProps {
   onBookConsultation: (expertName?: string) => void;
@@ -113,15 +90,15 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
 
   return (
     <motion.section
-      variants={sectionStaggerContainer}
-      initial="hidden"
-      whileInView="visible"
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.55, ease: "easeOut" }}
       className="py-20 sm:py-24 bg-white text-[#0f172a] border-t border-[#dbeafe] relative overflow-hidden"
     >
       <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header with Blue Accent Styling */}
-        <motion.div variants={slideUpItemVariants} className="text-center max-w-4xl mx-auto mb-14 sm:mb-16">
+        <div className="text-center max-w-4xl mx-auto mb-14 sm:mb-16">
           <div className="inline-flex items-center gap-2 bg-[#eff6ff] text-[#1d4ed8] border border-[#dbeafe] px-3.5 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest mb-4">
             <Sparkles className="w-3.5 h-3.5 text-[#1d4ed8]" />
             <span>Licensed CPAs, EAs & Big Four Alumni</span>
@@ -135,16 +112,19 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
           <p className="text-base sm:text-lg text-[#334155]/90 font-medium max-w-2xl mx-auto leading-relaxed">
             Our team brings decades of experience from Big Four and elite firms. We specialize in equity compensation and complex tax situations.
           </p>
-        </motion.div>
+        </div>
 
         {/* 5 Expert Cards in a Single Balanced Row on Desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 sm:gap-6">
-          {EXPERT_DATA.map((expert) => {
+          {EXPERT_DATA.map((expert, idx) => {
             const isConsult = expert.actionType === "consultation";
             return (
               <motion.div
                 key={expert.id}
-                variants={slideUpItemVariants}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: idx * 0.08 }}
                 onClick={() => handleCardClick(expert)}
                 role="button"
                 tabIndex={0}
@@ -228,7 +208,7 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
         </div>
 
         {/* Bottom Reassurance Banner */}
-        <motion.div variants={slideUpItemVariants} className="mt-12 max-w-3xl mx-auto bg-[#f8fafc] border border-[#dbeafe] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div className="mt-12 max-w-3xl mx-auto bg-[#f8fafc] border border-[#dbeafe] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center shrink-0">
               <ShieldCheck className="w-5 h-5" />
@@ -248,7 +228,7 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
           >
             Schedule Free 30-Min Call
           </button>
-        </motion.div>
+        </div>
       </div>
     </motion.section>
   );
