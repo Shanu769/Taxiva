@@ -138,7 +138,7 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
               >
                 <div>
                   {/* Portrait Container with Crisp Blue-Tinted Rounded Frame */}
-                  <div className="w-full aspect-[4/4.3] rounded-2xl overflow-hidden relative bg-gradient-to-b from-[#dbeafe] via-[#eff6ff] to-[#f8fafc] border border-[#bfdbfe]/70 shadow-inner mb-3.5 group-hover:border-[#1d4ed8]/50 transition-colors">
+                  <div className="w-full aspect-[4/4.3] max-h-80 rounded-2xl overflow-hidden relative bg-gradient-to-b from-[#dbeafe] via-[#eff6ff] to-[#f8fafc] border border-[#bfdbfe]/70 shadow-inner mb-3.5 group-hover:border-[#1d4ed8]/50 transition-colors">
                     <img
                       src={expert.avatarUrl}
                       alt={`Tax Expert ${expert.name} - ${expert.exp}`}
@@ -170,10 +170,10 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
                     <p className="text-xs sm:text-[13px] font-semibold text-[#475569] mt-0.5">
                       {expert.exp}
                     </p>
-                    <p className="text-[11px] font-bold text-[#1d4ed8] mt-1 line-clamp-1">
+                    <p className="text-[13px] leading-5 font-bold text-[#1d4ed8] mt-2">
                       {expert.firm}
                     </p>
-                    <p className="text-[11px] text-[#64748b] mt-1 line-clamp-2 leading-relaxed">
+                    <p className="text-sm text-[#64748b] mt-1 leading-relaxed">
                       {expert.specialty}
                     </p>
                   </div>
@@ -182,7 +182,7 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
                 {/* Card Footer Button */}
                 <div className="pt-2 px-1">
                   <div
-                    className={`w-full py-2.5 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition-all shadow-xs ${
+                    className={`w-full min-h-11 py-2.5 px-3 rounded-xl text-xs font-extrabold flex items-center justify-center gap-1.5 transition-all shadow-xs ${
                       isConsult
                         ? "bg-[#1d4ed8] text-white group-hover:bg-[#1e40af]"
                         : "bg-[#0f172a] text-white group-hover:bg-[#1d4ed8]"
@@ -233,3 +233,4 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
     </motion.section>
   );
 }
+
