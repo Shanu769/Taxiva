@@ -98,7 +98,7 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full bg-white text-[#0f172a]">
       {/* Grand Hero Section — Substantially Increased Height & Length for Full Capitol Building Visibility */}
-      <section className="relative py-24 sm:py-32 lg:py-44 min-h-[680px] sm:min-h-[760px] lg:min-h-[860px] xl:min-h-[920px] flex items-center overflow-hidden bg-[#0f172a] text-white border-b border-white/15">
+      <section className="relative py-12 sm:py-16 lg:py-20 min-h-[680px] lg:min-h-[740px] flex items-center overflow-hidden bg-[#0f172a] text-white border-b border-white/15">
         {/* Background Image Layer: Sized and aligned to show the full Capitol building including dome, colonnade, and base */}
         <div className="absolute inset-0 z-0 overflow-hidden bg-[#0f172a]">
           <img
@@ -123,7 +123,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55 }}
-              className="lg:col-span-7 bg-[#0f172a]/50 backdrop-blur-[3px] p-7 sm:p-9 rounded-3xl border border-white/25 shadow-2xl"
+              className="lg:col-span-7 bg-[#0f172a]/50 backdrop-blur-[3px] p-5 sm:p-8 rounded-3xl border border-white/25 shadow-2xl"
             >
               {/* Slogan pill in 12-13 font size as requested */}
               <div className="inline-flex items-center gap-2.5 bg-white/15 border border-white/30 px-4 py-2 rounded-xl text-white text-[12px] sm:text-[13px] font-extrabold uppercase tracking-wide mb-4 backdrop-blur-xs shadow-xs">
@@ -132,7 +132,7 @@ export default function Home() {
               </div>
 
               {/* Headline with 'IRS' removed as requested */}
-              <h1 className="text-3xl sm:text-5xl lg:text-[2.85rem] font-extrabold tracking-tight text-white mb-6 leading-[1.1] font-display drop-shadow-md">
+              <h1 className="text-[clamp(2rem,3.4vw,3rem)] font-extrabold tracking-tight text-white mb-6 leading-[1.16] font-display drop-shadow-md">
                 Maximize Your Tax Refund & File with{" "}
                 <span className="italic underline decoration-white/60 underline-offset-8">
                   100% Confidence.
@@ -168,7 +168,7 @@ export default function Home() {
                   1st button: Get in touch
                   2nd button: Book a consultation / Book a free 30 min call
                   3rd button: Upload documents */}
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch gap-3 [&>a]:min-h-12 [&>button]:min-h-12 [&>a]:justify-center [&>button]:justify-center">
                 <Link
                   to="/get-started"
                   className="bg-white text-[#0f172a] px-5 sm:px-6 py-3.5 rounded-xl font-extrabold text-xs sm:text-sm hover:bg-[#eff6ff] transition-all shadow-xl active:scale-95 inline-flex items-center gap-2"
@@ -511,7 +511,7 @@ export default function Home() {
                 transition={{ delay: idx * 0.07 }}
                 className="rounded-3xl bg-[#f8fafc] border border-[#dbeafe] overflow-hidden hover:border-[#1d4ed8] hover:bg-white hover:shadow-xl transition-all flex flex-col justify-between group"
               >
-                <div className="relative h-40 bg-[#0f172a] overflow-hidden border-b border-[#dbeafe]">
+                <div className="relative aspect-[16/9] min-h-40 bg-[#0f172a] overflow-hidden border-b border-[#dbeafe]">
                   {service.visualType === "individual" && (
                     <img
                       src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=700"
@@ -567,7 +567,7 @@ export default function Home() {
 
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    <p className="text-[#334155]/90 leading-relaxed text-xs sm:text-sm mb-4 font-medium">
+                    <p className="text-[#334155]/90 leading-7 text-base mb-4 font-medium">
                       {service.desc}
                     </p>
                     <div className="flex flex-wrap gap-1.5 mb-4">
@@ -585,7 +585,7 @@ export default function Home() {
                   <div className="pt-3.5 border-t border-[#dbeafe] flex items-center justify-between gap-2">
                     <Link
                       to={service.link}
-                      className="inline-flex items-center gap-1.5 text-[#1d4ed8] font-extrabold text-xs hover:gap-2 transition-all"
+                      className="inline-flex min-h-11 items-center gap-1.5 text-[#1d4ed8] font-extrabold text-sm hover:gap-2 transition-all"
                     >
                       <span>Details</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -593,7 +593,7 @@ export default function Home() {
 
                     <Link
                       to="/get-started"
-                      className="px-3.5 py-2 bg-[#1d4ed8] text-white rounded-xl text-xs font-extrabold hover:bg-[#1e40af] transition-all"
+                      className="inline-flex min-h-11 items-center justify-center px-3.5 py-2 bg-[#1d4ed8] text-white rounded-xl text-sm font-extrabold hover:bg-[#1e40af] transition-all"
                     >
                       Get in touch
                     </Link>
@@ -1326,3 +1326,4 @@ export default function Home() {
     </div>
   );
 }
+
