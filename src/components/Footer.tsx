@@ -161,8 +161,8 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/get-started" className="hover:text-white hover:underline transition-colors block py-0.5">
-                    Refer & Earn $20
+                  <Link to="/pricing" className="hover:text-white hover:underline transition-colors block py-0.5">
+                    Refer & Earn ($10–$50)
                   </Link>
                 </li>
                 <li>

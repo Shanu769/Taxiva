@@ -17,13 +17,48 @@ import {
   BadgeCheck,
   RefreshCw
 } from "lucide-react";
-import PricingTable from "../components/PricingTable";
+import PricingTable, { type PricingTabType } from "../components/PricingTable";
 import ConsultationModal from "../components/ConsultationModal";
 import { PricingSkeleton } from "../components/Skeleton";
+
+const REFERRAL_OFFERS: Record<
+  PricingTabType,
+  {
+    badge: string;
+    headingPrefix: string;
+    amount: string;
+    description: string;
+  }
+> = {
+  individual: {
+    badge: "Individual Tax Referral",
+    headingPrefix: "Refer a Friend & Earn",
+    amount: "$10",
+    description:
+      "Invite friends and colleagues for Individual Tax Filing. You receive a $10 instant credit for every successful individual return completed through our encrypted portal."
+  },
+  business: {
+    badge: "Business Tax Referral",
+    headingPrefix: "Refer a Business & Earn",
+    amount: "$30",
+    description:
+      "Refer a business owner or LLC / S-Corp client for Business Tax Filing. You receive a $30 instant credit for every successful business tax return completed."
+  },
+  bookkeeping: {
+    badge: "Bookkeeping Referral",
+    headingPrefix: "Refer a Friend & Earn",
+    amount: "$50",
+    description:
+      "Refer a founder or business for Monthly Bookkeeping. You receive a $50 instant credit for every new bookkeeping client you refer to TAXIVA LLC."
+  }
+};
 
 export default function Pricing() {
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<PricingTabType>("individual");
+
+  const currentReferral = REFERRAL_OFFERS[activeTab];
 
   // Perceived performance: simulate instant external schedule & fee matrix sync
   useEffect(() => {
@@ -65,22 +100,31 @@ export default function Pricing() {
               </p>
             </motion.div>
 
-            {/* Exclusive Referral Offer Card */}
+            {/* Exclusive Referral Offer Card — Dynamically updates ($10 Individual, $30 Business, $50 Bookkeeping) */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.15 }}
               className="lg:col-span-5 bg-white/10 border border-white/25 p-7 sm:p-8 rounded-3xl backdrop-blur-md relative shadow-2xl"
             >
-              <div className="inline-flex items-center gap-1.5 bg-white text-[#0f172a] px-3.5 py-1 rounded-xl text-xs font-black uppercase tracking-widest shadow-md mb-4">
-                <Gift className="w-3.5 h-3.5 text-[#1d4ed8]" />
-                <span>Exclusive Offer</span>
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <div className="inline-flex items-center gap-1.5 bg-white text-[#0f172a] px-3.5 py-1 rounded-xl text-xs font-black uppercase tracking-widest shadow-md">
+                  <Gift className="w-3.5 h-3.5 text-[#1d4ed8]" />
+                  <span>{currentReferral.badge}</span>
+                </div>
+                <span className="text-[11px] font-bold text-[#93c5fd]">
+                  $10 Individual · $30 Business · $50 Bookkeeping
+                </span>
               </div>
-              <h3 className="text-2xl font-black text-white mb-2 font-display">
-                Refer a Friend & Earn <span className="underline font-black text-[#93c5fd]">$20</span>
+
+              <h3 className="text-2xl sm:text-3xl font-black text-white mb-2 font-display">
+                {currentReferral.headingPrefix}{" "}
+                <span className="underline font-black text-[#93c5fd]">
+                  {currentReferral.amount}
+                </span>
               </h3>
               <p className="text-white/85 text-xs sm:text-sm mb-6 leading-relaxed font-medium">
-                Invite colleagues and friends to TAXIVA LLC. You receive a $20 instant credit for every successful return completed through our encrypted portal.
+                {currentReferral.description}
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <Link
@@ -110,7 +154,11 @@ export default function Pricing() {
           </div>
         </div>
       ) : (
-        <PricingTable onOpenConsultation={() => setIsConsultationOpen(true)} />
+        <PricingTable
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onOpenConsultation={() => setIsConsultationOpen(true)}
+        />
       )}
 
       {/* Trust & Guarantee Strip */}

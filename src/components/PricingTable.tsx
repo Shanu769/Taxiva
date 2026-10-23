@@ -16,31 +16,61 @@ import {
   Calendar,
   Sparkles,
   HelpCircle,
-  ShieldCheck
+  ShieldCheck,
+  Gift
 } from "lucide-react";
+
+export type PricingTabType = "individual" | "business" | "bookkeeping";
 
 interface PricingTableProps {
   onOpenConsultation?: () => void;
+  activeTab?: PricingTabType;
+  onTabChange?: (tab: PricingTabType) => void;
 }
 
-type TabType = "individual" | "business" | "bookkeeping";
-
-export default function PricingTable({ onOpenConsultation }: PricingTableProps) {
-  const [activeTab, setActiveTab] = useState<TabType>("individual");
+export default function PricingTable({
+  onOpenConsultation,
+  activeTab: controlledTab,
+  onTabChange
+}: PricingTableProps) {
+  const [internalTab, setInternalTab] = useState<PricingTabType>("individual");
+  const activeTab = controlledTab ?? internalTab;
   const navigate = useNavigate();
+
+  const handleSelectTab = (tab: PricingTabType) => {
+    setInternalTab(tab);
+    if (onTabChange) {
+      onTabChange(tab);
+    }
+  };
 
   const handleCta = (planName: string) => {
     navigate(`/get-started?plan=${encodeURIComponent(planName)}&type=pricing`);
   };
 
+  const referralDetails = {
+    individual: {
+      title: "Refer a Friend & Earn $10",
+      desc: "Receive a $10 instant credit for every friend or colleague who completes an Individual Tax Return."
+    },
+    business: {
+      title: "Refer a Business & Earn $30",
+      desc: "Receive a $30 instant credit for every business owner who completes a Business Tax Filing (1120-S, 1065, 1120, or LLC)."
+    },
+    bookkeeping: {
+      title: "Refer a Friend & Earn $50",
+      desc: "Receive a $50 instant credit for every business or founder who signs up for Monthly Bookkeeping."
+    }
+  }[activeTab];
+
   return (
     <div className="w-full bg-[#f6f3ee] py-14 sm:py-20 text-[#0f172a]">
       <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top 3-Tab Segmented Switcher (Exact replica of the blue bar in screenshots) */}
-        <div className="max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="max-w-3xl mx-auto mb-10 sm:mb-12 space-y-4">
           <div className="p-1.5 sm:p-2 bg-[#2563eb] rounded-2xl shadow-lg grid grid-cols-3 gap-1.5 sm:gap-2 text-white">
             <button
-              onClick={() => setActiveTab("individual")}
+              onClick={() => handleSelectTab("individual")}
               className={`py-3 px-3 sm:px-6 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 activeTab === "individual"
                   ? "bg-white text-[#1d4ed8] shadow-md"
@@ -52,7 +82,7 @@ export default function PricingTable({ onOpenConsultation }: PricingTableProps) 
             </button>
 
             <button
-              onClick={() => setActiveTab("business")}
+              onClick={() => handleSelectTab("business")}
               className={`py-3 px-3 sm:px-6 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 activeTab === "business"
                   ? "bg-white text-[#1d4ed8] shadow-md"
@@ -64,7 +94,7 @@ export default function PricingTable({ onOpenConsultation }: PricingTableProps) 
             </button>
 
             <button
-              onClick={() => setActiveTab("bookkeeping")}
+              onClick={() => handleSelectTab("bookkeeping")}
               className={`py-3 px-3 sm:px-6 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 activeTab === "bookkeeping"
                   ? "bg-white text-[#1d4ed8] shadow-md"
@@ -74,6 +104,30 @@ export default function PricingTable({ onOpenConsultation }: PricingTableProps) 
               <BookOpen className="w-4 h-4 shrink-0" />
               <span className="truncate">Bookkeeping</span>
             </button>
+          </div>
+
+          {/* Dynamic Referral Reward Strip Synced with Active Tab */}
+          <div className="bg-white border border-[#bfdbfe] rounded-2xl px-5 py-3.5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center shrink-0">
+                <Gift className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-sm font-black text-[#0f172a] font-display">
+                  {referralDetails.title}
+                </p>
+                <p className="text-xs text-[#475569] font-medium">
+                  {referralDetails.desc}
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/get-started"
+              className="inline-flex items-center justify-center gap-1.5 bg-[#eff6ff] hover:bg-[#dbeafe] text-[#1d4ed8] px-4 py-2 rounded-xl text-xs font-extrabold transition-colors shrink-0"
+            >
+              <span>Refer Now</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
 

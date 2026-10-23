@@ -342,7 +342,7 @@ export default function GetStartedForm() {
                       rel="noopener noreferrer"
                       className="flex-1 bg-[#1d4ed8] text-white py-3.5 px-6 rounded-xl font-bold text-sm hover:bg-[#0f172a] transition-all flex items-center justify-center gap-2 shadow-md"
                     >
-                      <span>Open Canopy Client Portal</span>
+                      <span>Canopy Client Portal</span>
                       <ExternalLink className="w-4 h-4" />
                     </a>
                     <button

@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Menu,
   X,
   ExternalLink,
@@ -17,6 +19,8 @@ import {
   ArrowRight,
   Lock,
   Calendar,
+  Clock,
+  AlertTriangle,
   FileText,
   Briefcase,
   Globe2,
@@ -27,6 +31,122 @@ import {
 import { cn } from "@/src/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import LogoAnimation from "./LogoAnimation";
+
+interface DynamicTaxDeadline {
+  id: string;
+  title: string;
+  shortTitle: string;
+  formCode: string;
+  targetDate: Date;
+  formattedDate: string;
+  actionHref: string;
+}
+
+function getUpcomingTaxDeadlines(referenceDate: Date): DynamicTaxDeadline[] {
+  const currentYear = referenceDate.getFullYear();
+  const years = [currentYear, currentYear + 1];
+  const schedule: DynamicTaxDeadline[] = [];
+
+  for (const year of years) {
+    const milestones = [
+      {
+        id: `q4-est-${year}`,
+        title: `Q4 Estimated Tax Payment Due`,
+        shortTitle: `Q4 Estimated Tax`,
+        formCode: "Form 1040-ES",
+        month: 0, // Jan 15
+        day: 15,
+        actionHref: "/services/individual"
+      },
+      {
+        id: `biz-1120s-${year}`,
+        title: `S-Corp & Partnership Tax Returns Due`,
+        shortTitle: `S-Corp & Partnership Filing`,
+        formCode: "Form 1120-S & 1065",
+        month: 2, // Mar 15
+        day: 15,
+        actionHref: "/services/business"
+      },
+      {
+        id: `ind-1040-${year}`,
+        title: `Federal & State Individual Tax Filing Deadline`,
+        shortTitle: `Individual Tax Day`,
+        formCode: "Form 1040 & FinCEN 114",
+        month: 3, // Apr 15
+        day: 15,
+        actionHref: "/services/individual"
+      },
+      {
+        id: `q2-expat-${year}`,
+        title: `Q2 Estimated Tax & U.S. Expats Automatic Filing Cutoff`,
+        shortTitle: `Q2 Estimates & Expats`,
+        formCode: "Form 1040-ES / Expats",
+        month: 5, // Jun 15
+        day: 15,
+        actionHref: "/services/foreign-reporting"
+      },
+      {
+        id: `q3-ext-biz-${year}`,
+        title: `Q3 Estimated Tax & Extended S-Corp/Partnership Deadline`,
+        shortTitle: `Q3 Estimates & Extended Entities`,
+        formCode: "Form 1040-ES / 1120-S",
+        month: 8, // Sep 15
+        day: 15,
+        actionHref: "/services/business"
+      },
+      {
+        id: `ext-1040-fbar-${year}`,
+        title: `Extended Individual Tax & FBAR Final Filing Deadline`,
+        shortTitle: `Extended 1040 & FBAR Cutoff`,
+        formCode: "Form 1040 & FinCEN 114",
+        month: 9, // Oct 15
+        day: 15,
+        actionHref: "/services/foreign-reporting"
+      },
+      {
+        id: `ye-strategy-${year}`,
+        title: `Year-End RSU, Capital Gains & Tax-Loss Harvesting Cutoff`,
+        shortTitle: `Year-End RSU & Tax Strategy`,
+        formCode: "Form 1040 • RSU Planning",
+        month: 11, // Dec 15
+        day: 15,
+        actionHref: "/services/individual"
+      },
+      {
+        id: `ye-close-${year}`,
+        title: `Annual Tax Year Close: Solo 401(k) & Deduction Deadline`,
+        shortTitle: `${year} Tax Year Close`,
+        formCode: "Entity & 1040 Deductions",
+        month: 11, // Dec 31
+        day: 31,
+        actionHref: "/get-started"
+      }
+    ];
+
+    for (const m of milestones) {
+      // End of the deadline day in local time (23:59:59)
+      const targetDate = new Date(year, m.month, m.day, 23, 59, 59);
+      if (targetDate.getTime() > referenceDate.getTime()) {
+        const formattedDate = targetDate.toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric"
+        });
+        schedule.push({
+          id: m.id,
+          title: m.title,
+          shortTitle: m.shortTitle,
+          formCode: m.formCode,
+          targetDate,
+          formattedDate,
+          actionHref: m.actionHref
+        });
+      }
+    }
+  }
+
+  return schedule.slice(0, 4);
+}
 
 const services = [
   {
@@ -68,7 +188,52 @@ const taxTools = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [bannerDismissed, setBannerDismissed] = useState(false);
+  const [activeDeadlineIdx, setActiveDeadlineIdx] = useState(0);
+  const [isBannerPaused, setIsBannerPaused] = useState(false);
+  const [now, setNow] = useState(() => new Date());
   const location = useLocation();
+
+  const upcomingDeadlines = useMemo(() => getUpcomingTaxDeadlines(now), [
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate()
+  ]);
+
+  const currentDeadline = upcomingDeadlines[activeDeadlineIdx] || upcomingDeadlines[0];
+
+  // Live 1-second tick for real-time urgency countdown
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Auto-cycle through upcoming deadlines every 8 seconds unless hovered/paused
+  useEffect(() => {
+    if (isBannerPaused || bannerDismissed || upcomingDeadlines.length <= 1) return;
+    const cycleTimer = setInterval(() => {
+      setActiveDeadlineIdx((prev) => (prev + 1) % upcomingDeadlines.length);
+    }, 8000);
+    return () => clearInterval(cycleTimer);
+  }, [isBannerPaused, bannerDismissed, upcomingDeadlines.length]);
+
+  const countdown = useMemo(() => {
+    if (!currentDeadline) return { days: 0, hours: 0, minutes: 0, seconds: 0, isCritical: false };
+    const diffMs = Math.max(0, currentDeadline.targetDate.getTime() - now.getTime());
+    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diffMs / (1000 * 60)) % 60);
+    const seconds = Math.floor((diffMs / 1000) % 60);
+    return {
+      days,
+      hours,
+      minutes,
+      seconds,
+      isCritical: days <= 30
+    };
+  }, [currentDeadline, now]);
 
   // Close drawer and dropdowns on route changes
   useEffect(() => {
@@ -112,8 +277,152 @@ export default function Header() {
     handleScrollToTop();
   };
 
+  const handlePrevDeadline = () => {
+    setActiveDeadlineIdx((prev) => (prev - 1 + upcomingDeadlines.length) % upcomingDeadlines.length);
+  };
+
+  const handleNextDeadline = () => {
+    setActiveDeadlineIdx((prev) => (prev + 1) % upcomingDeadlines.length);
+  };
+
   return (
     <header className="sticky top-0 z-40 w-full bg-[#f8fafc]/95 backdrop-blur-md border-b border-[#dbeafe] shadow-xs">
+      {/* Dynamic Tax Filing Deadline Urgency Banner */}
+      {!bannerDismissed && currentDeadline && (
+        <div
+          onMouseEnter={() => setIsBannerPaused(true)}
+          onMouseLeave={() => setIsBannerPaused(false)}
+          className="w-full bg-gradient-to-r from-[#0f172a] via-[#172554] to-[#0f172a] text-white border-b border-white/15 relative overflow-hidden"
+          role="region"
+          aria-label="Upcoming IRS Tax Filing Deadlines"
+        >
+          <div className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 py-2 flex items-center justify-between gap-2 sm:gap-4 text-xs">
+            {/* Left / Center: Urgency Status + Dynamic Deadline Info + Live Countdown */}
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+              {/* Urgency Indicator */}
+              <div className="inline-flex items-center gap-1.5 shrink-0">
+                <span className="relative flex h-2 w-2">
+                  <span
+                    className={cn(
+                      "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
+                      countdown.isCritical ? "bg-amber-400" : "bg-[#60a5fa]"
+                    )}
+                  />
+                  <span
+                    className={cn(
+                      "relative inline-flex rounded-full h-2 w-2",
+                      countdown.isCritical ? "bg-amber-400" : "bg-[#3b82f6]"
+                    )}
+                  />
+                </span>
+                <span className="font-extrabold uppercase tracking-wider text-[10px] sm:text-[11px] text-[#93c5fd]">
+                  {countdown.isCritical ? "Urgent Tax Cutoff" : "Upcoming IRS Deadline"}
+                </span>
+              </div>
+
+              <span className="text-white/30 hidden sm:inline" aria-hidden="true">
+                |
+              </span>
+
+              {/* Animated Deadline Title & Date */}
+              <div className="min-w-0 flex-1 flex items-center gap-2 overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentDeadline.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.22 }}
+                    className="flex items-center gap-2 truncate"
+                  >
+                    <span className="font-bold text-white truncate">
+                      <span className="hidden md:inline">{currentDeadline.title}</span>
+                      <span className="md:hidden">{currentDeadline.shortTitle}</span>
+                    </span>
+                    <span className="hidden lg:inline text-white/40" aria-hidden="true">
+                      ·
+                    </span>
+                    <span className="hidden lg:inline text-[#bfdbfe] font-semibold shrink-0">
+                      {currentDeadline.formCode}
+                    </span>
+                    <span className="text-white/40 shrink-0" aria-hidden="true">
+                      ·
+                    </span>
+                    <span className="font-extrabold text-amber-300 shrink-0">
+                      Due {currentDeadline.formattedDate}
+                    </span>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Live Real-Time Countdown Timer */}
+              <div
+                className="hidden sm:inline-flex items-center gap-1.5 bg-white/10 border border-white/15 px-2.5 py-1 rounded-md font-mono text-[11px] font-bold text-white shrink-0 tabular-nums"
+                title="Live time remaining until deadline"
+              >
+                <Clock className="w-3 h-3 text-amber-300 shrink-0" />
+                <span>
+                  {countdown.days}d : {String(countdown.hours).padStart(2, "0")}h :{" "}
+                  {String(countdown.minutes).padStart(2, "0")}m :{" "}
+                  {String(countdown.seconds).padStart(2, "0")}s
+                </span>
+              </div>
+
+              {/* Mobile Compact Days Left */}
+              <span className="sm:hidden font-mono text-[11px] font-extrabold text-amber-300 shrink-0 tabular-nums">
+                ({countdown.days}d left)
+              </span>
+            </div>
+
+            {/* Right Controls: Deadline Cycle Controls + Urgent CTA + Dismiss */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              {upcomingDeadlines.length > 1 && (
+                <div className="hidden md:flex items-center gap-1 text-[11px] text-white/75">
+                  <button
+                    type="button"
+                    onClick={handlePrevDeadline}
+                    aria-label="Previous upcoming tax deadline"
+                    className="p-1 hover:text-white hover:bg-white/10 rounded transition-colors cursor-pointer"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                  </button>
+                  <span className="font-mono text-[10px] tabular-nums">
+                    {activeDeadlineIdx + 1}/{upcomingDeadlines.length}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleNextDeadline}
+                    aria-label="Next upcoming tax deadline"
+                    className="p-1 hover:text-white hover:bg-white/10 rounded transition-colors cursor-pointer"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
+
+              <Link
+                to="/get-started"
+                onClick={handleScrollToTop}
+                className="inline-flex items-center gap-1 bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-2.5 sm:px-3 py-1 rounded-md font-extrabold text-[11px] transition-all shadow-xs whitespace-nowrap"
+              >
+                <span>File Now</span>
+                <span className="hidden xl:inline">— Free 24–48h Draft</span>
+                <ArrowRight className="w-3 h-3" />
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => setBannerDismissed(true)}
+                aria-label="Dismiss tax deadline banner"
+                className="p-1 text-white/60 hover:text-white hover:bg-white/10 rounded transition-colors cursor-pointer"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-22 gap-8">
           {/* Logo — Stylized 3D Transparent Animated 'T' Component + Cursive 'Taxiva LLC' UI/UX Branding */}
@@ -316,6 +625,24 @@ export default function Header() {
                   <X className="w-5 h-5" />
                 </button>
               </div>
+
+              {/* Mobile Drawer Dynamic Tax Deadline Urgency Strip */}
+              {currentDeadline && (
+                <div className="px-4 py-3 bg-[#0f172a] text-white border-b border-white/10">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-300">
+                      <Clock className="w-3 h-3" />
+                      <span>Next IRS Cutoff • Due {currentDeadline.formattedDate}</span>
+                    </div>
+                    <span className="font-mono text-[11px] font-bold text-[#93c5fd] tabular-nums">
+                      {countdown.days}d {countdown.hours}h left
+                    </span>
+                  </div>
+                  <div className="text-xs font-bold text-white truncate">
+                    {currentDeadline.title}
+                  </div>
+                </div>
+              )}
 
               {/* Drawer Top Priority Action Cards: Get in Touch & Client Login */}
               <div className="p-4 bg-gradient-to-b from-[#eff6ff] to-white border-b border-[#dbeafe] space-y-2.5">
