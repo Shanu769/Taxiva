@@ -222,10 +222,26 @@ export default function GlobalSearchModal({
     });
   }, [query]);
 
+  // Safe body scroll lock via React lifecycle
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (isOpen) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow || "unset";
+      };
+    }
+  }, [isOpen]);
+
   const handleSelect = (item: SearchItem) => {
     onClose();
     if (item.isExternal) {
-      window.open(item.path, "_blank");
+      const a = document.createElement("a");
+      a.href = item.path;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.click();
     } else if (item.path.startsWith("/#")) {
       navigate("/");
       setTimeout(() => {
@@ -252,8 +268,6 @@ export default function GlobalSearchModal({
     }
   };
 
-  if (!isOpen) return null;
-
   const categoryIcons: Record<string, any> = {
     "Tax Forms": FileText,
     "Tax Tools": Calculator,
@@ -263,15 +277,25 @@ export default function GlobalSearchModal({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-slate-950/60 backdrop-blur-md animate-in fade-in duration-200">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: -10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: -10 }}
-          transition={{ duration: 0.2 }}
-          className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden text-left flex flex-col max-h-[80vh]"
-          onKeyDown={handleKeyDown}
+      {isOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              onClose();
+            }
+          }}
+          className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-slate-950/60 backdrop-blur-md animate-in fade-in duration-200"
         >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden text-left flex flex-col max-h-[80vh]"
+            onKeyDown={handleKeyDown}
+          >
           {/* Top Search Field Bar */}
           <div className="p-4 border-b border-gray-100 flex items-center gap-3 bg-gray-50/50">
             <Search className="w-5 h-5 text-blue-900 shrink-0 ml-2" />
@@ -316,54 +340,89 @@ export default function GlobalSearchModal({
           {/* Search Result List */}
           <div className="p-3 overflow-y-auto max-h-[55vh] space-y-1">
             {filteredResults.length > 0 ? (
-              filteredResults.map((item, index) => {
-                const isSelected = index === selectedIndex;
-                const IconComp = categoryIcons[item.category] || BookOpen;
+              <>
+                {filteredResults.map((item, index) => {
+                  const isSelected = index === selectedIndex;
+                  const IconComp = categoryIcons[item.category] || BookOpen;
 
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => handleSelect(item)}
-                    onMouseEnter={() => setSelectedIndex(index)}
-                    className={`w-full p-3.5 rounded-2xl text-left flex items-start gap-3.5 transition-all ${
-                      isSelected
-                        ? "bg-blue-900 text-white shadow-lg shadow-blue-900/15"
-                        : "hover:bg-gray-50 text-gray-800"
-                    }`}
-                  >
-                    <div className={`p-2.5 rounded-xl shrink-0 mt-0.5 ${
-                      isSelected ? "bg-white/15 text-amber-300" : "bg-blue-50 text-blue-900"
-                    }`}>
-                      <IconComp className="w-4 h-4" />
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${
-                          isSelected ? "bg-white/20 text-white" : "bg-blue-50 text-blue-900"
-                        }`}>
-                          {item.category}
-                        </span>
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleSelect(item)}
+                      onMouseEnter={() => setSelectedIndex(index)}
+                      className={`w-full p-3.5 rounded-2xl text-left flex items-start gap-3.5 transition-all ${
+                        isSelected
+                          ? "bg-blue-900 text-white shadow-lg shadow-blue-900/15"
+                          : "hover:bg-gray-50 text-gray-800"
+                      }`}
+                    >
+                      <div className={`p-2.5 rounded-xl shrink-0 mt-0.5 ${
+                        isSelected ? "bg-white/15 text-amber-300" : "bg-blue-50 text-blue-900"
+                      }`}>
+                        <IconComp className="w-4 h-4" />
                       </div>
-                      <h4 className={`text-sm font-bold truncate ${isSelected ? "text-white" : "text-gray-900"}`}>
-                        {item.title}
-                      </h4>
-                      <p className={`text-xs font-medium line-clamp-1 mt-0.5 ${isSelected ? "text-blue-100" : "text-gray-500"}`}>
-                        {item.description}
-                      </p>
-                    </div>
 
-                    <div className={`shrink-0 self-center ${isSelected ? "text-amber-300" : "text-gray-300"}`}>
-                      {item.isExternal ? <ExternalLink className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-                    </div>
-                  </button>
-                );
-              })
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                            isSelected ? "bg-white/20 text-white" : "bg-blue-50 text-blue-900"
+                          }`}>
+                            {item.category}
+                          </span>
+                        </div>
+                        <h4 className={`text-sm font-bold truncate ${isSelected ? "text-white" : "text-gray-900"}`}>
+                          {item.title}
+                        </h4>
+                        <p className={`text-xs font-medium line-clamp-1 mt-0.5 ${isSelected ? "text-blue-100" : "text-gray-500"}`}>
+                          {item.description}
+                        </p>
+                      </div>
+
+                      <div className={`shrink-0 self-center ${isSelected ? "text-amber-300" : "text-gray-300"}`}>
+                        {item.isExternal ? <ExternalLink className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+                      </div>
+                    </button>
+                  );
+                })}
+
+                {query.trim().length > 1 && (
+                  <div className="pt-2 pb-1 border-t border-gray-100">
+                    <button
+                      onClick={() => {
+                        onClose();
+                        navigate("/tax-tools");
+                      }}
+                      className="w-full p-3 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border border-blue-200 text-blue-900 flex items-center justify-between text-left transition-all"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-blue-900 text-amber-400 rounded-xl">
+                          <Sparkles className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-black">Search live IRS & web regulations for "{query}"</div>
+                          <div className="text-[10px] text-blue-700 font-medium">Powered by gemini-3.8-flash + Google Search Grounding</div>
+                        </div>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-blue-900" />
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="py-12 text-center text-gray-400 font-medium">
-                <Search className="w-8 h-8 mx-auto text-gray-300 mb-2" />
-                <p className="text-sm font-bold text-gray-700">No results found for "{query}"</p>
-                <p className="text-xs text-gray-400 mt-1">Try searching for W-2, FBAR, 1040, or Tax Estimator</p>
+              <div className="py-10 text-center text-gray-400 font-medium space-y-3">
+                <Search className="w-8 h-8 mx-auto text-gray-300 mb-1" />
+                <p className="text-sm font-bold text-gray-700">No static forms found for "{query}"</p>
+                <p className="text-xs text-gray-400">Search real-time IRS & tax regulations via Google Search Grounding</p>
+                <button
+                  onClick={() => {
+                    onClose();
+                    navigate("/tax-tools");
+                  }}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-900 text-white rounded-xl text-xs font-bold shadow-sm hover:bg-blue-800 transition-colors cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Search Live IRS Web Data</span>
+                </button>
               </div>
             )}
           </div>
@@ -381,6 +440,7 @@ export default function GlobalSearchModal({
           </div>
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   );
 }

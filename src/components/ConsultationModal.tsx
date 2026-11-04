@@ -147,44 +147,105 @@ export default function ConsultationModal({
     onClose();
   };
 
-  if (!isOpen) return null;
+  // Safe body scroll lock via React lifecycle
+  React.useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (isOpen) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow || "unset";
+      };
+    }
+  }, [isOpen]);
+
+  // Handle ESC key to dismiss modal
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black/60 backdrop-blur-xs">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 15 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-[#dbeafe] overflow-hidden my-8"
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black/60 backdrop-blur-xs"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="consultation-modal-title"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              onClose();
+            }
+          }}
         >
-          {/* Header Bar */}
-          <div className="bg-[#0f172a] text-white p-6 sm:p-7 relative border-b border-white/10">
-            <button
-              onClick={onClose}
-              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-              aria-label="Close modal"
-            >
-              <X className="w-5 h-5" />
-            </button>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 15 }}
+            transition={{ duration: 0.2 }}
+            className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-[#dbeafe] overflow-hidden my-8"
+          >
+            {/* Header Bar with Clear Step Guidance */}
+            <div className="bg-[#0f172a] text-white p-5 sm:p-7 relative border-b border-white/10">
+              <button
+                type="button"
+                onClick={onClose}
+                className="absolute top-4 right-4 sm:top-5 sm:right-5 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Close modal"
+              >
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
 
-            <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 px-3 py-1 rounded-lg text-[11px] font-extrabold uppercase tracking-widest text-[#93c5fd] mb-2">
-              <Calendar className="w-3.5 h-3.5" />
-              <span>Complimentary Tax Consultation</span>
+              <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 px-3 py-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-[#93c5fd] mb-2">
+                <Calendar className="w-3.5 h-3.5" />
+                <span>Complimentary Tax Consultation • 100% Free</span>
+              </div>
+
+              <h2
+                id="consultation-modal-title"
+                className="text-xl sm:text-2xl lg:text-3xl font-extrabold font-display tracking-tight text-white"
+              >
+                Book a Free 30-Minute Strategy Call
+              </h2>
+
+            {/* 3-Step Clear Guidance Pipeline */}
+            <div className="mt-3 pt-3 border-t border-white/15 grid grid-cols-3 gap-2 text-[10px] sm:text-xs">
+              <div className="flex items-center gap-1.5 text-white font-bold">
+                <span className="w-4 h-4 rounded-full bg-[#2563eb] text-white text-[10px] flex items-center justify-center shrink-0">1</span>
+                <span className="truncate">Pick Expert</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-white/85 font-medium">
+                <span className="w-4 h-4 rounded-full bg-white/20 text-white text-[10px] flex items-center justify-center shrink-0">2</span>
+                <span className="truncate">Date & Slot</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-white/85 font-medium">
+                <span className="w-4 h-4 rounded-full bg-white/20 text-white text-[10px] flex items-center justify-center shrink-0">3</span>
+                <span className="truncate">Get Confirmed</span>
+              </div>
             </div>
-
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-white">
-              Book a Free 30-Minute Call
-            </h2>
-            <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-lg font-medium">
-              Bring last year's return. We'll confirm the plan, flag savings opportunities, and quote your exact flat fee before you commit.
-            </p>
           </div>
 
-          {/* Modal Body */}
-          <div className="p-6 sm:p-8 max-h-[75vh] overflow-y-auto">
+          {/* Modal Body with Mobile Friendly Scroll */}
+          <div className="p-4 sm:p-7 max-h-[80vh] overflow-y-auto">
+            {/* Consultation Value Guarantee Strip */}
+            <div className="bg-[#eff6ff] border border-[#bfdbfe] rounded-2xl p-3 sm:p-3.5 mb-5 flex items-start gap-2.5 text-xs text-[#1e3a8a]">
+              <Sparkles className="w-4 h-4 text-[#1d4ed8] shrink-0 mt-0.5" />
+              <div className="space-y-0.5 leading-relaxed">
+                <p className="font-extrabold text-[#0f172a]">What to expect on your 30-min call:</p>
+                <p className="text-[11px] text-[#334155]">
+                  Direct 1-on-1 advice with your CPA, prior year return deduction check, cross-border treaty review, and an exact flat fee quote before you commit.
+                </p>
+              </div>
+            </div>
+
             {isSuccess ? (
-              <div className="text-center py-8 space-y-4">
+              <div className="text-center py-6 sm:py-8 space-y-4">
                 <AnimatedCheckmark size="xl" variant="emerald" showRipple={true} className="mx-auto" />
                 <h3 className="text-2xl font-extrabold text-[#0f172a] font-display">
                   Consultation Confirmed!
@@ -203,18 +264,21 @@ export default function ConsultationModal({
                 </div>
                 <button
                   onClick={handleReset}
-                  className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-extrabold text-sm px-6 py-3 rounded-xl transition-all shadow-md mt-4"
+                  className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-extrabold text-sm px-6 py-3 rounded-xl transition-all shadow-md mt-4 cursor-pointer"
                 >
                   Done & Return to Site
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                 {/* Expert Selection */}
                 <div>
-                  <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f172a] mb-2">
-                    Select Your Tax Expert
-                  </label>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f172a]">
+                      Step 1: Select Your Tax Expert
+                    </label>
+                    <span className="text-[11px] font-bold text-[#1d4ed8]">All 50 States & Cross-Border</span>
+                  </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {EXPERTS.map((exp) => (
                       <button
@@ -251,7 +315,7 @@ export default function ConsultationModal({
                 {/* Service Selection */}
                 <div>
                   <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f172a] mb-1.5">
-                    Service Area of Interest
+                    Step 2: Service Area of Interest
                   </label>
                   <select
                     value={selectedService}
@@ -299,11 +363,15 @@ export default function ConsultationModal({
                 </div>
 
                 {/* Personal Information */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f172a] mb-1">
-                      Full Name *
-                    </label>
+                <div>
+                  <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f172a] mb-2">
+                    Step 3: Your Contact & Appointment Confirmation Details
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-[#475569] mb-1">
+                        Full Name *
+                      </label>
                     <input
                       type="text"
                       value={fullName}
@@ -355,6 +423,7 @@ export default function ConsultationModal({
                     />
                   </div>
                 </div>
+              </div>
 
                 {/* Submit CTA */}
                 <div className="pt-2">
@@ -375,6 +444,7 @@ export default function ConsultationModal({
           </div>
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   );
 }

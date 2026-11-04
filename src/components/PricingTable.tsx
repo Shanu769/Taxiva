@@ -66,64 +66,64 @@ export default function PricingTable({
   return (
     <div className="w-full bg-[#f6f3ee] py-14 sm:py-20 text-[#0f172a]">
       <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top 3-Tab Segmented Switcher (Exact replica of the blue bar in screenshots) */}
+        {/* Top 3-Tab Segmented Switcher (Single-column stack on mobile, 3-col on sm+) */}
         <div className="max-w-3xl mx-auto mb-10 sm:mb-12 space-y-4">
-          <div className="p-1.5 sm:p-2 bg-[#2563eb] rounded-2xl shadow-lg grid grid-cols-3 gap-1.5 sm:gap-2 text-white">
+          <div className="p-1.5 sm:p-2 bg-[#2563eb] rounded-2xl shadow-lg grid grid-cols-1 sm:grid-cols-3 gap-2 text-white">
             <button
               onClick={() => handleSelectTab("individual")}
-              className={`py-3 px-3 sm:px-6 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+              className={`min-h-[48px] py-3 px-4 sm:px-6 rounded-xl font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 activeTab === "individual"
                   ? "bg-white text-[#1d4ed8] shadow-md"
                   : "text-white/90 hover:text-white hover:bg-white/10"
               }`}
             >
               <User className="w-4 h-4 shrink-0" />
-              <span className="truncate">Individual tax filing</span>
+              <span>Individual tax filing</span>
             </button>
 
             <button
               onClick={() => handleSelectTab("business")}
-              className={`py-3 px-3 sm:px-6 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+              className={`min-h-[48px] py-3 px-4 sm:px-6 rounded-xl font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 activeTab === "business"
                   ? "bg-white text-[#1d4ed8] shadow-md"
                   : "text-white/90 hover:text-white hover:bg-white/10"
               }`}
             >
               <Building2 className="w-4 h-4 shrink-0" />
-              <span className="truncate">Business tax filing</span>
+              <span>Business tax filing</span>
             </button>
 
             <button
               onClick={() => handleSelectTab("bookkeeping")}
-              className={`py-3 px-3 sm:px-6 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+              className={`min-h-[48px] py-3 px-4 sm:px-6 rounded-xl font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 activeTab === "bookkeeping"
                   ? "bg-white text-[#1d4ed8] shadow-md"
                   : "text-white/90 hover:text-white hover:bg-white/10"
               }`}
             >
               <BookOpen className="w-4 h-4 shrink-0" />
-              <span className="truncate">Bookkeeping</span>
+              <span>Bookkeeping</span>
             </button>
           </div>
 
           {/* Dynamic Referral Reward Strip Synced with Active Tab */}
-          <div className="bg-white border border-[#bfdbfe] rounded-2xl px-5 py-3.5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center shrink-0">
+          <div className="bg-white border border-[#bfdbfe] rounded-2xl p-4 sm:px-5 sm:py-3.5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-start sm:items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
                 <Gift className="w-4 h-4" />
               </div>
               <div>
                 <p className="text-sm font-black text-[#0f172a] font-display">
                   {referralDetails.title}
                 </p>
-                <p className="text-xs text-[#475569] font-medium">
+                <p className="text-xs text-[#475569] font-medium leading-relaxed">
                   {referralDetails.desc}
                 </p>
               </div>
             </div>
             <Link
               to="/get-started"
-              className="inline-flex items-center justify-center gap-1.5 bg-[#eff6ff] hover:bg-[#dbeafe] text-[#1d4ed8] px-4 py-2 rounded-xl text-xs font-extrabold transition-colors shrink-0"
+              className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-1.5 bg-[#eff6ff] hover:bg-[#dbeafe] text-[#1d4ed8] px-5 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold transition-colors shrink-0"
             >
               <span>Refer Now</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -134,9 +134,9 @@ export default function PricingTable({
         {/* Tab 1: Individual tax filing */}
         {activeTab === "individual" && (
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" as const }}
             className="space-y-12"
           >
             {/* Header */}
@@ -195,7 +195,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#f1f5f9]">
                   <button
                     onClick={() => handleCta("Individual Base Plan")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
                   >
                     <span>Start with Base Plan</span>
                     <ArrowRight className="w-4 h-4" />
@@ -204,7 +204,7 @@ export default function PricingTable({
               </div>
 
               {/* Card 2: Plus (MOST POPULAR) */}
-              <div className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-[#2563eb] shadow-xl relative flex flex-col justify-between ring-4 ring-[#2563eb]/10">
+              <div className="bg-white rounded-3xl p-5 sm:p-7 border-2 border-[#2563eb] shadow-xl relative flex flex-col justify-between ring-4 ring-[#2563eb]/10">
                 <div className="absolute -top-3.5 left-6 bg-[#2563eb] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
                   Most Popular
                 </div>
@@ -255,7 +255,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#f1f5f9]">
                   <button
                     onClick={() => handleCta("Individual Plus Plan")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#ffedd5] hover:bg-[#fed7aa] text-[#9a3412] flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98] cursor-pointer"
                   >
                     <span>Start with Plus</span>
                     <ArrowRight className="w-4 h-4" />
@@ -311,7 +311,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#f1f5f9]">
                   <button
                     onClick={() => handleCta("Individual Premium Plan")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
                   >
                     <span>Start with Premium</span>
                     <ArrowRight className="w-4 h-4" />
@@ -320,7 +320,7 @@ export default function PricingTable({
               </div>
 
               {/* Card 4: Custom */}
-              <div className="bg-[#faf8f5] rounded-3xl p-6 sm:p-7 border-2 border-dashed border-[#cbd5e1] shadow-xs flex flex-col justify-between">
+              <div className="bg-[#faf8f5] rounded-3xl p-5 sm:p-7 border-2 border-dashed border-[#cbd5e1] shadow-xs flex flex-col justify-between">
                 <div>
                   <h3 className="text-xl font-black text-[#0f172a]">Custom</h3>
                   <p className="text-xs font-bold text-[#2563eb] mt-1">NRI, multi-state and complex returns</p>
@@ -359,7 +359,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#e2e8f0]">
                   <button
                     onClick={() => handleCta("Individual Custom Quote")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-white hover:bg-slate-100 text-[#0f172a] border border-[#cbd5e1] flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-white hover:bg-slate-100 text-[#0f172a] border border-[#cbd5e1] flex items-center justify-center gap-2 transition-all shadow-xs active:scale-[0.98] cursor-pointer"
                   >
                     <span>Get a custom quote</span>
                     <ArrowRight className="w-4 h-4" />
@@ -371,36 +371,36 @@ export default function PricingTable({
             {/* Bottom Row: Add-ons Table (Left) + 2 Action Cards (Right) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               {/* Individual Add-ons Table */}
-              <div className="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-[#e2e8f0] shadow-sm">
+              <div className="lg:col-span-8 bg-white rounded-3xl p-5 sm:p-8 border border-[#e2e8f0] shadow-sm">
                 <h3 className="text-xl font-black text-[#0f172a] mb-5 font-display">Individual add-ons</h3>
                 <div className="divide-y divide-[#f1f5f9]">
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Additional state return</span>
-                    <span className="font-extrabold text-[#0f172a]">$50</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$50</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Additional rental property or K-1</span>
-                    <span className="font-extrabold text-[#0f172a]">$50 each</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$50 each</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">FBAR (FinCEN 114)</span>
-                    <span className="font-extrabold text-[#0f172a]">$75</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$75</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Form 8938 foreign assets</span>
-                    <span className="font-extrabold text-[#0f172a]">$100</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$100</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">ITIN application for spouse or dependent</span>
-                    <span className="font-extrabold text-[#0f172a]">$150</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$150</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Amended return (1040-X)</span>
-                    <span className="font-extrabold text-[#0f172a]">from $199</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">from $199</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Extension filing</span>
-                    <span className="font-extrabold text-[#16a34a]">Free with any plan</span>
+                    <span className="font-extrabold text-[#16a34a] sm:text-right shrink-0">Free with any plan</span>
                   </div>
                 </div>
 
@@ -412,7 +412,7 @@ export default function PricingTable({
               {/* Right Side Cards */}
               <div className="lg:col-span-4 space-y-6">
                 {/* Estimator Card */}
-                <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#e2e8f0] shadow-sm">
+                <div className="bg-white rounded-3xl p-5 sm:p-7 border border-[#e2e8f0] shadow-sm">
                   <span className="text-[10px] font-black uppercase tracking-widest text-[#2563eb] block mb-2">
                     Not sure which plan?
                   </span>
@@ -424,7 +424,7 @@ export default function PricingTable({
                   </p>
                   <Link
                     to="/tax-tools"
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-1.5 transition-all shadow-sm"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98]"
                   >
                     <span>Open the estimator</span>
                     <ArrowRight className="w-4 h-4" />
@@ -432,7 +432,7 @@ export default function PricingTable({
                 </div>
 
                 {/* Free 30-min call card */}
-                <div className="bg-[#0f172a] text-white rounded-3xl p-6 sm:p-7 shadow-lg">
+                <div className="bg-[#0f172a] text-white rounded-3xl p-5 sm:p-7 shadow-lg">
                   <span className="text-[10px] font-black uppercase tracking-widest text-[#93c5fd] block mb-2">
                     Prefer to talk first?
                   </span>
@@ -450,7 +450,7 @@ export default function PricingTable({
                         navigate("/get-started?type=consultation");
                       }
                     }}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-white hover:bg-slate-100 text-[#0f172a] flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-white hover:bg-slate-100 text-[#0f172a] flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
                   >
                     <span>Book a free call</span>
                     <ArrowRight className="w-4 h-4" />
@@ -464,9 +464,9 @@ export default function PricingTable({
         {/* Tab 2: Business tax filing */}
         {activeTab === "business" && (
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" as const }}
             className="space-y-12"
           >
             {/* Header */}
@@ -525,7 +525,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#f1f5f9]">
                   <button
                     onClick={() => handleCta("Business Starter Plan")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
                   >
                     <span>Start with Starter</span>
                     <ArrowRight className="w-4 h-4" />
@@ -534,7 +534,7 @@ export default function PricingTable({
               </div>
 
               {/* Card 2: Growth (MOST POPULAR) */}
-              <div className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-[#2563eb] shadow-xl relative flex flex-col justify-between ring-4 ring-[#2563eb]/10">
+              <div className="bg-white rounded-3xl p-5 sm:p-7 border-2 border-[#2563eb] shadow-xl relative flex flex-col justify-between ring-4 ring-[#2563eb]/10">
                 <div className="absolute -top-3.5 left-6 bg-[#2563eb] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
                   Most Popular
                 </div>
@@ -585,7 +585,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#f1f5f9]">
                   <button
                     onClick={() => handleCta("Business Growth Plan")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#ffedd5] hover:bg-[#fed7aa] text-[#9a3412] flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98] cursor-pointer"
                   >
                     <span>Start with Growth</span>
                     <ArrowRight className="w-4 h-4" />
@@ -594,7 +594,7 @@ export default function PricingTable({
               </div>
 
               {/* Card 3: Scale */}
-              <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#e2e8f0] shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="bg-white rounded-3xl p-5 sm:p-7 border border-[#e2e8f0] shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div>
                   <h3 className="text-xl font-black text-[#0f172a]">Scale</h3>
                   <p className="text-xs font-bold text-[#2563eb] mt-1">C corporation or multi-entity</p>
@@ -637,7 +637,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#f1f5f9]">
                   <button
                     onClick={() => handleCta("Business Scale Plan")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
                   >
                     <span>Start with Scale</span>
                     <ArrowRight className="w-4 h-4" />
@@ -646,7 +646,7 @@ export default function PricingTable({
               </div>
 
               {/* Card 4: Custom */}
-              <div className="bg-[#faf8f5] rounded-3xl p-6 sm:p-7 border-2 border-dashed border-[#cbd5e1] shadow-xs flex flex-col justify-between">
+              <div className="bg-[#faf8f5] rounded-3xl p-5 sm:p-7 border-2 border-dashed border-[#cbd5e1] shadow-xs flex flex-col justify-between">
                 <div>
                   <h3 className="text-xl font-black text-[#0f172a]">Custom</h3>
                   <p className="text-xs font-bold text-[#2563eb] mt-1">Five or more owners, groups, foreign subsidiaries</p>
@@ -685,7 +685,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#e2e8f0]">
                   <button
                     onClick={() => handleCta("Business Custom Quote")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-white hover:bg-slate-100 text-[#0f172a] border border-[#cbd5e1] flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-white hover:bg-slate-100 text-[#0f172a] border border-[#cbd5e1] flex items-center justify-center gap-2 transition-all shadow-xs active:scale-[0.98] cursor-pointer"
                   >
                     <span>Get a custom quote</span>
                     <ArrowRight className="w-4 h-4" />
@@ -697,32 +697,32 @@ export default function PricingTable({
             {/* Bottom Row: Business Add-ons Table + Side Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               {/* Business Add-ons Table */}
-              <div className="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-[#e2e8f0] shadow-sm">
+              <div className="lg:col-span-8 bg-white rounded-3xl p-5 sm:p-8 border border-[#e2e8f0] shadow-sm">
                 <h3 className="text-xl font-black text-[#0f172a] mb-5 font-display">Business add-ons</h3>
                 <div className="divide-y divide-[#f1f5f9]">
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Additional state return</span>
-                    <span className="font-extrabold text-[#0f172a]">$150</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$150</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Additional owner K-1</span>
-                    <span className="font-extrabold text-[#0f172a]">$75 each</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$75 each</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Owner&apos;s personal return (bundled)</span>
-                    <span className="font-extrabold text-[#2563eb]">$125 off the individual plan</span>
+                    <span className="font-extrabold text-[#2563eb] sm:text-right shrink-0">$125 off the individual plan</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Late S corp election (Form 2553 with relief)</span>
-                    <span className="font-extrabold text-[#0f172a]">$350</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$350</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Prior-year catch-up return</span>
-                    <span className="font-extrabold text-[#0f172a]">from $500</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">from $500</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Extension filing</span>
-                    <span className="font-extrabold text-[#16a34a]">Free with any plan</span>
+                    <span className="font-extrabold text-[#16a34a] sm:text-right shrink-0">Free with any plan</span>
                   </div>
                 </div>
 
@@ -733,7 +733,7 @@ export default function PricingTable({
 
               {/* Side Cards */}
               <div className="lg:col-span-4 space-y-6">
-                <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#e2e8f0] shadow-sm">
+                <div className="bg-white rounded-3xl p-5 sm:p-7 border border-[#e2e8f0] shadow-sm">
                   <span className="text-[10px] font-black uppercase tracking-widest text-[#2563eb] block mb-2">
                     Not sure which plan?
                   </span>
@@ -745,14 +745,14 @@ export default function PricingTable({
                   </p>
                   <Link
                     to="/tax-tools"
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-1.5 transition-all shadow-sm"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98]"
                   >
                     <span>Open the estimator</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
 
-                <div className="bg-[#0f172a] text-white rounded-3xl p-6 sm:p-7 shadow-lg">
+                <div className="bg-[#0f172a] text-white rounded-3xl p-5 sm:p-7 shadow-lg">
                   <span className="text-[10px] font-black uppercase tracking-widest text-[#93c5fd] block mb-2">
                     Prefer to talk first?
                   </span>
@@ -770,7 +770,7 @@ export default function PricingTable({
                         navigate("/get-started?type=consultation");
                       }
                     }}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-white hover:bg-slate-100 text-[#0f172a] flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-white hover:bg-slate-100 text-[#0f172a] flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
                   >
                     <span>Book a free call</span>
                     <ArrowRight className="w-4 h-4" />
@@ -784,9 +784,9 @@ export default function PricingTable({
         {/* Tab 3: Bookkeeping */}
         {activeTab === "bookkeeping" && (
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.7, ease: "easeOut" as const }}
             className="space-y-12"
           >
             {/* Header */}
@@ -845,7 +845,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#f1f5f9]">
                   <button
                     onClick={() => handleCta("Bookkeeping Base Plan")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
                   >
                     <span>Start with Base</span>
                     <ArrowRight className="w-4 h-4" />
@@ -854,7 +854,7 @@ export default function PricingTable({
               </div>
 
               {/* Card 2: Essential (MOST POPULAR) */}
-              <div className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-[#2563eb] shadow-xl relative flex flex-col justify-between ring-4 ring-[#2563eb]/10">
+              <div className="bg-white rounded-3xl p-5 sm:p-7 border-2 border-[#2563eb] shadow-xl relative flex flex-col justify-between ring-4 ring-[#2563eb]/10">
                 <div className="absolute -top-3.5 left-6 bg-[#2563eb] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md">
                   Most Popular
                 </div>
@@ -905,7 +905,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#f1f5f9]">
                   <button
                     onClick={() => handleCta("Bookkeeping Essential Plan")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#ffedd5] hover:bg-[#fed7aa] text-[#9a3412] flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-md active:scale-[0.98] cursor-pointer"
                   >
                     <span>Start with Essential</span>
                     <ArrowRight className="w-4 h-4" />
@@ -914,7 +914,7 @@ export default function PricingTable({
               </div>
 
               {/* Card 3: Growth */}
-              <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#e2e8f0] shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="bg-white rounded-3xl p-5 sm:p-7 border border-[#e2e8f0] shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
                 <div>
                   <h3 className="text-xl font-black text-[#0f172a]">Growth</h3>
                   <p className="text-xs font-bold text-[#2563eb] mt-1">Up to $200,000 in monthly expenses</p>
@@ -957,7 +957,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#f1f5f9]">
                   <button
                     onClick={() => handleCta("Bookkeeping Growth Plan")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
                   >
                     <span>Start with Growth</span>
                     <ArrowRight className="w-4 h-4" />
@@ -966,7 +966,7 @@ export default function PricingTable({
               </div>
 
               {/* Card 4: Custom */}
-              <div className="bg-[#faf8f5] rounded-3xl p-6 sm:p-7 border-2 border-dashed border-[#cbd5e1] shadow-xs flex flex-col justify-between">
+              <div className="bg-[#faf8f5] rounded-3xl p-5 sm:p-7 border-2 border-dashed border-[#cbd5e1] shadow-xs flex flex-col justify-between">
                 <div>
                   <h3 className="text-xl font-black text-[#0f172a]">Custom</h3>
                   <p className="text-xs font-bold text-[#2563eb] mt-1">Above $200,000 a month or multi-entity</p>
@@ -1005,7 +1005,7 @@ export default function PricingTable({
                 <div className="pt-6 mt-6 border-t border-[#e2e8f0]">
                   <button
                     onClick={() => handleCta("Bookkeeping Custom Quote")}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-white hover:bg-slate-100 text-[#0f172a] border border-[#cbd5e1] flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-white hover:bg-slate-100 text-[#0f172a] border border-[#cbd5e1] flex items-center justify-center gap-2 transition-all shadow-xs active:scale-[0.98] cursor-pointer"
                   >
                     <span>Get a custom quote</span>
                     <ArrowRight className="w-4 h-4" />
@@ -1017,28 +1017,28 @@ export default function PricingTable({
             {/* Bottom Row: Bookkeeping Add-ons Table + Side Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               {/* Bookkeeping Add-ons Table */}
-              <div className="lg:col-span-8 bg-white rounded-3xl p-6 sm:p-8 border border-[#e2e8f0] shadow-sm">
+              <div className="lg:col-span-8 bg-white rounded-3xl p-5 sm:p-8 border border-[#e2e8f0] shadow-sm">
                 <h3 className="text-xl font-black text-[#0f172a] mb-5 font-display">Bookkeeping add-ons</h3>
                 <div className="divide-y divide-[#f1f5f9]">
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Catch-up bookkeeping</span>
-                    <span className="font-extrabold text-[#0f172a]">$249 per month of backlog (quote above 12 months)</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$249 per month of backlog (quote above 12 months)</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">QuickBooks or Xero migration and clean-up</span>
-                    <span className="font-extrabold text-[#0f172a]">from $299</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">from $299</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">1099-NEC filing for contractors</span>
-                    <span className="font-extrabold text-[#0f172a]">$10 per form, $50 minimum</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$10 per form, $50 minimum</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Sales tax filing</span>
-                    <span className="font-extrabold text-[#0f172a]">$75 per state per filing</span>
+                    <span className="font-extrabold text-[#0f172a] sm:text-right shrink-0">$75 per state per filing</span>
                   </div>
-                  <div className="py-3 flex items-center justify-between text-xs sm:text-sm">
+                  <div className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 text-xs sm:text-sm">
                     <span className="font-medium text-[#334155]">Business tax return for bookkeeping clients</span>
-                    <span className="font-extrabold text-[#2563eb]">15% off any business plan</span>
+                    <span className="font-extrabold text-[#2563eb] sm:text-right shrink-0">15% off any business plan</span>
                   </div>
                 </div>
 
@@ -1049,7 +1049,7 @@ export default function PricingTable({
 
               {/* Side Cards */}
               <div className="lg:col-span-4 space-y-6">
-                <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#e2e8f0] shadow-sm">
+                <div className="bg-white rounded-3xl p-5 sm:p-7 border border-[#e2e8f0] shadow-sm">
                   <span className="text-[10px] font-black uppercase tracking-widest text-[#2563eb] block mb-2">
                     Not sure which plan?
                   </span>
@@ -1061,14 +1061,14 @@ export default function PricingTable({
                   </p>
                   <Link
                     to="/tax-tools"
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-1.5 transition-all shadow-sm"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-[#2563eb] hover:bg-[#1d4ed8] text-white flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98]"
                   >
                     <span>Open the estimator</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
 
-                <div className="bg-[#0f172a] text-white rounded-3xl p-6 sm:p-7 shadow-lg">
+                <div className="bg-[#0f172a] text-white rounded-3xl p-5 sm:p-7 shadow-lg">
                   <span className="text-[10px] font-black uppercase tracking-widest text-[#93c5fd] block mb-2">
                     Prefer to talk first?
                   </span>
@@ -1086,7 +1086,7 @@ export default function PricingTable({
                         navigate("/get-started?type=consultation");
                       }
                     }}
-                    className="w-full py-3 px-4 rounded-xl font-extrabold text-xs sm:text-sm bg-white hover:bg-slate-100 text-[#0f172a] flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                    className="w-full min-h-[48px] py-3.5 px-4 rounded-xl font-black text-sm bg-white hover:bg-slate-100 text-[#0f172a] flex items-center justify-center gap-2 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
                   >
                     <span>Book a free call</span>
                     <ArrowRight className="w-4 h-4" />

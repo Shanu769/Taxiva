@@ -82,7 +82,7 @@ const sectionFadeInUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-60px" },
-  transition: { duration: 0.55, ease: "easeOut" as const }
+  transition: { duration: 0.72, ease: "easeOut" as const }
 };
 
 export default function Home() {
@@ -217,9 +217,11 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.15 }}
-              className="lg:col-span-5 relative min-h-[440px] sm:min-h-[480px] lg:min-h-[500px] flex items-center justify-center [perspective:1200px] select-none"
+              transition={{ duration: 0.72, delay: 0.15, ease: "easeOut" }}
+              className="lg:col-span-5 relative w-full flex items-center justify-center [perspective:1200px] select-none py-2 lg:py-0 overflow-hidden"
             >
+              {/* Inner Scaled Canvas for Mobile View vs Desktop */}
+              <div className="relative w-[360px] sm:w-[440px] lg:w-[480px] h-[390px] sm:h-[480px] lg:h-[500px] flex items-center justify-center scale-[0.85] xs:scale-90 sm:scale-100 origin-center shrink-0">
               {/* Transparent 3D Orbital Rings & Dashed Connector Lines */}
               <motion.div
                 animate={{ rotateZ: [0, 360] }}
@@ -391,7 +393,8 @@ export default function Home() {
                   </div>
                 </div>
               </motion.div>
-            </motion.div>
+            </div>
+          </motion.div>
           </div>
         </div>
       </section>
@@ -582,18 +585,18 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="pt-3.5 border-t border-[#dbeafe] flex items-center justify-between gap-2">
+                  <div className="pt-3.5 border-t border-[#dbeafe] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
                     <Link
                       to={service.link}
-                      className="inline-flex min-h-11 items-center gap-1.5 text-[#1d4ed8] font-extrabold text-sm hover:gap-2 transition-all"
+                      className="inline-flex min-h-[44px] items-center justify-center sm:justify-start px-3 py-2 text-[#1d4ed8] font-extrabold text-sm hover:gap-2 transition-all rounded-xl hover:bg-[#eff6ff]"
                     >
                       <span>Details</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
                     </Link>
 
                     <Link
                       to="/get-started"
-                      className="inline-flex min-h-11 items-center justify-center px-3.5 py-2 bg-[#1d4ed8] text-white rounded-xl text-sm font-extrabold hover:bg-[#1e40af] transition-all"
+                      className="inline-flex min-h-[44px] items-center justify-center px-4 py-2.5 bg-[#1d4ed8] text-white rounded-xl text-sm font-extrabold hover:bg-[#1e40af] transition-all text-center"
                     >
                       Get in touch
                     </Link>
@@ -762,17 +765,17 @@ export default function Home() {
                 </div>
 
                 {/* Action Buttons Row */}
-                <div className="flex flex-wrap items-center gap-4 pt-3">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-3 w-full sm:w-auto">
                   <Link
                     to="/get-started"
-                    className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-8 py-4 rounded-2xl font-black text-sm sm:text-base shadow-xl shadow-blue-900/20 transition-all active:scale-95 inline-flex items-center gap-3"
+                    className="w-full sm:w-auto min-h-[48px] bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-8 py-3.5 rounded-2xl font-black text-sm sm:text-base shadow-xl shadow-blue-900/20 transition-all active:scale-95 inline-flex items-center justify-center gap-3 text-center"
                   >
                     <span>Get in touch</span>
                     <ArrowRight className="w-5 h-5" />
                   </Link>
                   <Link
                     to="/pricing"
-                    className="bg-white hover:bg-[#eff6ff] text-[#0f172a] hover:text-[#1d4ed8] border-2 border-[#bfdbfe] px-7 py-4 rounded-2xl font-extrabold text-sm sm:text-base transition-all shadow-xs"
+                    className="w-full sm:w-auto min-h-[48px] bg-white hover:bg-[#eff6ff] text-[#0f172a] hover:text-[#1d4ed8] border-2 border-[#bfdbfe] px-7 py-3.5 rounded-2xl font-extrabold text-sm sm:text-base transition-all shadow-xs inline-flex items-center justify-center text-center"
                   >
                     Explore Pricing & Plans
                   </Link>
@@ -877,16 +880,16 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                 <Link
                   to="/get-started"
-                  className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-extrabold text-sm px-6 py-3 rounded-xl transition-all"
+                  className="w-full sm:w-auto min-h-[48px] bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-extrabold text-sm px-6 py-3.5 rounded-xl transition-all inline-flex items-center justify-center text-center"
                 >
                   Get in touch
                 </Link>
                 <Link
                   to="/login"
-                  className="bg-white hover:bg-[#eff6ff] text-[#0f172a] border border-[#dbeafe] font-extrabold text-sm px-6 py-3 rounded-xl transition-all"
+                  className="w-full sm:w-auto min-h-[48px] bg-white hover:bg-[#eff6ff] text-[#0f172a] border border-[#dbeafe] font-extrabold text-sm px-6 py-3.5 rounded-xl transition-all inline-flex items-center justify-center text-center"
                 >
                   Open portal
                 </Link>
@@ -926,10 +929,10 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                 <Link
                   to="/get-started"
-                  className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-extrabold text-sm px-6 py-3 rounded-xl transition-all"
+                  className="w-full sm:w-auto min-h-[48px] bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-extrabold text-sm px-6 py-3.5 rounded-xl transition-all inline-flex items-center justify-center text-center"
                 >
                   Get in touch
                 </Link>

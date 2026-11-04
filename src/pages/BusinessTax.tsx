@@ -43,7 +43,7 @@ export default function BusinessTax() {
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.55 }}
+              transition={{ duration: 0.7, ease: "easeOut" as const }}
               className="lg:col-span-6"
             >
               <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-amber-400 bg-blue-950 border border-blue-800/80 px-3.5 py-1.5 rounded-xl mb-4 backdrop-blur-xs">
@@ -59,10 +59,10 @@ export default function BusinessTax() {
                 Taxiva LLC supports small businesses, LLCs, partnerships, S corporations, and consultants with proactive corporate tax planning and multi-state compliance.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
                 <Link
                   to="/get-started"
-                  className="inline-flex items-center gap-2 bg-amber-400 text-slate-950 px-7 py-3.5 rounded-xl font-extrabold text-base hover:bg-amber-300 transition-all shadow-lg active:scale-95"
+                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 bg-amber-400 text-slate-950 px-7 py-3.5 rounded-xl font-extrabold text-base hover:bg-amber-300 transition-all shadow-lg active:scale-95 text-center"
                 >
                   <span>Start Your Business Return</span>
                   <ArrowRight className="w-5 h-5" />
@@ -70,7 +70,7 @@ export default function BusinessTax() {
 
                 <Link
                   to="/pricing"
-                  className="inline-flex items-center gap-2 bg-slate-900 text-white border border-slate-700 hover:border-slate-500 px-6 py-3.5 rounded-xl font-bold text-base transition-all"
+                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 bg-slate-900 text-white border border-slate-700 hover:border-slate-500 px-6 py-3.5 rounded-xl font-bold text-base transition-all text-center"
                 >
                   <span>Explore Pricing</span>
                 </Link>
@@ -80,7 +80,7 @@ export default function BusinessTax() {
             <motion.div
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" as const }}
               className="lg:col-span-6"
             >
               <div className="rounded-3xl overflow-hidden border border-slate-700 shadow-2xl aspect-[16/10] group">
@@ -221,10 +221,10 @@ export default function BusinessTax() {
           <p className="text-white/85 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-medium">
             Let licensed CPAs handle your Form 1120-S, 1065, or 1120 while you focus on scaling your business. Receive your complete draft return within 24–48 hours.
           </p>
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
             <Link
               to="/get-started"
-              className="bg-amber-400 text-slate-950 hover:bg-amber-300 px-8 py-4 rounded-xl font-black text-base shadow-xl transition-all active:scale-95 inline-flex items-center gap-2"
+              className="w-full sm:w-auto min-h-[48px] bg-amber-400 text-slate-950 hover:bg-amber-300 px-8 py-3.5 rounded-xl font-black text-base shadow-xl transition-all active:scale-95 inline-flex items-center justify-center gap-2 text-center"
             >
               <span>Book Business Consultation</span>
               <ArrowRight className="w-5 h-5" />

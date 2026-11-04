@@ -31,7 +31,7 @@ export default function ForeignReporting() {
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.55 }}
+              transition={{ duration: 0.7, ease: "easeOut" as const }}
               className="lg:col-span-6"
             >
               <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-emerald-400 bg-emerald-950/80 border border-emerald-800 px-3.5 py-1.5 rounded-xl mb-4 backdrop-blur-xs">
@@ -47,10 +47,10 @@ export default function ForeignReporting() {
                 Navigate U.S. reporting requirements for overseas bank accounts, NRE/NRO balances, mutual funds, and foreign assets with CPA-verified, 100% penalty-free accuracy.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
                 <Link
                   to="/get-started"
-                  className="inline-flex items-center gap-2 bg-amber-400 text-slate-950 px-7 py-3.5 rounded-xl font-extrabold text-base hover:bg-amber-300 transition-all shadow-lg active:scale-95"
+                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 bg-amber-400 text-slate-950 px-7 py-3.5 rounded-xl font-extrabold text-base hover:bg-amber-300 transition-all shadow-lg active:scale-95 text-center"
                 >
                   <span>Start Your FBAR Filing</span>
                   <ArrowRight className="w-5 h-5" />
@@ -58,7 +58,7 @@ export default function ForeignReporting() {
 
                 <Link
                   to="/pricing"
-                  className="inline-flex items-center gap-2 bg-slate-900 text-white border border-slate-700 hover:border-slate-500 px-6 py-3.5 rounded-xl font-bold text-base transition-all"
+                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 bg-slate-900 text-white border border-slate-700 hover:border-slate-500 px-6 py-3.5 rounded-xl font-bold text-base transition-all text-center"
                 >
                   <span>View Flat Pricing</span>
                 </Link>
@@ -68,7 +68,7 @@ export default function ForeignReporting() {
             <motion.div
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" as const }}
               className="lg:col-span-6"
             >
               <div className="rounded-3xl overflow-hidden border border-slate-700 shadow-2xl aspect-[16/10] group">
@@ -151,7 +151,7 @@ export default function ForeignReporting() {
 
             <Link
               to="/get-started"
-              className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-8 py-4 rounded-xl font-black text-sm shadow-xl active:scale-95 transition-all whitespace-nowrap flex items-center gap-2"
+              className="w-full md:w-auto min-h-[48px] bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-8 py-3.5 rounded-xl font-black text-sm shadow-xl active:scale-95 transition-all whitespace-nowrap flex items-center justify-center gap-2 text-center"
             >
               <span>Get in touch</span>
               <ArrowRight className="w-4 h-4" />

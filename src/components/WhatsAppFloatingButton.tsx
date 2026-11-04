@@ -15,7 +15,7 @@ export default function WhatsAppFloatingButton() {
     "https://wa.me/919963260743?text=Hi%20TAXIVA%20LLC%2C%20I%20would%20like%20to%20consult%20about%20my%20tax%20draft%20or%20inquire%20about%20services.";
 
   return (
-    <div className="fixed bottom-6 left-6 z-40 flex items-center gap-3">
+    <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40 flex items-center gap-3">
       {/* Tooltip badge */}
       <AnimatePresence>
         {showTooltip && (
@@ -46,9 +46,9 @@ export default function WhatsAppFloatingButton() {
         aria-label="Chat on WhatsApp with Taxiva LLC"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
-        className="w-14 h-14 rounded-full bg-[#25d366] text-white shadow-2xl flex items-center justify-center transition-all duration-300 ring-4 ring-[#25d366]/20 hover:bg-[#20ba59] active:scale-95"
+        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25d366] text-white shadow-2xl flex items-center justify-center transition-all duration-300 ring-4 ring-[#25d366]/20 hover:bg-[#20ba59] active:scale-95"
       >
-        <WhatsAppIcon className="w-7 h-7 text-white" />
+        <WhatsAppIcon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
       </motion.a>
     </div>
   );

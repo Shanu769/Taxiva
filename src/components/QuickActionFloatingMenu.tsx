@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   Plus, Camera, UploadCloud, FileText, MessageSquare, 
@@ -28,6 +28,35 @@ export default function QuickActionFloatingMenu({
   onUploadFile
 }: QuickActionProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const menuContainerRef = useRef<HTMLDivElement>(null);
+
+  // Close on ESC key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
+  // Close on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      if (menuContainerRef.current && !menuContainerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener("touchstart", handleOutsideClick, { passive: true });
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
+  }, [isOpen]);
 
   const actions = [
     {
@@ -93,7 +122,7 @@ export default function QuickActionFloatingMenu({
   ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] text-left">
+    <div ref={menuContainerRef} className="fixed bottom-6 right-6 z-[100] text-left">
       <AnimatePresence>
         {isOpen && (
           <>

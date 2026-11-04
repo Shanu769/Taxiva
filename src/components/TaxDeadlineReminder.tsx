@@ -138,7 +138,11 @@ export default function TaxDeadlineReminder() {
     // Google Calendar URL
     const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateFormatted}/${dateFormatted}&details=${details}&add=info@taxiva.co`;
     
-    window.open(googleCalUrl, "_blank");
+    const link = document.createElement("a");
+    link.href = googleCalUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.click();
 
     setSyncedMessage(`Added "${deadline.title}" to Google Calendar!`);
     setTimeout(() => setSyncedMessage(null), 4000);

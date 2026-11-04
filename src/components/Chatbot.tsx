@@ -4,19 +4,28 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { MessageSquare as LucideMessageSquare, X, Send, Loader2, MinusCircle, Maximize2, ExternalLink } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { MessageSquare as LucideMessageSquare, X, Send, Loader2, MinusCircle, Maximize2, ExternalLink, Globe, Sparkles, Search } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/src/lib/utils";
 import ReactMarkdown from "react-markdown";
 import { db } from "../lib/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
+interface GroundedSource {
+  title: string;
+  uri: string;
+}
+
 interface Message {
   role: "user" | "model";
   parts: [{ text: string }];
+  sources?: GroundedSource[];
+  searchQueries?: string[];
 }
 
 export default function Chatbot() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [input, setInput] = useState("");
@@ -40,7 +49,7 @@ export default function Chatbot() {
     if (!customMsg) setInput("");
     setIsLoading(true);
 
-    const lowerMsg = messageToSend.toLowerCase();
+    const lowerMsg = messageToSend.toLowerCase().trim();
 
     // Lead collection logic
     const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
@@ -67,54 +76,30 @@ export default function Chatbot() {
       }
     }
 
-    // Check refund status redirect
-    if (lowerMsg.includes("refund")) {
+    // Direct quick navigation for check refund status click
+    if (lowerMsg === "check refund status" || lowerMsg === "refund status") {
       setTimeout(() => {
         setMessages((prev) => [...prev, { 
           role: "model", 
-          parts: [{ text: "I'm redirecting you to our **Refund & Payment Center** now. You can check your federal and state refund status there! 🚀" }] 
+          parts: [{ text: "Opening our **Refund & Payment Center** now. You can track your official Federal and State tax refund progress directly through IRS and state gateways! 🚀" }] 
         }]);
         setTimeout(() => {
-          window.location.href = "/tax-tools";
-        }, 2000);
-      }, 500);
+          navigate("/tax-tools");
+        }, 1500);
+      }, 300);
       setIsLoading(false);
       return;
     }
 
-    // Start my tax filing
-    if (lowerMsg.includes("start") && lowerMsg.includes("file")) {
+    // Direct quick navigation for upload documents
+    if (lowerMsg === "upload documents" || lowerMsg === "upload docs") {
       setTimeout(() => {
         setMessages((prev) => [...prev, { 
           role: "model", 
-          parts: [{ text: "Taxiva LLC is your expert partner. We provide precise tax filings and wealth-building strategies. Our team ensures 100% accuracy and compliance. You can [fill out our Get Started Google Form](/get-started) and our team will respond automatically!" }] 
+          parts: [{ text: "To upload documents securely, please access your **Canopy Client Portal** or use our secure client portal on the [Client Login page](/login)." }] 
         }]);
         setIsLoading(false);
-      }, 500);
-      return;
-    }
-
-    // Upload documents
-    if (lowerMsg.includes("upload") && lowerMsg.includes("doc")) {
-      setTimeout(() => {
-        setMessages((prev) => [...prev, { 
-          role: "model", 
-          parts: [{ text: "To upload documents securely, please log in to your **Canopy Everything Access Portal**. You can access it via the [Client Login page](/login) or directly [here](https://app.canopytax.com)." }] 
-        }]);
-        setIsLoading(false);
-      }, 500);
-      return;
-    }
-
-    // Pricing
-    if (lowerMsg.includes("pricing") || lowerMsg.includes("cost") || lowerMsg.includes("fee")) {
-      setTimeout(() => {
-        setMessages((prev) => [...prev, { 
-          role: "model", 
-          parts: [{ text: "Our expert tax services are transparent and value-based, starting from just **$89**. For a detailed quote tailored to your specific needs, feel free to ask me more or visit our [Pricing page](/pricing)." }] 
-        }]);
-        setIsLoading(false);
-      }, 500);
+      }, 300);
       return;
     }
 
@@ -130,7 +115,23 @@ export default function Chatbot() {
 
       const data = await response.json();
       if (data.text) {
-        setMessages((prev) => [...prev, { role: "model", parts: [{ text: data.text }] }]);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "model",
+            parts: [{ text: data.text }],
+            sources: Array.isArray(data.sources) ? data.sources : undefined,
+            searchQueries: Array.isArray(data.searchQueries) ? data.searchQueries : undefined,
+          },
+        ]);
+      } else if (data.error) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "model",
+            parts: [{ text: "I'm currently unable to retrieve live search data. Please feel free to reach our team at info@taxiva.co or +1 737-381-2330." }],
+          },
+        ]);
       }
     } catch (error) {
       console.error("Chat error:", error);
@@ -144,14 +145,14 @@ export default function Chatbot() {
   };
 
   const quickOptions = [
+    "2026 IRS Tax Brackets & Standard Deduction",
+    "FBAR Foreign Account Threshold ($10k)",
     "Start my tax filing",
     "Check refund status",
-    "Upload documents",
-    "Ask about pricing",
   ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[100] flex flex-col items-end">
       {/* Chat Window */}
       <AnimatePresence>
         {isOpen && !isMinimized && (
@@ -159,7 +160,7 @@ export default function Chatbot() {
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
-            className="w-[90vw] sm:w-[400px] h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden mb-4"
+            className="w-[calc(100vw-2rem)] sm:w-[400px] max-h-[78vh] sm:h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden mb-3"
           >
             {/* Header */}
             <div className="bg-blue-900 p-4 text-white flex justify-between items-center shrink-0">
@@ -233,6 +234,38 @@ export default function Chatbot() {
                         {msg.parts[0].text}
                       </ReactMarkdown>
                     </div>
+
+                    {msg.sources && msg.sources.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-gray-200/70">
+                        <div className="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-blue-900 mb-1.5">
+                          <Globe className="w-3 h-3 text-blue-600" />
+                          <span>Grounded Sources ({msg.sources.length})</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {msg.sources.slice(0, 4).map((src, sIdx) => {
+                            let domain = "";
+                            try {
+                              domain = new URL(src.uri).hostname.replace("www.", "");
+                            } catch {
+                              domain = "source";
+                            }
+                            return (
+                              <a
+                                key={sIdx}
+                                href={src.uri}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-900 bg-blue-100/80 hover:bg-blue-200 px-2 py-0.5 rounded-md transition-colors group"
+                                title={src.title}
+                              >
+                                <span className="truncate max-w-[130px]">{src.title || domain}</span>
+                                <ExternalLink className="w-2.5 h-2.5 opacity-70 group-hover:opacity-100" />
+                              </a>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -301,11 +334,11 @@ export default function Chatbot() {
             }
           }}
           className={cn(
-            "w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-all duration-500",
+            "w-12 h-12 sm:w-16 sm:h-16 rounded-full shadow-2xl flex items-center justify-center transition-all duration-500",
             isOpen ? "bg-white text-blue-900 rotate-180 border-2 border-blue-900" : "bg-blue-900 text-white shadow-blue-900/30 ring-4 ring-blue-900/10"
           )}
         >
-          {isOpen ? <X className="w-8 h-8" /> : <LucideMessageSquare className="w-8 h-8" />}
+          {isOpen ? <X className="w-6 h-6 sm:w-8 sm:h-8" /> : <LucideMessageSquare className="w-6 h-6 sm:w-8 sm:h-8" />}
         </motion.button>
       </div>
     </div>

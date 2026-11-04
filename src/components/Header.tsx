@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   ChevronDown,
@@ -187,12 +187,16 @@ const taxTools = [
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>("services");
+  const [desktopDropdown, setDesktopDropdown] = useState<"services" | "tools" | null>(null);
+  const [isPinned, setIsPinned] = useState(false);
   const [bannerDismissed, setBannerDismissed] = useState(false);
   const [activeDeadlineIdx, setActiveDeadlineIdx] = useState(0);
   const [isBannerPaused, setIsBannerPaused] = useState(false);
   const [now, setNow] = useState(() => new Date());
   const location = useLocation();
+  const desktopNavRef = useRef<HTMLDivElement>(null);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const upcomingDeadlines = useMemo(() => getUpcomingTaxDeadlines(now), [
     now.getFullYear(),
@@ -237,44 +241,94 @@ export default function Header() {
 
   // Close drawer and dropdowns on route changes
   useEffect(() => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     setIsOpen(false);
-    setActiveDropdown(null);
+    setActiveDropdown("services");
+    setDesktopDropdown(null);
+    setIsPinned(false);
   }, [location.pathname]);
 
-  // Lock body scroll when mobile slide-out menu is open
+  // Outside click listener for desktop dropdowns across mouse and touch
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      if (desktopNavRef.current && !desktopNavRef.current.contains(e.target as Node)) {
+        if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+        setDesktopDropdown(null);
+        setIsPinned(false);
+      }
     };
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick, { passive: true });
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
+  }, []);
+
+  // Automatically dismiss mobile drawer when viewport switches to desktop (>= 1024px)
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Safe body scroll locking via React lifecycle
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (isOpen) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow || "unset";
+      };
+    }
   }, [isOpen]);
 
-  // Handle ESC key to close mobile drawer
+  // Handle ESC key to close mobile drawer & desktop dropdown
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
         setIsOpen(false);
+        setDesktopDropdown(null);
+        setIsPinned(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const toggleDropdown = (name: string) => {
-    setActiveDropdown(activeDropdown === name ? null : name);
+  // Resilient dropdown controllers: supports hover AND explicit click pinning
+  const handleDropdownEnter = (name: "services" | "tools") => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setDesktopDropdown(name);
   };
 
-  const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  const handleDropdownLeave = () => {
+    if (isPinned) return; // Retain menu open if pinned by user click
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(() => {
+      setDesktopDropdown(null);
+    }, 220);
   };
 
-  const handleMobileNavClick = () => {
-    setIsOpen(false);
-    handleScrollToTop();
+  const handleDropdownToggle = (name: "services" | "tools") => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    if (desktopDropdown === name) {
+      setDesktopDropdown(null);
+      setIsPinned(false);
+    } else {
+      setDesktopDropdown(name);
+      setIsPinned(true);
+    }
+  };
+
+  const toggleMobileAccordion = (name: string) => {
+    setActiveDropdown((prev) => (prev === name ? null : name));
   };
 
   const handlePrevDeadline = () => {
@@ -286,7 +340,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#f8fafc]/95 backdrop-blur-md border-b border-[#dbeafe] shadow-xs">
+    <header className="sticky top-0 z-[100] w-full bg-[#f8fafc]/95 backdrop-blur-md border-b border-[#dbeafe] shadow-xs">
       {/* Dynamic Tax Filing Deadline Urgency Banner */}
       {!bannerDismissed && currentDeadline && (
         <div
@@ -402,7 +456,6 @@ export default function Header() {
 
               <Link
                 to="/get-started"
-                onClick={handleScrollToTop}
                 className="inline-flex items-center gap-1 bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-2.5 sm:px-3 py-1 rounded-md font-extrabold text-[11px] transition-all shadow-xs whitespace-nowrap"
               >
                 <span>File Now</span>
@@ -424,13 +477,12 @@ export default function Header() {
       )}
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-22 gap-8">
+        <div className="flex justify-between items-center h-22 gap-4 lg:gap-6 xl:gap-8">
           {/* Logo — Stylized 3D Transparent Animated 'T' Component + Cursive 'Taxiva LLC' UI/UX Branding */}
           <div className="flex-shrink-0 flex items-center">
             <Link
               to="/"
-              onClick={handleScrollToTop}
-              className="flex items-center gap-3 group whitespace-nowrap shrink-0"
+              className="flex items-center gap-2.5 sm:gap-3 group whitespace-nowrap shrink-0"
             >
               <LogoAnimation size="md" variant="header" />
 
@@ -443,125 +495,283 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden xl:flex items-center gap-6 2xl:gap-8">
+          {/* Desktop Navigation (responsive from lg / 1024px upwards) */}
+          <nav ref={desktopNavRef} className="hidden lg:flex items-center gap-3 xl:gap-6 2xl:gap-8">
             <Link
               to="/"
-              onClick={handleScrollToTop}
-              className="text-[#0f172a] hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
+              onClick={() => setDesktopDropdown(null)}
+              className="text-[#0f172a] hover:text-[#1d4ed8] text-xs xl:text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
             >
               Home
             </Link>
 
-            {/* Services Dropdown */}
-            <div className="relative group py-4">
-              <button className="flex items-center gap-1 text-[#0f172a] group-hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer">
-                Services <ChevronDown className="w-4 h-4 text-[#1d4ed8] group-hover:text-[#0f172a]" />
-              </button>
-              <div
+            {/* Services Dropdown - Resilient Click & Hover Pop-up with Grace Timeout */}
+            <div
+              className="relative py-4"
+              onMouseEnter={() => handleDropdownEnter("services")}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <button
+                type="button"
+                id="services-menu-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleDropdownToggle("services");
+                }}
+                aria-expanded={desktopDropdown === "services"}
+                aria-haspopup="true"
+                aria-controls="services-dropdown-panel"
                 className={cn(
-                  "absolute top-full left-0 w-72 bg-white border border-[#dbeafe] shadow-xl rounded-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                  "flex items-center gap-1.5 text-xs xl:text-sm 2xl:text-base font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer px-2.5 xl:px-3 py-1.5 rounded-xl border select-none",
+                  desktopDropdown === "services"
+                    ? "text-[#1d4ed8] bg-[#eff6ff] border-[#bfdbfe] shadow-xs"
+                    : "text-[#0f172a] hover:text-[#1d4ed8] hover:bg-[#f1f5f9] border-transparent"
                 )}
               >
-                {services.map((item) => (
+                <span>Services</span>
+                <ChevronDown
+                  className={cn(
+                    "w-4 h-4 text-[#1d4ed8] transition-transform duration-200",
+                    desktopDropdown === "services" && "rotate-180"
+                  )}
+                />
+              </button>
+
+              <div
+                id="services-dropdown-panel"
+                role="menu"
+                aria-labelledby="services-menu-button"
+                onMouseEnter={() => handleDropdownEnter("services")}
+                onMouseLeave={handleDropdownLeave}
+                className={cn(
+                  "absolute top-full left-0 w-80 xl:w-88 bg-white border-2 border-[#bfdbfe] shadow-2xl rounded-2xl p-2.5 transition-all duration-200 z-[110]",
+                  desktopDropdown === "services"
+                    ? "opacity-100 visible translate-y-0 scale-100 pointer-events-auto"
+                    : "opacity-0 invisible -translate-y-2 scale-95 pointer-events-none"
+                )}
+              >
+                <div className="px-3 py-2 text-[11px] font-black uppercase tracking-wider text-[#1d4ed8] border-b border-[#f1f5f9] flex items-center justify-between mb-1">
+                  <span>Taxiva Tax Practices</span>
+                  <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                    Licensed CPAs
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  {services.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      role="menuitem"
+                      onClick={() => {
+                        setDesktopDropdown(null);
+                        setIsPinned(false);
+                      }}
+                      className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs xl:text-sm font-semibold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] transition-all group"
+                    >
+                      <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#1d4ed8] group-hover:bg-[#1d4ed8] group-hover:text-white flex items-center justify-center shrink-0 transition-colors shadow-2xs">
+                        <item.icon className="w-4 h-4" />
+                      </div>
+                      <div className="truncate">
+                        <div className="font-extrabold text-[#0f172a] group-hover:text-[#1d4ed8] text-xs sm:text-sm">
+                          {item.name}
+                        </div>
+                        <div className="text-[11px] text-[#64748b] font-medium truncate">
+                          {item.subtitle}
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+                {/* View All Services Overview CTA Footer */}
+                <div className="mt-2 pt-2 border-t border-[#f1f5f9]">
                   <Link
-                    key={item.name}
-                    to={item.href}
-                    onClick={handleScrollToTop}
-                    className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] transition-colors"
+                    to="/services"
+                    role="menuitem"
+                    onClick={() => {
+                      setDesktopDropdown(null);
+                      setIsPinned(false);
+                    }}
+                    className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#f8fafc] hover:bg-[#eff6ff] text-[#1d4ed8] text-xs font-extrabold transition-colors border border-[#dbeafe]"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#1d4ed8] flex items-center justify-center shrink-0">
-                      <item.icon className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="font-bold">{item.name}</div>
-                      <div className="text-[11px] text-[#64748b] font-medium">{item.subtitle}</div>
-                    </div>
+                    <span>View All Services & Pricing</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
-                ))}
+                </div>
               </div>
             </div>
 
             <Link
               to="/pricing"
-              onClick={handleScrollToTop}
-              className="text-[#0f172a] hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
+              onClick={() => {
+                setDesktopDropdown(null);
+                setIsPinned(false);
+              }}
+              className="text-[#0f172a] hover:text-[#1d4ed8] text-xs xl:text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
             >
               Pricing
             </Link>
 
-            {/* Refund & Payment Center Dropdown */}
-            <div className="relative group py-4">
-              <button className="flex items-center gap-1 text-[#0f172a] group-hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0 cursor-pointer">
-                Refund & Payment Center <ChevronDown className="w-4 h-4 text-[#1d4ed8] group-hover:text-[#0f172a]" />
-              </button>
-              <div
+            {/* Refund & Payment Center Dropdown - Resilient Click & Hover Pop-up */}
+            <div
+              className="relative py-4"
+              onMouseEnter={() => handleDropdownEnter("tools")}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <button
+                type="button"
+                id="tools-menu-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleDropdownToggle("tools");
+                }}
+                aria-expanded={desktopDropdown === "tools"}
+                aria-haspopup="true"
+                aria-controls="tools-dropdown-panel"
                 className={cn(
-                  "absolute top-full left-0 w-72 bg-white border border-[#dbeafe] shadow-xl rounded-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+                  "flex items-center gap-1.5 text-xs xl:text-sm 2xl:text-base font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer px-2.5 xl:px-3 py-1.5 rounded-xl border select-none",
+                  desktopDropdown === "tools"
+                    ? "text-[#1d4ed8] bg-[#eff6ff] border-[#bfdbfe] shadow-xs"
+                    : "text-[#0f172a] hover:text-[#1d4ed8] hover:bg-[#f1f5f9] border-transparent"
                 )}
               >
-                {taxTools.map((item) =>
-                  item.href.startsWith("http") ? (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between px-4 py-2.5 text-sm font-semibold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] transition-colors"
-                    >
-                      <span>{item.name}</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-[#1d4ed8]/70" />
-                    </a>
-                  ) : (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      onClick={handleScrollToTop}
-                      className="block px-4 py-2.5 text-sm font-bold text-[#1d4ed8] bg-[#f8fafc] border-t border-[#eff6ff] hover:bg-[#eff6ff] transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-                  )
+                <span>Refund & Payment Center</span>
+                <ChevronDown
+                  className={cn(
+                    "w-4 h-4 text-[#1d4ed8] transition-transform duration-200",
+                    desktopDropdown === "tools" && "rotate-180"
+                  )}
+                />
+              </button>
+
+              <div
+                id="tools-dropdown-panel"
+                role="menu"
+                aria-labelledby="tools-menu-button"
+                onMouseEnter={() => handleDropdownEnter("tools")}
+                onMouseLeave={handleDropdownLeave}
+                className={cn(
+                  "absolute top-full left-0 w-80 xl:w-88 bg-white border-2 border-[#bfdbfe] shadow-2xl rounded-2xl p-2.5 transition-all duration-200 z-[110]",
+                  desktopDropdown === "tools"
+                    ? "opacity-100 visible translate-y-0 scale-100 pointer-events-auto"
+                    : "opacity-0 invisible -translate-y-2 scale-95 pointer-events-none"
                 )}
+              >
+                <div className="px-3 py-2 text-[11px] font-black uppercase tracking-wider text-[#1d4ed8] border-b border-[#f1f5f9] flex items-center justify-between mb-1">
+                  <span>Official Portals</span>
+                  <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                    Direct Links
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  {taxTools.map((item) =>
+                    item.href.startsWith("http") ? (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        role="menuitem"
+                        onClick={() => {
+                          setDesktopDropdown(null);
+                          setIsPinned(false);
+                        }}
+                        className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] transition-all group"
+                      >
+                        <div className="flex items-center gap-2 truncate">
+                          <span className="text-[10px] font-bold bg-[#f1f5f9] text-[#1e40af] px-1.5 py-0.5 rounded border border-[#dbeafe]">
+                            {item.badge}
+                          </span>
+                          <span className="truncate">{item.name}</span>
+                        </div>
+                        <ExternalLink className="w-3.5 h-3.5 text-[#1d4ed8]/80 group-hover:text-[#1d4ed8] shrink-0" />
+                      </a>
+                    ) : (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        role="menuitem"
+                        onClick={() => {
+                          setDesktopDropdown(null);
+                          setIsPinned(false);
+                        }}
+                        className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-[#1d4ed8] bg-[#f8fafc] border border-[#dbeafe] hover:bg-[#eff6ff] transition-all"
+                      >
+                        <span>{item.name}</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-[#1d4ed8]" />
+                      </Link>
+                    )
+                  )}
+                </div>
+
+                {/* Hub Link Footer */}
+                <div className="mt-2 pt-2 border-t border-[#f1f5f9]">
+                  <Link
+                    to="/tax-tools"
+                    role="menuitem"
+                    onClick={() => {
+                      setDesktopDropdown(null);
+                      setIsPinned(false);
+                    }}
+                    className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#f8fafc] hover:bg-[#eff6ff] text-[#1d4ed8] text-xs font-extrabold transition-colors border border-[#dbeafe]"
+                  >
+                    <span>Open All Tax Tools & Gateways</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
             </div>
 
             <Link
               to="/contact"
-              onClick={handleScrollToTop}
-              className="text-[#0f172a] hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
+              onClick={() => {
+                setDesktopDropdown(null);
+                setIsPinned(false);
+              }}
+              className="text-[#0f172a] hover:text-[#1d4ed8] text-xs xl:text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
             >
               Contact Us
             </Link>
             <Link
               to="/about"
-              onClick={handleScrollToTop}
-              className="text-[#0f172a] hover:text-[#1d4ed8] text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
+              onClick={() => {
+                setDesktopDropdown(null);
+                setIsPinned(false);
+              }}
+              className="text-[#0f172a] hover:text-[#1d4ed8] text-xs xl:text-sm 2xl:text-base font-bold transition-colors whitespace-nowrap shrink-0"
             >
               About Us
             </Link>
           </nav>
 
-          {/* Desktop CTA Buttons */}
-          <div className="hidden xl:flex items-center gap-3 shrink-0">
+          {/* Desktop CTA Buttons (visible from lg upwards) */}
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
             <Link
               to="/login"
-              onClick={handleScrollToTop}
-              className="inline-flex items-center justify-center bg-white border border-[#bfdbfe] hover:border-[#1d4ed8] hover:bg-[#eff6ff] text-[#0f172a] px-5 py-2.5 rounded-xl text-sm 2xl:text-base font-extrabold transition-all shadow-2xs active:scale-95 whitespace-nowrap shrink-0"
+              className="inline-flex items-center justify-center bg-white border border-[#bfdbfe] hover:border-[#1d4ed8] hover:bg-[#eff6ff] text-[#0f172a] px-3.5 xl:px-5 py-2 xl:py-2.5 rounded-xl text-xs xl:text-sm 2xl:text-base font-extrabold transition-all shadow-2xs active:scale-95 whitespace-nowrap shrink-0"
             >
               Client Login
             </Link>
             <Link
               to="/get-started"
-              onClick={handleScrollToTop}
-              className="inline-flex items-center justify-center bg-[#1d4ed8] text-white px-5 py-2.5 rounded-xl text-sm 2xl:text-base font-extrabold hover:bg-[#0f172a] transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0"
+              className="inline-flex items-center justify-center bg-[#1d4ed8] text-white px-3.5 xl:px-5 py-2 xl:py-2.5 rounded-xl text-xs xl:text-sm 2xl:text-base font-extrabold hover:bg-[#0f172a] transition-all shadow-md active:scale-95 whitespace-nowrap shrink-0"
             >
               Get in touch
             </Link>
           </div>
 
-          {/* Mobile Right Bar: Fast Access 'Get in touch' + Hamburger Toggle */}
-          <div className="xl:hidden flex items-center gap-2 sm:gap-3">
+          {/* Mobile Right Bar: Tablet Quick Access + Fast 'Get in touch' + Hamburger Toggle */}
+          <div className="lg:hidden flex items-center gap-2 sm:gap-3">
+            <Link
+              to="/services"
+              className="hidden sm:inline-flex items-center gap-1 bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe] hover:bg-[#dbeafe] px-3 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap"
+            >
+              <span>Services</span>
+            </Link>
             <Link
               to="/get-started"
               className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all shadow-md active:scale-95 whitespace-nowrap"
@@ -570,6 +780,7 @@ export default function Header() {
             </Link>
 
             <button
+              type="button"
               onClick={() => setIsOpen(true)}
               aria-label="Open mobile navigation menu"
               aria-expanded={isOpen}
@@ -581,10 +792,10 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Slide-Out Hamburger Drawer for Mobile Devices */}
+      {/* Slide-Out Hamburger Drawer for Mobile Devices (< 1024px) */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-50 xl:hidden">
+          <div className="fixed inset-0 z-[120] lg:hidden">
             {/* Backdrop Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -680,7 +891,7 @@ export default function Header() {
                 <div className="space-y-1 pb-2">
                   <Link
                     to="/"
-                    onClick={handleMobileNavClick}
+                    onClick={() => setIsOpen(false)}
                     className="flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors"
                   >
                     <span>Home</span>
@@ -689,7 +900,8 @@ export default function Header() {
                   {/* Expandable Services Accordion */}
                   <div className="rounded-xl overflow-hidden">
                     <button
-                      onClick={() => toggleDropdown("services")}
+                      type="button"
+                      onClick={() => toggleMobileAccordion("services")}
                       className="w-full flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors cursor-pointer"
                     >
                       <span>Services</span>
@@ -714,7 +926,7 @@ export default function Header() {
                             <Link
                               key={item.name}
                               to={item.href}
-                              onClick={handleMobileNavClick}
+                              onClick={() => setIsOpen(false)}
                               className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-[#334155] hover:text-[#1d4ed8] hover:bg-white rounded-lg transition-colors"
                             >
                               <item.icon className="w-3.5 h-3.5 text-[#1d4ed8] shrink-0" />
@@ -724,6 +936,14 @@ export default function Header() {
                               </div>
                             </Link>
                           ))}
+                          <Link
+                            to="/services"
+                            onClick={() => setIsOpen(false)}
+                            className="flex items-center justify-between px-3 py-2 text-xs font-bold text-[#1d4ed8] bg-white rounded-lg border border-[#bfdbfe] mt-1"
+                          >
+                            <span>View All 4 Services Overview</span>
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -731,7 +951,7 @@ export default function Header() {
 
                   <Link
                     to="/pricing"
-                    onClick={handleMobileNavClick}
+                    onClick={() => setIsOpen(false)}
                     className="flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors"
                   >
                     <span>Pricing & Plans</span>
@@ -740,7 +960,8 @@ export default function Header() {
                   {/* Expandable Refund & Payment Center Accordion */}
                   <div className="rounded-xl overflow-hidden">
                     <button
-                      onClick={() => toggleDropdown("tools")}
+                      type="button"
+                      onClick={() => toggleMobileAccordion("tools")}
                       className="w-full flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors cursor-pointer"
                     >
                       <span>Refund & Payment Center</span>
@@ -777,7 +998,7 @@ export default function Header() {
                               <Link
                                 key={item.name}
                                 to={item.href}
-                                onClick={handleMobileNavClick}
+                                onClick={() => setIsOpen(false)}
                                 className="block px-3 py-2 text-xs font-bold text-[#1d4ed8] bg-white rounded-lg border border-[#bfdbfe]"
                               >
                                 {item.name}
@@ -791,7 +1012,7 @@ export default function Header() {
 
                   <Link
                     to="/contact"
-                    onClick={handleMobileNavClick}
+                    onClick={() => setIsOpen(false)}
                     className="flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors"
                   >
                     <span>Contact Us</span>
@@ -799,7 +1020,7 @@ export default function Header() {
 
                   <Link
                     to="/about"
-                    onClick={handleMobileNavClick}
+                    onClick={() => setIsOpen(false)}
                     className="flex items-center justify-between px-3.5 py-3 text-sm font-bold text-[#0f172a] hover:bg-[#eff6ff] hover:text-[#1d4ed8] rounded-xl transition-colors"
                   >
                     <span>About Us</span>
@@ -828,7 +1049,7 @@ export default function Header() {
               <div className="p-4 border-t border-[#e2e8f0] bg-[#f8fafc] space-y-2">
                 <Link
                   to="/get-started"
-                  onClick={handleMobileNavClick}
+                  onClick={() => setIsOpen(false)}
                   className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white py-3 px-4 rounded-xl font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 active:scale-98 transition-all"
                 >
                   <span>Start Free Tax Draft</span>

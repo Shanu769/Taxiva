@@ -10,7 +10,7 @@ import SocialFollow from "./SocialFollow";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0f172a] text-white pt-16 pb-12 border-t border-white/15">
+    <footer className="bg-[#0f172a] text-white pt-16 pb-24 sm:pb-12 border-t border-white/15">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Layout:
             On Mobile: Brand section followed by vertically stacked link groups.

@@ -17,14 +17,18 @@ import {
   CheckCircle2,
   ArrowRight,
   RefreshCw,
-  Activity
+  Activity,
+  Copy,
+  Check
 } from "lucide-react";
 import TaxCalendar from "../components/TaxCalendar";
 import { StatusSkeleton } from "../components/Skeleton";
+import GroundedTaxResearch from "../components/GroundedTaxResearch";
 
 export default function TaxTools() {
   const [isLoadingStatus, setIsLoadingStatus] = useState(true);
   const [lastCheckedTime, setLastCheckedTime] = useState<string>("Just now");
+  const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -41,6 +45,19 @@ export default function TaxTools() {
       setLastCheckedTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " EST");
     }, 500);
   };
+
+  const handleCopyUrl = (url: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(url).then(() => {
+      setCopiedUrl(url);
+      setTimeout(() => setCopiedUrl(null), 2500);
+    }).catch(() => {
+      // Fallback
+      setCopiedUrl(url);
+      setTimeout(() => setCopiedUrl(null), 2500);
+    });
+  };
   // Primary Official Portals explicitly provided and requested
   const primaryPortals = [
     {
@@ -48,8 +65,10 @@ export default function TaxTools() {
       badge: "Official IRS Tool",
       desc: "Check your federal refund status 24 hours after e-filing. Have your SSN/ITIN, filing status, and exact refund amount ready.",
       link: "https://www.irs.gov/refunds",
+      directUrl: "https://sa.www4.irs.gov/irfof/lang/en/irfofgetstatus.jsp",
+      directBtn: "Launch Where's My Refund Tool",
       icon: Search,
-      btn: "Check Federal Refund Status",
+      btn: "IRS Refund Info & Guidelines",
       featured: true
     },
     {
@@ -66,8 +85,10 @@ export default function TaxTools() {
       badge: "IRS Direct Pay",
       desc: "Pay directly from your checking or savings bank account with zero fees and no registration required. Safe, fast, and instant confirmation.",
       link: "https://www.irs.gov/payments/direct-pay-with-bank-account",
+      directUrl: "https://www.irs.gov/payments/direct-pay",
+      directBtn: "Open IRS Direct Pay",
       icon: CreditCard,
-      btn: "Open Federal Payment Portal",
+      btn: "IRS Direct Pay Portal",
       featured: true
     },
     {
@@ -84,10 +105,26 @@ export default function TaxTools() {
       badge: "ID.me Verification",
       desc: "Create or access your official IRS Online Account to view your tax records, transcripts, prior payments, and official IRS notices.",
       link: "https://www.irs.gov/payments/online-account-for-individuals",
+      directUrl: "https://sa.www4.irs.gov/ola/",
+      directBtn: "IRS Account Direct Login",
       icon: User,
       btn: "IRS Account Setup & Login",
       featured: true
     }
+  ];
+
+  // Top 10 Major State Refund Portals for One-Click Access
+  const topStatePortals = [
+    { state: "California", code: "CA", agency: "FTB Refund Tracker", url: "https://www.ftb.ca.gov/online/refund/index.asp" },
+    { state: "New York", code: "NY", agency: "NYS Where's My Refund", url: "https://www.tax.ny.gov/pit/file/refund.htm" },
+    { state: "Texas", code: "TX", agency: "Comptroller Taxes", url: "https://comptroller.texas.gov/taxes/" },
+    { state: "New Jersey", code: "NJ", agency: "NJ Taxation Portal", url: "https://www.state.nj.us/treasury/taxation/" },
+    { state: "Ohio", code: "OH", agency: "Dept of Taxation", url: "https://www.tax.ohio.gov/" },
+    { state: "Pennsylvania", code: "PA", agency: "PA myPATH Portal", url: "https://mypath.pa.gov/" },
+    { state: "Illinois", code: "IL", agency: "MyTax Illinois", url: "https://mytax.illinois.gov/" },
+    { state: "Georgia", code: "GA", agency: "GA Tax Center (GTC)", url: "https://gtc.dor.ga.gov/" },
+    { state: "Washington", code: "WA", agency: "WA Dept of Revenue", url: "https://dor.wa.gov/" },
+    { state: "North Carolina", code: "NC", agency: "NC Refund Status", url: "https://www.ncdor.gov/file-pay/refund-status" },
   ];
 
   // Secondary State & Business Tools
@@ -142,9 +179,9 @@ export default function TaxTools() {
       <section className="bg-gradient-to-b from-[#eff6ff] to-[#f8fafc] py-16 sm:py-20 border-b border-[#dbeafe]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.7, ease: "easeOut" as const }}
           >
             <div className="inline-flex items-center gap-2 bg-[#dbeafe] text-[#1d4ed8] px-3.5 py-1.5 rounded-xl text-xs font-extrabold uppercase tracking-widest mb-4">
               <Landmark className="w-4 h-4" />
@@ -247,25 +284,76 @@ export default function TaxTools() {
                       </span>
                     </div>
                     <h3 className="text-xl font-black text-[#0f172a] mb-2 font-display">{tool.title}</h3>
-                    <p className="text-[#334155]/90 text-sm leading-relaxed mb-6 font-medium">{tool.desc}</p>
+                    <p className="text-[#334155]/90 text-sm leading-relaxed mb-4 font-medium">{tool.desc}</p>
                   </div>
 
-                  <a
-                    href={tool.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#1d4ed8] hover:bg-[#1e40af] text-white py-3.5 px-4 rounded-xl font-extrabold text-sm transition-all shadow-md group-hover:shadow-lg active:scale-95"
-                  >
-                    <span>{tool.btn}</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
+                  <div className="space-y-2.5 pt-2">
+                    {tool.directUrl ? (
+                      <div className="space-y-2">
+                        <a
+                          href={tool.directUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full inline-flex items-center justify-center gap-2 bg-[#1d4ed8] hover:bg-[#1e40af] text-white py-3.5 px-4 rounded-xl font-extrabold text-sm transition-all shadow-md group-hover:shadow-lg active:scale-95"
+                        >
+                          <span>{tool.directBtn || tool.btn}</span>
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                        <a
+                          href={tool.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full inline-flex items-center justify-center gap-1.5 bg-[#f8fafc] hover:bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe] py-2 px-3 rounded-xl font-bold text-xs transition-all"
+                        >
+                          <span>{tool.btn}</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                    ) : (
+                      <a
+                        href={tool.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full inline-flex items-center justify-center gap-2 bg-[#1d4ed8] hover:bg-[#1e40af] text-white py-3.5 px-4 rounded-xl font-extrabold text-sm transition-all shadow-md group-hover:shadow-lg active:scale-95"
+                      >
+                        <span>{tool.btn}</span>
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
+
+                    <div className="flex items-center justify-between pt-2 border-t border-[#f1f5f9] text-[11px] text-[#64748b]">
+                      <span className="truncate max-w-[170px] font-mono text-[10px] text-[#2563eb]">
+                        {(tool.directUrl || tool.link).replace("https://www.", "").replace("https://", "")}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={(e) => handleCopyUrl(tool.directUrl || tool.link, e)}
+                        className="inline-flex items-center gap-1 text-[#1d4ed8] hover:text-[#0f172a] font-bold cursor-pointer transition-colors"
+                      >
+                        {copiedUrl === (tool.directUrl || tool.link) ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="text-emerald-600 font-extrabold">Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Copy Link</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           )}
 
+          {/* Live Google Search Grounded IRS & Tax Law Intelligence */}
+          <GroundedTaxResearch />
+
           {/* All 50 States Tax Agency Directory Banner */}
-          <div className="mb-16 p-8 sm:p-12 bg-white rounded-3xl border-2 border-[#dbeafe] shadow-md flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="mb-8 p-8 sm:p-12 bg-white rounded-3xl border-2 border-[#dbeafe] shadow-md flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-xl text-center lg:text-left">
               <div className="inline-flex items-center gap-2 bg-[#eff6ff] text-[#1d4ed8] px-3 py-1 rounded-lg text-xs font-extrabold uppercase tracking-wider">
                 <Map className="w-4 h-4" />
@@ -289,6 +377,40 @@ export default function TaxTools() {
             </a>
           </div>
 
+          {/* Top 10 Major State Tax Agency Fast Links */}
+          <div className="mb-16 bg-[#f8fafc] border border-[#dbeafe] rounded-3xl p-6 sm:p-8">
+            <div className="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#1d4ed8]">Quick Access</span>
+                <h4 className="text-lg font-black text-[#0f172a]">Major State Refund & Tax Portals</h4>
+              </div>
+              <p className="text-xs text-[#64748b]">Direct official portals for top filer states</p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              {topStatePortals.map((sp) => (
+                <a
+                  key={sp.state}
+                  href={sp.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-white hover:bg-[#eff6ff] border border-[#dbeafe] hover:border-[#1d4ed8] rounded-xl flex flex-col justify-between transition-all group shadow-2xs"
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-black text-[#0f172a] group-hover:text-[#1d4ed8]">{sp.state}</span>
+                    <span className="text-[10px] font-mono font-bold bg-[#eff6ff] text-[#1d4ed8] px-1.5 py-0.5 rounded border border-[#bfdbfe]">
+                      {sp.code}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] text-[#64748b] group-hover:text-[#1d4ed8] font-medium mt-1">
+                    <span className="truncate">{sp.agency}</span>
+                    <ExternalLink className="w-3 h-3 shrink-0 ml-1 text-[#1d4ed8]" />
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
           {/* Secondary Tools Section */}
           <div className="mb-6">
             <span className="text-xs font-extrabold uppercase tracking-widest text-[#2563eb] block mb-1">
@@ -310,18 +432,43 @@ export default function TaxTools() {
                     <tool.icon className="w-5 h-5" />
                   </div>
                   <h3 className="text-lg font-extrabold text-[#0f172a] mb-2 font-display">{tool.title}</h3>
-                  <p className="text-[#334155] text-xs sm:text-sm leading-relaxed mb-6 font-medium">{tool.desc}</p>
+                  <p className="text-[#334155] text-xs sm:text-sm leading-relaxed mb-4 font-medium">{tool.desc}</p>
                 </div>
 
-                <a
-                  href={tool.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-[#f8fafc] hover:bg-[#eff6ff] text-[#0f172a] hover:text-[#1d4ed8] border border-[#dbeafe] py-2.5 px-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-98"
-                >
-                  <span>{tool.btn}</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
+                <div className="space-y-2.5 pt-2">
+                  <a
+                    href={tool.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-[#f8fafc] hover:bg-[#eff6ff] text-[#0f172a] hover:text-[#1d4ed8] border border-[#dbeafe] py-2.5 px-3.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-98"
+                  >
+                    <span>{tool.btn}</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+
+                  <div className="flex items-center justify-between text-[11px] text-[#64748b]">
+                    <span className="truncate max-w-[150px] font-mono text-[10px] text-[#64748b]">
+                      {tool.link.replace("https://www.", "").replace("https://", "")}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={(e) => handleCopyUrl(tool.link, e)}
+                      className="inline-flex items-center gap-1 text-[#1d4ed8] hover:text-[#0f172a] font-bold cursor-pointer transition-colors text-[11px]"
+                    >
+                      {copiedUrl === tool.link ? (
+                        <>
+                          <Check className="w-3 h-3 text-emerald-600" />
+                          <span className="text-emerald-600 font-extrabold">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3" />
+                          <span>Copy</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

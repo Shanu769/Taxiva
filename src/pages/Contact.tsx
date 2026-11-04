@@ -109,6 +109,7 @@ export default function Contact() {
                 <motion.h1
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.7, ease: "easeOut" as const }}
                   className="text-4xl sm:text-5xl font-black text-[#0f172a] mb-5 font-display tracking-tight leading-[1.1]"
                 >
                   Contact <span className="text-[#1d4ed8] uppercase">TAXIVA LLC</span>
@@ -231,19 +232,19 @@ export default function Contact() {
                   {activeTab === "form" ? (
                     <motion.div
                       key="form-tab"
-                      initial={{ opacity: 0, y: 12 }}
+                      initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -12 }}
-                      transition={{ duration: 0.25 }}
+                      exit={{ opacity: 0, y: -16 }}
+                      transition={{ duration: 0.55, ease: "easeOut" as const }}
                     >
                       {isSuccess ? (
                         /* Confirmation Screen with Framer Motion Animated Checkmark */
                         <motion.div
                           initial={{ opacity: 0, scale: 0.95 }}
                           animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.35, ease: "easeOut" }}
-                      className="py-6 space-y-6"
-                    >
+                          transition={{ duration: 0.65, ease: "easeOut" as const }}
+                          className="py-6 space-y-6"
+                        >
                       <div className="flex items-start gap-4">
                         <AnimatedCheckmark size="lg" variant="emerald" showRipple={true} className="mt-0.5" />
                         <div className="space-y-1">

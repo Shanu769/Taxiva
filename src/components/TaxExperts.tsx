@@ -93,7 +93,7 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.55, ease: "easeOut" }}
+      transition={{ duration: 0.7, ease: "easeOut" as const }}
       className="py-20 sm:py-24 bg-white text-[#0f172a] border-t border-[#dbeafe] relative overflow-hidden"
     >
       <div className="max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -124,7 +124,7 @@ export default function TaxExperts({ onBookConsultation }: TaxExpertsProps) {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: idx * 0.08 }}
+                transition={{ duration: 0.65, delay: idx * 0.08, ease: "easeOut" as const }}
                 onClick={() => handleCardClick(expert)}
                 role="button"
                 tabIndex={0}

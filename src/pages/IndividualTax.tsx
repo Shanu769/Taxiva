@@ -36,7 +36,7 @@ export default function IndividualTax() {
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.55 }}
+              transition={{ duration: 0.7, ease: "easeOut" as const }}
               className="lg:col-span-6"
             >
               <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-amber-400 bg-blue-950 border border-blue-800/80 px-3.5 py-1.5 rounded-xl mb-4 backdrop-blur-xs">
@@ -52,10 +52,10 @@ export default function IndividualTax() {
                 Taxiva LLC provides CPA-reviewed federal and multi-state tax preparation for individuals, families, W-2 & 1099 professionals, RSU/ESPP equity holders, and real estate investors.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
                 <Link
                   to="/get-started"
-                  className="inline-flex items-center gap-2 bg-amber-400 text-slate-950 px-7 py-3.5 rounded-xl font-extrabold text-base hover:bg-amber-300 transition-all shadow-lg active:scale-95"
+                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 bg-amber-400 text-slate-950 px-7 py-3.5 rounded-xl font-extrabold text-base hover:bg-amber-300 transition-all shadow-lg active:scale-95 text-center"
                 >
                   <span>Start Your Individual Return</span>
                   <ArrowRight className="w-5 h-5" />
@@ -63,7 +63,7 @@ export default function IndividualTax() {
 
                 <Link
                   to="/pricing"
-                  className="inline-flex items-center gap-2 bg-slate-900 text-white border border-slate-700 hover:border-slate-500 px-6 py-3.5 rounded-xl font-bold text-base transition-all"
+                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 bg-slate-900 text-white border border-slate-700 hover:border-slate-500 px-6 py-3.5 rounded-xl font-bold text-base transition-all text-center"
                 >
                   <span>View Flat Pricing</span>
                 </Link>
@@ -73,7 +73,7 @@ export default function IndividualTax() {
             <motion.div
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" as const }}
               className="lg:col-span-6"
             >
               <div className="rounded-3xl overflow-hidden border border-slate-700 shadow-2xl aspect-[16/10] group">
@@ -89,9 +89,9 @@ export default function IndividualTax() {
       </section>
 
       {/* Comprehensive Coverage & Value */}
-      <section className="py-24 bg-white">
+      <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-start">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -102,13 +102,13 @@ export default function IndividualTax() {
                 <span className="text-xs font-black uppercase tracking-wider text-[#1d4ed8] bg-[#eff6ff] px-3.5 py-1.5 rounded-full border border-[#dbeafe] mb-3 inline-block">
                   Line-by-Line CPA Preparation
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-black text-[#0f172a] font-display flex items-center gap-3">
-                  <CheckCircle2 className="w-8 h-8 text-[#1d4ed8]" />
+                <h2 className="text-2xl sm:text-4xl font-black text-[#0f172a] font-display flex items-center gap-3">
+                  <CheckCircle2 className="w-7 h-7 sm:w-8 sm:h-8 text-[#1d4ed8] shrink-0" />
                   <span>Comprehensive Coverage</span>
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 {services.map((service, idx) => (
                   <motion.div
                     key={service}
@@ -120,7 +120,7 @@ export default function IndividualTax() {
                   >
                     <Link
                       to="/get-started"
-                      className="flex items-center gap-3 p-3.5 bg-[#f8fafc] hover:bg-[#eff6ff] rounded-2xl border border-[#dbeafe] hover:border-[#1d4ed8] text-[#334155] hover:text-[#1d4ed8] transition-all group"
+                      className="flex items-center gap-3 p-3.5 min-h-[48px] bg-[#f8fafc] hover:bg-[#eff6ff] rounded-2xl border border-[#dbeafe] hover:border-[#1d4ed8] text-[#334155] hover:text-[#1d4ed8] transition-all group"
                     >
                       <div className="w-2 h-2 bg-[#1d4ed8] rounded-full shrink-0 group-hover:scale-150 transition-transform" />
                       <span className="text-xs sm:text-sm font-bold leading-snug">{service}</span>
@@ -138,20 +138,20 @@ export default function IndividualTax() {
               transition={{ delay: 0.15 }}
               className="space-y-6"
             >
-              <div className="bg-[#eff6ff] rounded-3xl p-8 border border-[#bfdbfe] shadow-sm relative overflow-hidden">
+              <div className="bg-[#eff6ff] rounded-3xl p-6 sm:p-8 border border-[#bfdbfe] shadow-sm relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 opacity-10">
                   <DollarSign className="w-24 h-24 text-[#1d4ed8]" />
                 </div>
                 <span className="text-xs font-black uppercase tracking-wider text-[#1d4ed8] block mb-2">
                   Upfront Flat Fees
                 </span>
-                <h3 className="text-2xl font-black text-[#0f172a] mb-3 font-display">Transparent Pricing</h3>
+                <h3 className="text-xl sm:text-2xl font-black text-[#0f172a] mb-3 font-display">Transparent Pricing</h3>
                 <p className="text-[#475569] mb-6 text-sm sm:text-base leading-relaxed font-medium">
                   We confirm your price before starting any work. Pick the plan that fits your schedules, with zero hourly surprise add-ons.
                 </p>
                 <Link
                   to="/pricing"
-                  className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-6 py-3 rounded-xl font-extrabold text-sm inline-flex items-center gap-2 transition-all shadow-md active:scale-95"
+                  className="w-full sm:w-auto min-h-[48px] bg-[#1d4ed8] hover:bg-[#1e40af] text-white px-6 py-3.5 rounded-xl font-extrabold text-sm inline-flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 text-center"
                 >
                   <span>Explore Pricing & Plans</span>
                   <ArrowRight className="w-4 h-4" />

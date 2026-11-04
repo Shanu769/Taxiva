@@ -111,7 +111,7 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.7, ease: "easeOut" as const }}
             className="max-w-3xl"
           >
             <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-bold text-white/90 mb-5 bg-white/10 border border-white/20 px-3.5 py-1.5 rounded-xl w-fit backdrop-blur-xs">
@@ -177,7 +177,7 @@ export default function About() {
               initial={{ opacity: 0, x: -16 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.45 }}
+              transition={{ duration: 0.7, ease: "easeOut" as const }}
               className="lg:col-span-6 space-y-4"
             >
               <div className="text-xs font-extrabold text-[#1d4ed8] tracking-widest uppercase">
@@ -196,7 +196,7 @@ export default function About() {
               initial={{ opacity: 0, x: 16 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.45 }}
+              transition={{ duration: 0.7, ease: "easeOut" as const }}
               className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4"
             >
               {[

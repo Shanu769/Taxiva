@@ -82,7 +82,7 @@ export default function Pricing() {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.7, ease: "easeOut" as const }}
               className="lg:col-span-7 text-left"
             >
               <div className="inline-flex items-center gap-2 bg-white/15 border border-white/25 px-3.5 py-1.5 rounded-lg text-xs font-black uppercase tracking-widest text-[#93c5fd] mb-4">
@@ -104,7 +104,7 @@ export default function Pricing() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" as const }}
               className="lg:col-span-5 bg-white/10 border border-white/25 p-7 sm:p-8 rounded-3xl backdrop-blur-md relative shadow-2xl"
             >
               <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
@@ -126,17 +126,17 @@ export default function Pricing() {
               <p className="text-white/85 text-xs sm:text-sm mb-6 leading-relaxed font-medium">
                 {currentReferral.description}
               </p>
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full">
                 <Link
                   to="/get-started"
-                  className="bg-white text-[#0f172a] hover:bg-[#eff6ff] px-5 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all shadow-md active:scale-95 inline-flex items-center gap-2"
+                  className="w-full sm:w-auto min-h-[48px] bg-white text-[#0f172a] hover:bg-[#eff6ff] px-6 py-3.5 rounded-xl font-extrabold text-sm transition-all shadow-md active:scale-95 inline-flex items-center justify-center gap-2 text-center"
                 >
                   <span>Join Referral Program</span>
                   <ArrowRight className="w-4 h-4 text-[#1d4ed8]" />
                 </Link>
                 <button
                   onClick={() => setIsConsultationOpen(true)}
-                  className="border border-white/35 text-white hover:bg-white/10 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer"
+                  className="w-full sm:w-auto min-h-[48px] border border-white/35 text-white hover:bg-white/10 px-5 py-3.5 rounded-xl font-bold text-sm transition-all cursor-pointer flex items-center justify-center text-center"
                 >
                   Book 30-Min Call
                 </button>
@@ -216,17 +216,21 @@ export default function Pricing() {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full sm:w-auto">
               <Link
                 to="/get-started"
-                className="w-full sm:w-auto bg-white text-[#0f172a] hover:bg-[#eff6ff] px-6 py-3.5 rounded-xl font-black text-sm transition-all shadow-md active:scale-95 text-center"
+                className="w-full sm:w-auto min-h-[48px] bg-white text-[#0f172a] hover:bg-[#eff6ff] px-6 py-3.5 rounded-xl font-black text-sm transition-all shadow-md active:scale-95 text-center flex items-center justify-center"
               >
                 Start Free Tax Draft
               </Link>
               <button
                 type="button"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="w-full sm:w-auto border border-white/30 hover:bg-white/10 text-white px-5 py-3.5 rounded-xl font-bold text-sm transition-all cursor-pointer flex items-center justify-center gap-2"
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                }}
+                className="w-full sm:w-auto min-h-[48px] border border-white/30 hover:bg-white/10 text-white px-5 py-3.5 rounded-xl font-bold text-sm transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <span>Back to Top</span>
                 <ArrowRight className="w-4 h-4 -rotate-90" />

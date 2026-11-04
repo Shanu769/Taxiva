@@ -86,7 +86,7 @@ export default function IndianTax() {
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.55, ease: "easeOut" }}
+              transition={{ duration: 0.7, ease: "easeOut" as const }}
               className="lg:col-span-6"
             >
               <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-amber-400 bg-amber-950/70 border border-amber-800/80 px-3.5 py-1.5 rounded-xl mb-4 backdrop-blur-xs">
@@ -102,10 +102,10 @@ export default function IndianTax() {
                 Taxiva LLC provides synchronized cross-border tax preparation and DTAA advisory for NRIs, H-1B/L-1 visa holders, and U.S. residents with income or assets in both the United States and India.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
                 <Link
                   to="/get-started"
-                  className="inline-flex items-center gap-2 bg-amber-400 text-slate-950 px-7 py-3.5 rounded-xl font-extrabold text-base hover:bg-amber-300 transition-all shadow-lg active:scale-95"
+                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 bg-amber-400 text-slate-950 px-7 py-3.5 rounded-xl font-extrabold text-base hover:bg-amber-300 transition-all shadow-lg active:scale-95 text-center"
                 >
                   <span>Start Your NRI Tax Filing</span>
                   <ArrowRight className="w-5 h-5" />
@@ -113,7 +113,7 @@ export default function IndianTax() {
 
                 <Link
                   to="/pricing"
-                  className="inline-flex items-center gap-2 bg-slate-900 text-white border border-slate-700 hover:border-slate-500 px-6 py-3.5 rounded-xl font-bold text-base transition-all"
+                  className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 bg-slate-900 text-white border border-slate-700 hover:border-slate-500 px-6 py-3.5 rounded-xl font-bold text-base transition-all text-center"
                 >
                   <span>View Flat Pricing</span>
                 </Link>
@@ -123,7 +123,7 @@ export default function IndianTax() {
             <motion.div
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" as const }}
               className="lg:col-span-6"
             >
               <div className="rounded-3xl overflow-hidden border border-slate-700 shadow-2xl aspect-[16/10] group">
@@ -189,7 +189,7 @@ export default function IndianTax() {
 
                 <Link
                   to="/get-started"
-                  className="inline-flex items-center gap-1.5 text-xs font-black text-[#1d4ed8] group-hover:gap-2.5 transition-all pt-4 border-t border-slate-200/60"
+                  className="min-h-[44px] inline-flex items-center gap-1.5 text-xs font-black text-[#1d4ed8] group-hover:gap-2.5 transition-all pt-4 border-t border-slate-200/60"
                 >
                   <span>Consult with NRI Specialist</span>
                   <ArrowRight className="w-4 h-4" />
@@ -244,10 +244,10 @@ export default function IndianTax() {
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full lg:w-auto">
               <Link
                 to="/get-started"
-                className="bg-amber-400 text-slate-950 hover:bg-amber-300 min-w-[200px] text-center px-8 py-4 rounded-xl font-black text-sm shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto min-h-[48px] bg-amber-400 text-slate-950 hover:bg-amber-300 min-w-[200px] text-center px-8 py-3.5 rounded-xl font-black text-sm shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2"
               >
                 <span>Connect with NRI Experts</span>
                 <ArrowRight className="w-4 h-4" />
