@@ -84,7 +84,7 @@ export default function ExpenseSummaryChart({ customExpenses, onScanReceiptClick
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `Taxiva_LLC_Expense_Summary_${selectedYear}.csv`;
+    a.download = `TaxBeam_LLC_Expense_Summary_${selectedYear}.csv`;
     a.click();
   };
 

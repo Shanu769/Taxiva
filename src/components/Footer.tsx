@@ -26,7 +26,7 @@ export default function Footer() {
                   className="text-2xl sm:text-[1.85rem] font-bold text-white leading-none tracking-wide"
                   style={{ fontFamily: "'Dancing Script', 'Great Vibes', cursive" }}
                 >
-                  Taxiva LLC
+                  TaxBeam LLC
                 </span>
                 {/* Clearly readable tagline on dark navy background */}
                 <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-sky-300 mt-1.5 drop-shadow-xs">
@@ -81,8 +81,8 @@ export default function Footer() {
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-sky-400 shrink-0" />
-                <a href="mailto:info@taxiva.co" className="hover:text-sky-300 hover:underline font-semibold">
-                  info@taxiva.co
+                <a href="mailto:info@taxbeam.co" className="hover:text-sky-300 hover:underline font-semibold">
+                  info@taxbeam.co
                 </a>
               </p>
               <p className="flex items-start gap-2 text-xs text-slate-300">
@@ -123,12 +123,12 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link to="/services/foreign-reporting" className="hover:text-white hover:underline transition-colors block py-0.5">
-                    FBAR & Foreign Reporting
+                    Foreign Account & FBAR Reporting
                   </Link>
                 </li>
                 <li>
                   <Link to="/services/indian-tax" className="hover:text-white hover:underline transition-colors block py-0.5">
-                    Indian Tax & NRI
+                    Indian Tax Filing
                   </Link>
                 </li>
                 <li>
@@ -139,10 +139,10 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Column 2: About TAXIVA LLC */}
+            {/* Column 2: About TaxBeam LLC */}
             <div className="flex flex-col space-y-4">
               <h4 className="font-extrabold text-sm uppercase tracking-wider text-white border-b border-white/10 pb-2">
-                About TAXIVA
+                About TaxBeam LLC
               </h4>
               <ul className="flex flex-col space-y-3 text-sm text-slate-300">
                 <li>
@@ -248,27 +248,27 @@ export default function Footer() {
               </h4>
               <ul className="flex flex-col space-y-3 text-sm text-slate-300">
                 <li>
-                  <Link to="/login" className="hover:text-white hover:underline transition-colors block py-0.5">
-                    AES-256 Cloud Portal
+                  <Link to="/legal#security" className="hover:text-white hover:underline transition-colors block py-0.5">
+                    Data Security & Controls
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="hover:text-white hover:underline transition-colors block py-0.5">
-                    IRS Sec. 7216 Privacy
+                  <Link to="/legal#privacy" className="hover:text-white hover:underline transition-colors block py-0.5">
+                    IRS Sec. 7216 Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="hover:text-white hover:underline transition-colors block py-0.5">
-                    SOC 2 Data Controls
+                  <Link to="/legal#documents" className="hover:text-white hover:underline transition-colors block py-0.5">
+                    Secure Canopy Handling
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contact" className="hover:text-white hover:underline transition-colors block py-0.5">
-                    IRS Notice Support
+                  <Link to="/legal#disclaimer" className="hover:text-white hover:underline transition-colors block py-0.5">
+                    Tax Information Disclaimer
                   </Link>
                 </li>
                 <li>
-                  <Link to="/about" className="hover:text-white hover:underline transition-colors block py-0.5">
+                  <Link to="/legal#terms" className="hover:text-white hover:underline transition-colors block py-0.5">
                     Terms & Conditions
                   </Link>
                 </li>
@@ -298,7 +298,7 @@ export default function Footer() {
           </div>
 
           <p className="text-slate-300 text-center lg:text-right">
-            © {new Date().getFullYear()} <strong className="text-white font-bold">Taxiva LLC</strong> •{" "}
+            © {new Date().getFullYear()} <strong className="text-white font-bold">TaxBeam LLC</strong> •{" "}
             <span className="text-sky-300 font-semibold">US and cross-border tax experts</span>. All rights reserved.
           </p>
         </div>

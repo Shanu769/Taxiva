@@ -162,13 +162,13 @@ const services = [
     icon: Briefcase
   },
   {
-    name: "FBAR & Foreign Reporting",
+    name: "Foreign Account & FBAR Reporting",
     href: "/services/foreign-reporting",
     subtitle: "FinCEN 114 • FATCA Form 8938",
     icon: Globe2
   },
   {
-    name: "Indian Tax & NRI",
+    name: "Indian Tax Filing",
     href: "/services/indian-tax",
     subtitle: "DTAA Relief • Form 1116 • ITR",
     icon: Landmark
@@ -478,7 +478,7 @@ export default function Header() {
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-22 gap-4 lg:gap-6 xl:gap-8">
-          {/* Logo — Stylized 3D Transparent Animated 'T' Component + Cursive 'Taxiva LLC' UI/UX Branding */}
+          {/* Logo — Stylized 3D Transparent Animated 'T' Component + Cursive 'TaxBeam LLC' UI/UX Branding */}
           <div className="flex-shrink-0 flex items-center">
             <Link
               to="/"
@@ -490,7 +490,7 @@ export default function Header() {
                 className="text-2xl sm:text-[1.85rem] font-bold text-[#0f172a] group-hover:text-[#1d4ed8] transition-colors leading-none tracking-wide select-none drop-shadow-[0_1px_1px_rgba(15,23,42,0.08)]"
                 style={{ fontFamily: "'Dancing Script', 'Great Vibes', cursive" }}
               >
-                Taxiva LLC
+                TaxBeam LLC
               </span>
             </Link>
           </div>
@@ -552,7 +552,7 @@ export default function Header() {
                 )}
               >
                 <div className="px-3 py-2 text-[11px] font-black uppercase tracking-wider text-[#1d4ed8] border-b border-[#f1f5f9] flex items-center justify-between mb-1">
-                  <span>Taxiva Tax Practices</span>
+                  <span>TaxBeam Practices</span>
                   <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
                     Licensed CPAs
                   </span>
@@ -824,7 +824,7 @@ export default function Header() {
                     className="text-2xl font-bold text-[#0f172a]"
                     style={{ fontFamily: "'Dancing Script', 'Great Vibes', cursive" }}
                   >
-                    Taxiva LLC
+                    TaxBeam LLC
                   </span>
                 </div>
 

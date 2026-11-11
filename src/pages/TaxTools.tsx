@@ -207,7 +207,7 @@ export default function TaxTools() {
             <div className="space-y-1.5 text-center md:text-left flex-1">
               <h3 className="text-lg sm:text-xl font-extrabold text-white">Client Security Safeguard</h3>
               <p className="text-white/85 text-xs sm:text-sm leading-relaxed font-medium">
-                <strong>Taxiva LLC will never ask you to enter your IRS, ID.me, bank, or state login password on our website.</strong> Always use the official government links provided below to submit payments or check refund status directly.
+                <strong>TaxBeam LLC will never ask you to enter your IRS, ID.me, bank, or state login password on our website.</strong> Always use the official government links provided below to submit payments or check refund status directly.
               </p>
             </div>
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-3.5 py-2 rounded-xl text-xs font-bold text-white shrink-0">

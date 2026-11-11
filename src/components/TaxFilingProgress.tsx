@@ -53,7 +53,7 @@ const DEFAULT_PROFILE_STEPS: Record<FilingProfileType, FilingStep[]> = {
     {
       id: 2,
       title: "2. Professional Audit",
-      shortDesc: "Taxiva LLC CPA line-by-line verification",
+      shortDesc: "TaxBeam LLC CPA line-by-line verification",
       detailedDesc: "Our experienced CPAs review your financial records to ensure all credits, foreign bank reporting (FBAR/FATCA), and eligible deductions are maximized.",
       status: "in-progress",
       estimatedDays: "1-2 Business Days",

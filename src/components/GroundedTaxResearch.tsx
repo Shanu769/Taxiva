@@ -194,7 +194,7 @@ export default function GroundedTaxResearch() {
             <div className="font-bold text-red-900">Search Grounding Service Notice</div>
             <div>{error}</div>
             <div className="mt-1 text-xs text-red-700">
-              For personalized tax review, please reach out to our team at info@taxiva.co or call +1 737-381-2330.
+              For personalized tax review, please reach out to our team at info@taxbeam.co or call +1 737-381-2330.
             </div>
           </div>
         </div>

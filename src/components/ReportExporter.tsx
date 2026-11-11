@@ -8,7 +8,7 @@ interface ReportExporterProps {
   currentUserEmail?: string;
 }
 
-export default function ReportExporter({ documents, taxFilingStatus = "In Review by CPA", currentUserEmail = "info@taxiva.co" }: ReportExporterProps) {
+export default function ReportExporter({ documents, taxFilingStatus = "In Review by CPA", currentUserEmail = "info@taxbeam.co" }: ReportExporterProps) {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const generatePdfReport = () => {
@@ -25,7 +25,7 @@ export default function ReportExporter({ documents, taxFilingStatus = "In Review
       doc.setTextColor(255, 255, 255);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(22);
-      doc.text("TAXIVA LLC", 14, 20);
+      doc.text("TaxBeam LLC", 14, 20);
 
       doc.setFontSize(10);
       doc.setFont("helvetica", "normal");
@@ -86,7 +86,7 @@ export default function ReportExporter({ documents, taxFilingStatus = "In Review
         yPos += 10;
       });
 
-      // Section: Taxiva LLC CPA Notes & Next Steps
+      // Section: TaxBeam LLC CPA Notes & Next Steps
       yPos += 10;
       if (yPos > 240) {
         doc.addPage();
@@ -110,9 +110,9 @@ export default function ReportExporter({ documents, taxFilingStatus = "In Review
       // Footer
       doc.setFontSize(8);
       doc.setTextColor(156, 163, 175);
-      doc.text("TAXIVA LLC Accounting & Tax Support Services - New York, NY (EST) | Confidential Client Report", 14, 285);
+      doc.text("TaxBeam LLC Accounting & Tax Support Services - New York, NY (EST) | Confidential Client Report", 14, 285);
 
-      doc.save(`Taxiva_LLC_Tax_Summary_${new Date().toISOString().slice(0, 10)}.pdf`);
+      doc.save(`TaxBeam_LLC_Tax_Summary_${new Date().toISOString().slice(0, 10)}.pdf`);
       setIsGenerating(false);
     } catch (err) {
       console.error("PDF generation failed:", err);

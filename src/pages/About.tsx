@@ -126,9 +126,7 @@ export default function About() {
             </h1>
 
             <p className="text-base sm:text-lg text-white/90 leading-relaxed mb-8 font-medium">
-              Headquartered in <strong className="text-white font-bold">New York, NY (EST)</strong>,{" "}
-              <strong className="text-white font-black uppercase">TAXIVA LLC</strong> delivers CPA-led tax filing,
-              business formation, and NRI cross-border compliance across all 50 U.S. states.
+              TaxBeam LLC is committed to helping individuals and businesses navigate their tax preparation and filing requirements with clarity and confidence. Our focus is on providing reliable tax-related services, streamlined communication, and a convenient client experience.
             </p>
 
             <div className="flex flex-wrap items-center gap-3.5">
@@ -187,7 +185,7 @@ export default function About() {
                 Licensed Tax Professionals Focused on Your Bottom Line
               </h2>
               <p className="text-[#334155] text-base sm:text-lg leading-relaxed font-medium">
-                At <strong className="text-[#0f172a] font-black">TAXIVA LLC</strong>, licensed CPAs, IRS Enrolled Agents, and Chartered Accountants handle your return from start to finish. Whether you file W-2s with RSUs, run an LLC or S-Corp, or manage US–India cross-border income, we ensure every deduction is claimed with 100% accuracy.
+                At <strong className="text-[#0f172a] font-black">TaxBeam LLC</strong>, licensed CPAs, IRS Enrolled Agents, and Chartered Accountants handle your return from start to finish. Whether you file W-2s with RSUs, run an LLC or S-Corp, or manage US–India cross-border income, we ensure every deduction is claimed with 100% accuracy.
               </p>
             </motion.div>
 
@@ -279,10 +277,10 @@ export default function About() {
             <div className="lg:col-span-7 space-y-6">
               <div>
                 <span className="text-xs font-extrabold uppercase tracking-widest text-[#1d4ed8] block mb-2">
-                  The TAXIVA Advantage
+                  The TaxBeam Advantage
                 </span>
                 <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0f172a] tracking-tight font-display">
-                  Why 6,500+ Clients Choose TAXIVA LLC
+                  Why 6,500+ Clients Choose TaxBeam LLC
                 </h2>
               </div>
 
@@ -325,8 +323,8 @@ export default function About() {
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail className="w-4 h-4 text-sky-400 shrink-0" />
-                  <a href="mailto:info@taxiva.co" className="hover:text-sky-300 font-bold transition-colors">
-                    info@taxiva.co
+                  <a href="mailto:info@taxbeam.co" className="hover:text-sky-300 font-bold transition-colors">
+                    info@taxbeam.co
                   </a>
                 </div>
                 <div className="flex items-center gap-3">

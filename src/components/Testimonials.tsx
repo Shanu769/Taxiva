@@ -47,7 +47,7 @@ const TESTIMONIAL_STORIES: TestimonialStory[] = [
     outcomeBadge: "$14,200 Double-Taxation Saved",
     highlight: "Seamless US-India DTAA Foreign Tax Credit & NRI property capital gains compliance.",
     quote:
-      "When I sold ancestral property in India while working on an H-1B in Austin, I was terrified of paying capital gains tax twice. Taxiva LLC coordinated both my Indian ITR-2 and my U.S. Form 1116 Foreign Tax Credit, saving me over $14,200 in duplicate tax liability and handling my FBAR & Form 8938 disclosures with zero hassle.",
+      "When I sold ancestral property in India while working on an H-1B in Austin, I was terrified of paying capital gains tax twice. TaxBeam LLC coordinated both my Indian ITR-2 and my U.S. Form 1116 Foreign Tax Credit, saving me over $14,200 in duplicate tax liability and handling my FBAR & Form 8938 disclosures with zero hassle.",
     rating: 5,
     yearsClient: "Client since 2022",
     avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=240"
@@ -62,7 +62,7 @@ const TESTIMONIAL_STORIES: TestimonialStory[] = [
     outcomeBadge: "$19,650 Annual S-Corp Tax Savings",
     highlight: "Restructured single-member LLC to S-Corporation with compliant reasonable salary & QBI optimization.",
     quote:
-      "Switching to Taxiva LLC for our consulting business was the best financial decision we've made. Their CPAs analyzed our net income, guided our Form 2553 S-Corp election, optimized our Section 199A QBI deduction, and prepared both our Form 1120-S and K-1s right on schedule.",
+      "Switching to TaxBeam LLC for our consulting business was the best financial decision we've made. Their CPAs analyzed our net income, guided our Form 2553 S-Corp election, optimized our Section 199A QBI deduction, and prepared both our Form 1120-S and K-1s right on schedule.",
     rating: 5,
     yearsClient: "Client since 2021",
     avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=240"
@@ -77,7 +77,7 @@ const TESTIMONIAL_STORIES: TestimonialStory[] = [
     outcomeBadge: "$6,840 RSU Cost-Basis Recovery",
     highlight: "Corrected supplemental RSU double-counting and multi-state California-to-Texas residency split.",
     quote:
-      "After relocating from California to Texas mid-year with multiple RSU vesting events and ESPP sales, DIY tax software showed I owed thousands. Taxiva LLC's line-by-line review caught an unadjusted cost basis on my 1099-B and properly allocated my CA part-year residency—turning a tax bill into a $6,840 refund.",
+      "After relocating from California to Texas mid-year with multiple RSU vesting events and ESPP sales, DIY tax software showed I owed thousands. TaxBeam LLC's line-by-line review caught an unadjusted cost basis on my 1099-B and properly allocated my CA part-year residency—turning a tax bill into a $6,840 refund.",
     rating: 5,
     yearsClient: "Client since 2023",
     avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=240"
@@ -92,7 +92,7 @@ const TESTIMONIAL_STORIES: TestimonialStory[] = [
     outcomeBadge: "100% IRS & FinCEN Compliant",
     highlight: "Multi-account NRE/NRO foreign bank reporting and foreign mutual fund PFIC analysis.",
     quote:
-      "I had multiple NRE, NRO, and FCNR accounts across three Indian banks plus U.S. rental properties. Taxiva LLC organized every maximum account balance, converted currencies using official Treasury year-end rates, and filed my FinCEN Form 114 and FATCA Form 8938 accurately within 48 hours.",
+      "I had multiple NRE, NRO, and FCNR accounts across three Indian banks plus U.S. rental properties. TaxBeam LLC organized every maximum account balance, converted currencies using official Treasury year-end rates, and filed my FinCEN Form 114 and FATCA Form 8938 accurately within 48 hours.",
     rating: 5,
     yearsClient: "Client since 2020",
     avatarUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=240"
@@ -107,7 +107,7 @@ const TESTIMONIAL_STORIES: TestimonialStory[] = [
     outcomeBadge: "4-State Partnership Filing Completed",
     highlight: "Multi-partner Form 1065 compliance, bonus depreciation, and partner K-1 distributions.",
     quote:
-      "Managing a 4-partner LLC with inventory and contractor payments across multiple states used to delay our personal tax filings every spring. Taxiva LLC's Canopy portal made uploading our P&L and balance sheet effortless, and we had all our Schedule K-1s ready weeks before the March 15 deadline.",
+      "Managing a 4-partner LLC with inventory and contractor payments across multiple states used to delay our personal tax filings every spring. TaxBeam LLC's Canopy portal made uploading our P&L and balance sheet effortless, and we had all our Schedule K-1s ready weeks before the March 15 deadline.",
     rating: 5,
     yearsClient: "Client since 2022",
     avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=240"
@@ -122,7 +122,7 @@ const TESTIMONIAL_STORIES: TestimonialStory[] = [
     outcomeBadge: "$8,320 Prior-Year Amendment Refund",
     highlight: "Amended prior-year return to claim missed rental depreciation and home office deductions.",
     quote:
-      "Not only did Taxiva LLC prepare our joint 2025 federal and state returns with W-2, 1099-NEC consulting, and rental property income, they also reviewed our previous two years' returns for free and filed an amended Form 1040-X that recovered $8,320 we had overpaid.",
+      "Not only did TaxBeam LLC prepare our joint 2025 federal and state returns with W-2, 1099-NEC consulting, and rental property income, they also reviewed our previous two years' returns for free and filed an amended Form 1040-X that recovered $8,320 we had overpaid.",
     rating: 5,
     yearsClient: "Client since 2023",
     avatarUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=240"
@@ -177,7 +177,7 @@ export default function Testimonials() {
               Trusted by Individuals, NRIs & Business Owners Across <span className="text-amber-400 italic">All 50 States.</span>
             </h2>
             <p className="text-slate-300 text-lg mt-4 max-w-2xl leading-relaxed">
-              See how Taxiva LLC helps clients eliminate IRS compliance stress, prevent double taxation, and legally maximize tax savings through CPA-reviewed filing.
+              See how TaxBeam LLC helps clients eliminate IRS compliance stress, prevent double taxation, and legally maximize tax savings through CPA-reviewed filing.
             </p>
           </div>
 
@@ -346,7 +346,7 @@ export default function Testimonials() {
                 Want a Free 3-Year Prior Tax Return Review?
               </h3>
               <p className="text-sm text-slate-300 mt-1 max-w-2xl">
-                Every new Taxiva LLC client receives a complimentary review of prior tax returns to identify missed RSU basis adjustments, foreign tax credits, or business write-offs.
+                Every new TaxBeam LLC client receives a complimentary review of prior tax returns to identify missed RSU basis adjustments, foreign tax credits, or business write-offs.
               </p>
             </div>
           </div>

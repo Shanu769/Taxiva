@@ -19,7 +19,7 @@ export interface FAQItem {
 export const FAQ_DATA: FAQItem[] = [
   {
     id: "faq-1",
-    question: "What is tax filing with Taxiva LLC, and how does the process work?",
+    question: "What is tax filing with TaxBeam LLC, and how does the process work?",
     answer:
       "Our CPA-reviewed tax filing process works in 4 simple steps: (1) Submit our quick Get Started form; (2) Upload your W-2s, 1099s, and tax documents securely to our Canopy Everything Access Portal; (3) Receive a complete line-by-line draft tax return prepared by our tax specialists; (4) Approve and e-sign Form 8879 for official IRS and state e-filing.",
     category: "Filing Process",
@@ -35,10 +35,10 @@ export const FAQ_DATA: FAQItem[] = [
   },
   {
     id: "faq-3",
-    question: "Why choose an expert online tax filing firm like Taxiva LLC?",
+    question: "Why choose an expert online tax filing firm like TaxBeam LLC?",
     answer:
-      "Unlike automated DIY software that misses RSU cost-basis adjustments, multi-state credits, or US-India DTAA treaty benefits, every Taxiva LLC return undergoes a comprehensive review by experienced CPAs and IRS Enrolled Agents—plus a complimentary 3-year prior return check.",
-    category: "Why Taxiva LLC",
+      "Unlike automated DIY software that misses RSU cost-basis adjustments, multi-state credits, or US-India DTAA treaty benefits, every TaxBeam LLC return undergoes a comprehensive review by experienced CPAs and IRS Enrolled Agents—plus a complimentary 3-year prior return check.",
+    category: "Why TaxBeam LLC",
     tags: ["CPA Review", "RSU", "Multi-State", "Prior Return Check"]
   },
   {
@@ -59,7 +59,7 @@ export const FAQ_DATA: FAQItem[] = [
   },
   {
     id: "faq-6",
-    question: "How does filing online with Taxiva LLC make refunds and IRS payments easier?",
+    question: "How does filing online with TaxBeam LLC make refunds and IRS payments easier?",
     answer:
       "We e-file your federal and state returns directly with the IRS for rapid direct-deposit refunds, and our Refund & Payment Center gives you one-click access to official IRS Where's My Refund tracking, IRS Direct Pay, and all 50 state tax portals.",
     category: "Refunds & Payments",
@@ -67,7 +67,7 @@ export const FAQ_DATA: FAQItem[] = [
   },
   {
     id: "faq-7",
-    question: "Can Taxiva LLC help with last-minute extensions, ITIN applications, or IRS notices?",
+    question: "Can TaxBeam LLC help with last-minute extensions, ITIN applications, or IRS notices?",
     answer:
       "Yes. Whether you need an immediate Form 4868 / Form 7004 filing extension, a Form W-7 ITIN application for your spouse or dependents, New York (NY) main company formation, or representation to respond to an IRS notice or letter, our New York, NY (EST) team is ready to assist year-round.",
     category: "Extensions & ITIN",
@@ -97,7 +97,7 @@ export default function FAQ({ className = "" }: { className?: string }) {
           </h2>
 
           <p className="text-[#334155]/80 text-base sm:text-lg leading-relaxed font-medium">
-            At Taxiva LLC, we help individuals, Global Indians, NRIs, and businesses file confidently across all 50 states—so you never miss a deduction, credit, or compliance deadline.
+            At TaxBeam LLC, we help individuals, Global Indians, NRIs, and businesses file confidently across all 50 states—so you never miss a deduction, credit, or compliance deadline.
           </p>
 
           <div className="pt-2 space-y-4">

@@ -9,14 +9,14 @@ import { auth } from "../lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function SettingsPage() {
-  const [currentUserEmail, setCurrentUserEmail] = useState<string>("client@taxiva.co");
+  const [currentUserEmail, setCurrentUserEmail] = useState<string>("client@taxbeam.co");
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user?.email) {
         setCurrentUserEmail(user.email);
       } else {
-        const demo = localStorage.getItem("taxiva_demo_user");
+        const demo = localStorage.getItem("taxbeam_demo_user");
         if (demo) {
           try {
             const parsed = JSON.parse(demo);

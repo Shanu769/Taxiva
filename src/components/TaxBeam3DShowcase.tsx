@@ -42,7 +42,7 @@ interface CameraPreset {
 const CAMERA_PRESETS: Record<CameraPresetKey, CameraPreset> = {
   overview: {
     label: "360° Architecture",
-    subtitle: "Complete Taxiva Compliance & Refund Vault",
+    subtitle: "Complete TaxBeam Compliance & Refund Vault",
     position: [0, 4.6, 9.8],
     target: [0, 1.6, 0]
   },
@@ -143,7 +143,7 @@ function createTaxFolioTexture(
   ctx.fillText(formCode, 56, 92);
 
   ctx.font = "700 16px monospace";
-  ctx.fillText("TAXIVA LLC CPA VERIFIED", 255, 86);
+  ctx.fillText("TAXBEAM LLC CPA VERIFIED", 255, 86);
 
   // Title & Subtitle
   ctx.fillStyle = "#f8fafc";
@@ -265,7 +265,7 @@ function createChapterDialTexture(renderer: THREE.WebGLRenderer): THREE.CanvasTe
   return tex;
 }
 
-export default function Taxiva3DShowcase() {
+export default function TaxBeam3DShowcase() {
   const canvasMountRef = useRef<HTMLDivElement | null>(null);
 
   // UI Control states
@@ -936,7 +936,7 @@ export default function Taxiva3DShowcase() {
           ? "fixed inset-0 z-50 w-screen h-screen bg-slate-950 overflow-hidden"
           : "relative w-full h-[680px] sm:h-[740px] bg-slate-950 overflow-hidden border-y border-slate-800"
       }
-      id="taxiva-3d-scene"
+      id="taxbeam-3d-scene"
     >
       {/* Dedicated WebGL Mount Container (Outside React HUD overlays) */}
       <div ref={canvasMountRef} className="w-full h-full cursor-grab active:cursor-grabbing" />

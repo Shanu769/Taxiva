@@ -52,7 +52,7 @@ function renderArtworkDataUrl(variant: TaxArtworkVariant): string {
       secondary: "#38bdf8",
       badge: "IRS AUTHORIZED E-FILE • CPA LINE-BY-LINE REVIEW",
       formCode: "FORM 1040 • 1120-S • FBAR",
-      headline: "Taxiva LLC Precision Tax Filing Studio",
+      headline: "TaxBeam LLC Precision Tax Filing Studio",
       subline: "Federal • All 50 States • Business Entities • US-India Cross-Border",
       stats: [
         { label: "Federal & State Accuracy", val: "99.98% Audit-Ready" },

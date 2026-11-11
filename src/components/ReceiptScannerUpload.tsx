@@ -129,7 +129,7 @@ export default function ReceiptScannerUpload({ onAddExpense, onAddFile }: Receip
         amount: parseFloat(randomAmount.toFixed(2)),
         category: randomCategory,
         taxDeductiblePercent: deductiblePct,
-        notes: `Auto-scanned via Taxiva LLC OCR Digitizer (IRS Sec. 162 Compliant)`,
+        notes: `Auto-scanned via TaxBeam LLC OCR Digitizer (IRS Sec. 162 Compliant)`,
         imageUrl: imgData,
       });
 

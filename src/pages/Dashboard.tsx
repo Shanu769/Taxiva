@@ -78,7 +78,7 @@ export default function Dashboard() {
     {
       id: "n-4",
       title: "Organizers Received",
-      message: "Your 2025 Tax Questionnaire responses have been received by Taxiva LLC support.",
+      message: "Your 2025 Tax Questionnaire responses have been received by TaxBeam LLC support.",
       time: "1d ago",
       type: "cpa",
       unread: false,
@@ -149,7 +149,7 @@ export default function Dashboard() {
       size: "850 KB",
       type: "pdf",
       category: "Prior Tax Return",
-      addedBy: "Taxiva LLC CPA",
+      addedBy: "TaxBeam LLC CPA",
       status: "Accepted by IRS",
       encrypted: true,
       encryptionAlgo: "AES-256-GCM",
@@ -204,7 +204,7 @@ export default function Dashboard() {
         setCurrentUser(user);
         setLoading(false);
       } else {
-        const demoUserJson = localStorage.getItem("taxiva_demo_user");
+        const demoUserJson = localStorage.getItem("taxbeam_demo_user");
         if (demoUserJson) {
           try {
             setCurrentUser(JSON.parse(demoUserJson));
@@ -223,7 +223,7 @@ export default function Dashboard() {
 
   const handleLogout = async () => {
     try {
-      localStorage.removeItem("taxiva_demo_user");
+      localStorage.removeItem("taxbeam_demo_user");
       await logout();
       navigate("/");
     } catch (err) {
@@ -272,14 +272,14 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Right Side: Taxiva LLC Branding and Actions */}
+          {/* Right Side: TaxBeam LLC Branding and Actions */}
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3 pr-4 border-r border-gray-100">
               <Link to="/" className="flex items-center gap-2 group">
                 <div className="w-8 h-8 bg-blue-900 rounded-xl flex items-center justify-center font-black text-white text-sm">
                   T
                 </div>
-                <span className="text-lg font-extrabold text-blue-900 tracking-tighter italic">Taxiva LLC</span>
+                <span className="text-lg font-extrabold text-blue-900 tracking-tighter italic">TaxBeam LLC</span>
               </Link>
             </div>
             
@@ -602,7 +602,7 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="text-lg font-extrabold italic">Taxiva LLC Notifications</h3>
+                      <h3 className="text-lg font-extrabold italic">TaxBeam LLC Notifications</h3>
                       {notifications.filter(n => n.unread).length > 0 && (
                         <span className="bg-amber-400 text-blue-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                           {notifications.filter(n => n.unread).length} New
@@ -749,7 +749,7 @@ export default function Dashboard() {
               <div className="p-4 bg-gray-50 border-t border-gray-100 text-center shrink-0">
                 <p className="text-[11px] text-gray-500 font-semibold flex items-center justify-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  Taxiva LLC System Alerts &bull; IRS Sec. 7216 Compliant
+                  TaxBeam LLC System Alerts &bull; IRS Sec. 7216 Compliant
                 </p>
               </div>
             </motion.div>
@@ -1164,7 +1164,7 @@ function CommunicationView({
         </div>
 
         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest hidden sm:inline px-3">
-          Taxiva LLC Communication Hub
+          TaxBeam LLC Communication Hub
         </span>
       </div>
 
@@ -1525,7 +1525,7 @@ function FilesView({
             </h2>
 
             <p className="text-blue-100/80 text-xs sm:text-sm font-medium leading-relaxed">
-              Upload tax documents, W-2s, 1099s, bank statements, and deduction receipts. All files undergo end-to-end client-side encryption before storing in Taxiva LLC's protected vault.
+              Upload tax documents, W-2s, 1099s, bank statements, and deduction receipts. All files undergo end-to-end client-side encryption before storing in TaxBeam LLC's protected vault.
             </p>
           </div>
 
@@ -1943,7 +1943,7 @@ function FilesView({
                       <CheckCircle2 className="w-4 h-4" /> 2. Applying Client AES-256-GCM Encryption
                     </div>
                     <div className={`flex items-center gap-2 ${encryptStep >= 3 ? "text-emerald-700 font-extrabold" : "text-gray-400"}`}>
-                      <CheckCircle2 className="w-4 h-4" /> 3. Transmitting to Taxiva LLC Vault Storage
+                      <CheckCircle2 className="w-4 h-4" /> 3. Transmitting to TaxBeam LLC Vault Storage
                     </div>
                   </div>
                 </div>
@@ -2228,7 +2228,7 @@ function OrganizersView({ status, onUpdateStatus }: { status: string, onUpdateSt
         <div className="p-10">
           <div className="max-w-2xl mx-auto space-y-12">
             <div className="space-y-6 text-center">
-              <h3 className="text-2xl font-bold text-gray-900 italic">Welcome to your Taxiva LLC Organizer</h3>
+              <h3 className="text-2xl font-bold text-gray-900 italic">Welcome to your TaxBeam LLC Organizer</h3>
               <p className="text-gray-500 font-medium leading-relaxed tracking-tight">
                 Our intuitive tax organizer helps you gather everything needed for your 2025 tax filing. 
                 Complete it at your own pace—your progress is saved automatically.
@@ -2533,7 +2533,7 @@ function ReviewSubmitStep({ steps }: { steps: string[] }) {
 
       <div className="p-6 bg-gray-50 rounded-3xl border border-gray-200">
          <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest leading-relaxed text-center italic">
-           By submitting this organizer, you certify that the information provided is true and accurate to the best of your knowledge. Taxiva LLC will use this data to prepare your 2025 tax returns.
+           By submitting this organizer, you certify that the information provided is true and accurate to the best of your knowledge. TaxBeam LLC will use this data to prepare your 2025 tax returns.
          </p>
       </div>
     </div>

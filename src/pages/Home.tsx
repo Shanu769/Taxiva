@@ -608,7 +608,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* "WHY TAXIVA LLC — The care of a family accountant, at a flat price" (Matching Reference Image image_ee9170ca.png) */}
+      {/* "WHY TaxBeam LLC — The care of a family accountant, at a flat price" (Matching Reference Image image_ee9170ca.png) */}
       <motion.section
         {...sectionFadeInUp}
         className="py-16 bg-[#f8fafc] border-t border-[#dbeafe]"
@@ -618,7 +618,7 @@ export default function Home() {
             {/* Left Column: Headline, Description & Meet the Team CTA */}
             <div className="lg:col-span-5 space-y-5">
               <span className="text-xs font-extrabold uppercase tracking-widest text-[#2563eb] block">
-                WHY TAXIVA LLC
+                WHY TaxBeam LLC
               </span>
               <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0f172a] tracking-tight leading-[1.08] font-display">
                 The care of a family accountant, at a flat price
@@ -642,7 +642,7 @@ export default function Home() {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <a
-                  href="https://wa.me/919963260743?text=Hi%20TAXIVA%20LLC%2C%20I%20would%20like%20to%20consult%20about%20tax%20filing%20services"
+                  href="https://wa.me/919963260743?text=Hi%20TaxBeam%20LLC%2C%20I%20would%20like%20to%20consult%20about%20tax%20filing%20services"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[#25d366] hover:bg-[#20ba59] text-white px-5 py-3.5 rounded-full font-extrabold text-sm transition-all shadow-sm active:scale-95"
@@ -784,7 +784,7 @@ export default function Home() {
                 <div className="pt-2 border-t border-[#eff6ff] text-xs sm:text-sm text-[#334155] font-medium flex flex-wrap items-center gap-y-1 gap-x-3">
                   <span>New York HQ: <strong className="text-[#0f172a] font-black">+1 737-381-2330</strong></span>
                   <span className="text-[#94a3b8] hidden sm:inline">•</span>
-                  <span><strong className="text-[#0f172a] font-black">info@taxiva.co</strong></span>
+                  <span><strong className="text-[#0f172a] font-black">info@taxbeam.co</strong></span>
                   <span className="text-[#94a3b8] hidden sm:inline">•</span>
                   <span>Mon – Sat: 9:00 AM – 7:00 PM EST</span>
                 </div>
@@ -795,14 +795,14 @@ export default function Home() {
                 <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-[#bfdbfe] bg-[#0f172a] relative h-80 sm:h-96 lg:h-[440px] group">
                   <img
                     src="/assets/aistudio/image_a62c31cf.png"
-                    alt="TAXIVA LLC — One Platform, Every Regulation, Instant Answers"
+                    alt="TaxBeam LLC — One Platform, Every Regulation, Instant Answers"
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   />
                   {/* Subtle Dark Gradient Overlay for Contrast */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a]/95 via-[#0f172a]/20 to-transparent" />
 
                   <div className="absolute top-4 right-4 bg-[#0f172a]/90 backdrop-blur-md text-white border border-white/30 px-3.5 py-1.5 rounded-xl text-[11px] font-black uppercase tracking-wider shadow-lg">
-                    TAXIVA LLC • CPA & CA
+                    TaxBeam LLC • CPA & CA
                   </div>
 
                   {/* Bottom Highlight Pill */}
@@ -857,7 +857,7 @@ export default function Home() {
                   Received an IRS notice?
                 </h3>
                 <p className="text-sm sm:text-base text-[#334155]/90 leading-relaxed mb-6 font-medium">
-                  Don't wait on the deadline. Open a portal request, upload the letter, and TAXIVA LLC starts working on your official CPA response immediately.
+                  Don't wait on the deadline. Open a portal request, upload the letter, and TaxBeam LLC starts working on your official CPA response immediately.
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-7">
@@ -1117,7 +1117,7 @@ export default function Home() {
                 Ready to File Your Taxes with Maximum Accuracy?
               </h2>
               <p className="text-white/90 text-xs sm:text-sm leading-relaxed">
-                Just sign up—we'll match you with the right TAXIVA LLC tax expert in New York (EST) and take care of the rest.
+                Just sign up—we'll match you with the right TaxBeam LLC tax expert in New York (EST) and take care of the rest.
               </p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-3 relative z-10 shrink-0">
@@ -1158,7 +1158,7 @@ export default function Home() {
                 </h2>
 
                 <p className="text-[#334155]/90 text-sm sm:text-base mb-6 leading-relaxed font-medium">
-                  Join the TAXIVA LLC client briefing and receive timely reminders on quarterly estimated taxes, FBAR rules, and year-end tax reduction strategies.
+                  Join the TaxBeam LLC client briefing and receive timely reminders on quarterly estimated taxes, FBAR rules, and year-end tax reduction strategies.
                 </p>
 
                 <div className="bg-[#f8fafc] border border-[#dbeafe] rounded-2xl p-5 mb-6">
@@ -1175,7 +1175,7 @@ export default function Home() {
                 {newsletterSubscribed ? (
                   <div className="bg-[#eff6ff] border border-[#bfdbfe] text-[#0f172a] px-5 py-4 rounded-xl font-bold flex items-center gap-2 text-sm">
                     <CheckCircle2 className="w-5 h-5 text-[#1d4ed8]" />
-                    <span>Thank you for subscribing to TAXIVA LLC tax alerts!</span>
+                    <span>Thank you for subscribing to TaxBeam LLC tax alerts!</span>
                   </div>
                 ) : (
                   <form

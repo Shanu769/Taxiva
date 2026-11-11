@@ -247,13 +247,13 @@ export default function GetStartedForm() {
                   </div>
                 </a>
 
-                <a href="mailto:info@taxiva.co" className="flex items-center gap-4 group">
+                <a href="mailto:info@taxbeam.co" className="flex items-center gap-4 group">
                   <div className="w-10 h-10 rounded-xl bg-[#eff6ff] border border-[#dbeafe] text-[#1d4ed8] flex items-center justify-center shrink-0 group-hover:bg-[#1d4ed8] group-hover:text-white transition-all">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div>
                     <p className="text-sm font-extrabold text-[#0f172a] group-hover:text-[#1d4ed8] transition-colors">
-                      info@taxiva.co
+                      info@taxbeam.co
                     </p>
                     <p className="text-xs text-[#334155]/80 font-medium">For documents and details</p>
                   </div>
@@ -282,7 +282,7 @@ export default function GetStartedForm() {
                         Thank you, {submittedData.fullName}!
                       </h2>
                       <p className="text-sm text-[#334155] mt-1 leading-relaxed font-medium">
-                        A licensed CPA or Enrolled Agent at <strong>TAXIVA LLC (New York, NY • EST)</strong> is reviewing your request and will reply within one business day with your personalized quote.
+                        A licensed CPA or Enrolled Agent at <strong>TaxBeam LLC (New York, NY • EST)</strong> is reviewing your request and will reply within one business day with your personalized quote.
                       </p>
                     </div>
                   </div>

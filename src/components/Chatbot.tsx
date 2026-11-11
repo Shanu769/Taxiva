@@ -129,7 +129,7 @@ export default function Chatbot() {
           ...prev,
           {
             role: "model",
-            parts: [{ text: "I'm currently unable to retrieve live search data. Please feel free to reach our team at info@taxiva.co or +1 737-381-2330." }],
+            parts: [{ text: "I'm currently unable to retrieve live search data. Please feel free to reach our team at info@taxbeam.co or +1 737-381-2330." }],
           },
         ]);
       }
@@ -137,7 +137,7 @@ export default function Chatbot() {
       console.error("Chat error:", error);
       setMessages((prev) => [
         ...prev,
-        { role: "model", parts: [{ text: "Sorry, I'm having trouble connecting to the team. Please email us at info@taxiva.co or call +1 737-381-2330." }] },
+        { role: "model", parts: [{ text: "Sorry, I'm having trouble connecting to the team. Please email us at info@taxbeam.co or call +1 737-381-2330." }] },
       ]);
     } finally {
       setIsLoading(false);
@@ -169,7 +169,7 @@ export default function Chatbot() {
                   <span className="font-black text-white">T</span>
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm">Taxiva LLC Assistant</h3>
+                  <h3 className="font-bold text-sm">TaxBeam LLC Assistant</h3>
                   <div className="flex items-center gap-1.5 text-[10px] text-blue-200">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
                     Online & Ready to Help
@@ -194,7 +194,7 @@ export default function Chatbot() {
                     <LucideMessageSquare className="w-8 h-8" />
                   </div>
                   <div className="space-y-1">
-                    <h4 className="font-bold text-gray-900">Hi, welcome to Taxiva LLC 👋</h4>
+                    <h4 className="font-bold text-gray-900">Hi, welcome to TaxBeam LLC 👋</h4>
                     <p className="text-sm text-gray-500">How can we help you today?</p>
                   </div>
                   <div className="grid grid-cols-2 gap-2 pt-4">
@@ -298,7 +298,7 @@ export default function Chatbot() {
             </form>
 
             <div className="p-2 text-[10px] text-center text-gray-400 bg-gray-50">
-              New York, NY (EST) Support • info@taxiva.co
+              New York, NY (EST) Support • info@taxbeam.co
             </div>
           </motion.div>
         )}

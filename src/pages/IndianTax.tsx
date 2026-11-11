@@ -99,7 +99,7 @@ export default function IndianTax() {
               </h1>
 
               <p className="text-lg sm:text-xl text-blue-100 leading-relaxed mb-8 font-normal">
-                Taxiva LLC provides synchronized cross-border tax preparation and DTAA advisory for NRIs, H-1B/L-1 visa holders, and U.S. residents with income or assets in both the United States and India.
+                TaxBeam LLC provides synchronized cross-border tax preparation and DTAA advisory for NRIs, H-1B/L-1 visa holders, and U.S. residents with income or assets in both the United States and India.
               </p>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
@@ -210,7 +210,7 @@ export default function IndianTax() {
                 Audit Checklist
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-[#0f172a] font-display">
-                What Taxiva LLC Covers for Every Cross-Border Filer
+                What TaxBeam LLC Covers for Every Cross-Border Filer
               </h3>
             </div>
 

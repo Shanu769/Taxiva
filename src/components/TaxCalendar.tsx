@@ -235,9 +235,9 @@ export default function TaxCalendar({
     if (!reminderAdded[id]) {
       const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Taxiva LLC Compliance//Tax Calendar//EN
+PRODID:-//TaxBeam LLC Compliance//Tax Calendar//EN
 BEGIN:VEVENT
-SUMMARY:Taxiva LLC Tax Deadline: ${title}
+SUMMARY:TaxBeam LLC Tax Deadline: ${title}
 DESCRIPTION:Reminder for tax deadline: ${title}.
 DTSTART;VALUE=DATE:${dueDate.replace(/-/g, '')}
 DTEND;VALUE=DATE:${dueDate.replace(/-/g, '')}

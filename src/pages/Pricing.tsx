@@ -49,7 +49,7 @@ const REFERRAL_OFFERS: Record<
     headingPrefix: "Refer a Friend & Earn",
     amount: "$50",
     description:
-      "Refer a founder or business for Monthly Bookkeeping. You receive a $50 instant credit for every new bookkeeping client you refer to TAXIVA LLC."
+      "Refer a founder or business for Monthly Bookkeeping. You receive a $50 instant credit for every new bookkeeping client you refer to TaxBeam LLC."
   }
 };
 

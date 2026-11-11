@@ -42,7 +42,7 @@ export interface NotificationPreferences {
   docIrsAcceptance: boolean;
 
   // Planning & Marketing
-  taxivaNewsletter: boolean;
+  taxbeamNewsletter: boolean;
   yearEndTaxStrategies: boolean;
 
   // Security
@@ -56,7 +56,7 @@ export interface NotificationPreferences {
 
 const DEFAULT_PROFILE: UserProfile = {
   fullName: "Alexander V. Wright",
-  email: "client@taxiva.co",
+  email: "client@taxbeam.co",
   phone: "+1 (555) 382-9104",
   occupation: "Senior Software Architect & Independent Consultant",
   residencyState: "California (CA)",
@@ -82,17 +82,17 @@ const DEFAULT_PREFERENCES: NotificationPreferences = {
   docForm8879Signature: true,
   docIrsAcceptance: true,
 
-  taxivaNewsletter: true,
+  taxbeamNewsletter: true,
   yearEndTaxStrategies: true,
 
   securityLoginAlerts: true,
   securityAuditLogs: false,
 
-  notificationEmail: "client@taxiva.co",
+  notificationEmail: "client@taxbeam.co",
   deliveryFrequency: "instant",
 };
 
-export default function SettingsView({ currentUserEmail = "client@taxiva.co" }: { currentUserEmail?: string }) {
+export default function SettingsView({ currentUserEmail = "client@taxbeam.co" }: { currentUserEmail?: string }) {
   const [activeTab, setActiveTab] = useState<"profile" | "notifications" | "security">("profile");
 
   // User Profile State
@@ -114,12 +114,12 @@ export default function SettingsView({ currentUserEmail = "client@taxiva.co" }: 
     try {
       const saved = localStorage.getItem("taxo_notification_preferences");
       if (saved) {
-        return { ...DEFAULT_PREFERENCES, ...JSON.parse(saved), notificationEmail: currentUserEmail || "client@taxiva.co" };
+        return { ...DEFAULT_PREFERENCES, ...JSON.parse(saved), notificationEmail: currentUserEmail || "client@taxbeam.co" };
       }
     } catch (e) {
       console.error("Failed to load preferences from localStorage", e);
     }
-    return { ...DEFAULT_PREFERENCES, notificationEmail: currentUserEmail || "client@taxiva.co" };
+    return { ...DEFAULT_PREFERENCES, notificationEmail: currentUserEmail || "client@taxbeam.co" };
   });
 
   const [savedMessage, setSavedMessage] = useState<string | null>(null);
@@ -127,7 +127,7 @@ export default function SettingsView({ currentUserEmail = "client@taxiva.co" }: 
   const [testSentSuccess, setTestSentSuccess] = useState(false);
 
   useEffect(() => {
-    if (currentUserEmail && (profile.email === "client@taxiva.co" || !profile.email)) {
+    if (currentUserEmail && (profile.email === "client@taxbeam.co" || !profile.email)) {
       setProfile(p => ({ ...p, email: currentUserEmail }));
       setPrefs(p => ({ ...p, notificationEmail: currentUserEmail }));
     }
@@ -685,13 +685,13 @@ export default function SettingsView({ currentUserEmail = "client@taxiva.co" }: 
             <div className="space-y-4 text-xs font-semibold">
               <div className="flex items-center justify-between p-3.5 bg-gray-50/80 rounded-2xl hover:bg-blue-50/30 transition-colors">
                 <div>
-                  <p className="font-bold text-gray-900">Taxiva LLC Monthly Insider Digest</p>
+                  <p className="font-bold text-gray-900">TaxBeam LLC Monthly Insider Digest</p>
                   <p className="text-[11px] text-gray-500 font-normal">Quarterly tax law changes, IRS inflation adjustments, and CPA advice</p>
                 </div>
                 <input
                   type="checkbox"
-                  checked={prefs.taxivaNewsletter}
-                  onChange={() => handleTogglePref("taxivaNewsletter")}
+                  checked={prefs.taxbeamNewsletter}
+                  onChange={() => handleTogglePref("taxbeamNewsletter")}
                   className="w-5 h-5 rounded-md text-blue-900 focus:ring-blue-900 cursor-pointer accent-blue-900"
                 />
               </div>
@@ -815,7 +815,7 @@ export default function SettingsView({ currentUserEmail = "client@taxiva.co" }: 
                 <span>IRS Sec. 7216 Confidentiality Enforced</span>
               </p>
               <p className="text-gray-600 leading-relaxed text-[11px]">
-                Under Internal Revenue Code Section 7216, Taxiva LLC CPAs and staff are legally prohibited from disclosing or using your tax return information for any purpose other than preparing, assisting in, or reviewing your tax return.
+                Under Internal Revenue Code Section 7216, TaxBeam LLC CPAs and staff are legally prohibited from disclosing or using your tax return information for any purpose other than preparing, assisting in, or reviewing your tax return.
               </p>
             </div>
 
@@ -836,7 +836,7 @@ export default function SettingsView({ currentUserEmail = "client@taxiva.co" }: 
               <div className="flex items-center justify-between p-3.5 bg-gray-50 rounded-2xl">
                 <div>
                   <p className="font-bold text-gray-900">Login Alert Notifications</p>
-                  <p className="text-[11px] text-gray-500">Send email alert when a new device accesses your Taxiva LLC portal</p>
+                  <p className="text-[11px] text-gray-500">Send email alert when a new device accesses your TaxBeam LLC portal</p>
                 </div>
                 <input
                   type="checkbox"

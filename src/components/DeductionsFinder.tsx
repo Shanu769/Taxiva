@@ -372,7 +372,7 @@ export default function DeductionsFinder({ onSaveToNotes }: { onSaveToNotes?: (c
       {/* Save Button */}
       <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-xs text-gray-500 font-medium italic">
-          Selected deductions are reviewed by your dedicated Taxiva LLC CPA before final filing.
+          Selected deductions are reviewed by your dedicated TaxBeam LLC CPA before final filing.
         </p>
 
         <button

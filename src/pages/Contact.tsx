@@ -45,8 +45,8 @@ export default function Contact() {
     },
     {
       title: "Email Us",
-      value: "info@taxiva.co",
-      href: "mailto:info@taxiva.co",
+      value: "info@taxbeam.co",
+      href: "mailto:info@taxbeam.co",
       icon: Mail
     },
     {
@@ -112,7 +112,7 @@ export default function Contact() {
                   transition={{ duration: 0.7, ease: "easeOut" as const }}
                   className="text-4xl sm:text-5xl font-black text-[#0f172a] mb-5 font-display tracking-tight leading-[1.1]"
                 >
-                  Contact <span className="text-[#1d4ed8] uppercase">TAXIVA LLC</span>
+                  Contact <span className="text-[#1d4ed8] uppercase">TaxBeam LLC</span>
                 </motion.h1>
                 <p className="text-base sm:text-lg text-[#334155]/90 leading-relaxed font-medium">
                   Have a question about individual tax filing, New York (NY) main company formation & business taxes, FBAR & foreign reporting, or Indian tax & NRI compliance? Our New York (EST) CPA & Enrolled Agent team is ready to assist.

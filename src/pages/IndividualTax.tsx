@@ -49,7 +49,7 @@ export default function IndividualTax() {
               </h1>
 
               <p className="text-lg sm:text-xl text-blue-100 leading-relaxed mb-8 font-normal">
-                Taxiva LLC provides CPA-reviewed federal and multi-state tax preparation for individuals, families, W-2 & 1099 professionals, RSU/ESPP equity holders, and real estate investors.
+                TaxBeam LLC provides CPA-reviewed federal and multi-state tax preparation for individuals, families, W-2 & 1099 professionals, RSU/ESPP equity holders, and real estate investors.
               </p>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
@@ -161,7 +161,7 @@ export default function IndividualTax() {
               <div className="bg-white rounded-3xl p-8 border border-[#dbeafe] shadow-sm space-y-4">
                 <h3 className="text-2xl font-black text-[#0f172a] font-display flex items-center gap-2">
                   <ShieldCheck className="w-6 h-6 text-[#1d4ed8]" />
-                  <span>Why Choose Taxiva LLC?</span>
+                  <span>Why Choose TaxBeam LLC?</span>
                 </h3>
                 <ul className="space-y-4 divide-y divide-slate-100 pt-2">
                   <li className="flex gap-4 pt-3">

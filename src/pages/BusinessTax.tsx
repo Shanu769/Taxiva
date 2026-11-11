@@ -56,7 +56,7 @@ export default function BusinessTax() {
               </h1>
 
               <p className="text-lg sm:text-xl text-slate-300 leading-relaxed mb-8 font-normal">
-                Taxiva LLC supports small businesses, LLCs, partnerships, S corporations, and consultants with proactive corporate tax planning and multi-state compliance.
+                TaxBeam LLC supports small businesses, LLCs, partnerships, S corporations, and consultants with proactive corporate tax planning and multi-state compliance.
               </p>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">

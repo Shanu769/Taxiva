@@ -36,7 +36,7 @@ interface BreadcrumbProps {
 // Predefined route metadata for clear hierarchy & readable titles
 const ROUTE_MAP: Record<string, { label: string; parent?: { label: string; href: string } }> = {
   "/about": {
-    label: "About TAXIVA LLC"
+    label: "About TaxBeam LLC"
   },
   "/services/individual": {
     label: "Individual Tax Filing",

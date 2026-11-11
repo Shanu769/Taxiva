@@ -146,7 +146,7 @@ const SEARCH_DATABASE: SearchItem[] = [
   },
   {
     id: "page-pricing",
-    title: "Taxiva LLC Pricing & CPA Consultation Plans",
+    title: "TaxBeam LLC Pricing & CPA Consultation Plans",
     category: "Services & Pages",
     description: "Transparent fixed-fee pricing for individual, business, and foreign tax returns.",
     path: "/pricing",
@@ -435,7 +435,7 @@ export default function GlobalSearchModal({
             </div>
             <div className="flex items-center gap-1 text-blue-900">
               <Sparkles className="w-3 h-3 text-amber-500" />
-              <span>Taxiva LLC Intelligent Index</span>
+              <span>TaxBeam LLC Intelligent Index</span>
             </div>
           </div>
         </motion.div>

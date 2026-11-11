@@ -88,7 +88,7 @@ const DEFAULT_DEADLINES: TaxDeadline[] = [
 export default function TaxDeadlineReminder() {
   const [deadlines, setDeadlines] = useState<TaxDeadline[]>(() => {
     try {
-      const saved = localStorage.getItem("taxiva_completed_deadlines");
+      const saved = localStorage.getItem("taxbeam_completed_deadlines");
       if (saved) {
         const completedIds: string[] = JSON.parse(saved);
         return DEFAULT_DEADLINES.map(d => ({ ...d, isCompleted: completedIds.includes(d.id) }));
@@ -126,17 +126,17 @@ export default function TaxDeadlineReminder() {
     setDeadlines(updated);
     
     const completedIds = updated.filter(d => d.isCompleted).map(d => d.id);
-    localStorage.setItem("taxo_completed_deadlines", JSON.stringify(completedIds));
+    localStorage.setItem("taxbeam_completed_deadlines", JSON.stringify(completedIds));
   };
 
   const handleSyncCalendar = (deadline: TaxDeadline) => {
     // Generate ICS content
-    const title = encodeURIComponent(`Taxiva LLC Reminder: ${deadline.title}`);
+    const title = encodeURIComponent(`TaxBeam LLC Reminder: ${deadline.title}`);
     const details = encodeURIComponent(`${deadline.description} - IRS Form: ${deadline.formType}`);
     const dateFormatted = deadline.dateStr.replace(/-/g, "");
     
     // Google Calendar URL
-    const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateFormatted}/${dateFormatted}&details=${details}&add=info@taxiva.co`;
+    const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateFormatted}/${dateFormatted}&details=${details}&add=info@taxbeam.co`;
     
     const link = document.createElement("a");
     link.href = googleCalUrl;
@@ -152,7 +152,7 @@ export default function TaxDeadlineReminder() {
     const dateFormatted = deadline.dateStr.replace(/-/g, "");
     const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Taxiva LLC Tax Compliance//EN
+PRODID:-//TaxBeam LLC Tax Compliance//EN
 BEGIN:VEVENT
 SUMMARY:${deadline.title}
 DESCRIPTION:${deadline.description} (Form: ${deadline.formType})
@@ -166,7 +166,7 @@ END:VCALENDAR`;
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `Taxiva_LLC_${deadline.id}_Reminder.ics`;
+    a.download = `TaxBeam_LLC_${deadline.id}_Reminder.ics`;
     a.click();
 
     setSyncedMessage(`Downloaded .ics file for ${deadline.title}`);

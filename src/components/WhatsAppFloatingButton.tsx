@@ -12,7 +12,7 @@ export default function WhatsAppFloatingButton() {
   const [showTooltip, setShowTooltip] = useState(true);
 
   const whatsappUrl =
-    "https://wa.me/919963260743?text=Hi%20TAXIVA%20LLC%2C%20I%20would%20like%20to%20consult%20about%20my%20tax%20draft%20or%20inquire%20about%20services.";
+    "https://wa.me/919963260743?text=Hi%20TaxBeam%20LLC%2C%20I%20would%20like%20to%20consult%20about%20my%20tax%20draft%20or%20inquire%20about%20services.";
 
   return (
     <div className="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-40 flex items-center gap-3">
@@ -43,7 +43,7 @@ export default function WhatsAppFloatingButton() {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat on WhatsApp with Taxiva LLC"
+        aria-label="Chat on WhatsApp with TaxBeam LLC"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25d366] text-white shadow-2xl flex items-center justify-center transition-all duration-300 ring-4 ring-[#25d366]/20 hover:bg-[#20ba59] active:scale-95"

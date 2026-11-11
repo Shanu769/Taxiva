@@ -22,7 +22,7 @@ export function WhatsAppIcon({ className = "w-6 h-6" }: { className?: string }) 
 
 export default function WhatsAppCallout() {
   const whatsappUrl =
-    "https://wa.me/919963260743?text=Hi%20TAXIVA%20LLC%2C%20I%20would%20like%20to%20get%20started%20with%20my%20tax%20draft%20or%20inquire%20about%20services.";
+    "https://wa.me/919963260743?text=Hi%20TaxBeam%20LLC%2C%20I%20would%20like%20to%20get%20started%20with%20my%20tax%20draft%20or%20inquire%20about%20services.";
 
   return (
     <section className="py-14 sm:py-16 bg-gradient-to-b from-[#f8fafc] via-[#eff6ff]/60 to-white border-t border-b border-[#dbeafe] relative overflow-hidden">

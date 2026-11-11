@@ -271,7 +271,7 @@ export default function GmailCommunicationPanel({ onAttachToFiles }: GmailCommun
           </div>
           <h4 className="text-lg font-black text-gray-900 mb-2">Connect Your Gmail Account</h4>
           <p className="text-xs text-gray-500 max-w-md mb-6 leading-relaxed font-medium">
-            Grant permission to securely view tax emails, receive official CPA notifications, and import tax document attachments directly into your Taxiva LLC vault.
+            Grant permission to securely view tax emails, receive official CPA notifications, and import tax document attachments directly into your TaxBeam LLC vault.
           </p>
           <button 
             onClick={handleConnectGmail}

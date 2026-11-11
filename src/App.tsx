@@ -26,6 +26,7 @@ import Login from "./pages/Login";
 import GetStartedForm from "./pages/GetStartedForm";
 import Dashboard from "./pages/Dashboard";
 import SettingsPage from "./pages/SettingsPage";
+import LegalSecurity from "./pages/LegalSecurity";
 
 // Helper to scroll to top on route change or navigation
 function ScrollToTop() {
@@ -84,6 +85,10 @@ function AppContent() {
           <Route path="/get-in-touch" element={<GetStartedForm />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/legal" element={<LegalSecurity />} />
+          <Route path="/security" element={<LegalSecurity />} />
+          <Route path="/privacy" element={<LegalSecurity />} />
+          <Route path="/terms" element={<LegalSecurity />} />
           {/* Wildcard catch-all fallback to Home page so external links never 404 or show blank */}
           <Route path="*" element={<Home />} />
         </Routes>
